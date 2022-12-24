@@ -1,0 +1,6 @@
+runtime: nodejs16 # or another supported version
+
+# instance_class: F2
+
+env_variables:
+  MONGO_URL: "mongodb+srv://starsstars:hermes1111@cluster0.bae3ozx.mongodb.net/?retryWrites=true&w=majority"
