@@ -9,7 +9,7 @@ function NewsCard(props) {
         backgroundColor="white"
         overflow="hidden"
         variant="outline"
-        mb="1"
+        mb="2"
         textAlign="left"
         style={{ border: "1px solid var(--primary)", borderRadius: "15px" }}
         _hover={{ boxShadow: "0px 2px 2px #18191F" }}
