@@ -4,13 +4,17 @@ import "./index.css";
 import App from "./Containers/App";
 import reportWebVitals from "./reportWebVitals";
 import { ScoreCardProvider } from "./hooks/useScoreCard";
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from "./Theme";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ScoreCardProvider>
-      <App />
-    </ScoreCardProvider>
+    <ChakraProvider theme={theme}>
+      <ScoreCardProvider>
+        <App />
+      </ScoreCardProvider>
+    </ChakraProvider>
   </React.StrictMode>
 );
 
