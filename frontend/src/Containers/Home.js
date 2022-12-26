@@ -1,14 +1,5 @@
 import { useState } from "react";
-import {
-  Box,
-  Container,
-  HStack,
-  Heading,
-  Text,
-  Card,
-  CardHeader,
-  CardBody,
-} from "@chakra-ui/react";
+import { Box, Container, HStack } from "@chakra-ui/react";
 import NewsCard from "../Components/ui/NewsCard";
 
 const Home = () => {
