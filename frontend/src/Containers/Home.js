@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Box, Container, HStack } from "@chakra-ui/react";
+import { Box, Container, HStack, Text, Button } from "@chakra-ui/react";
 import NewsCard from "../Components/ui/NewsCard";
 
 const Home = () => {
@@ -45,7 +45,7 @@ const Home = () => {
             textAlign="left"
             px="0"
           >
-            <Container backgroundColor="blue" height="15%" px="0"></Container>
+            <Container height="15%" px="0"></Container>
             <Container
               height="30%"
               px="0"
@@ -53,9 +53,18 @@ const Home = () => {
               fontSize="3vmin"
               fontWeight="500"
             >
-              RedaNews redacts a daily news every day, user will need to guess
-              several vocabulary to fill the redacted blanks and find the news
-              title to win!
+              <Text>
+                RedaNews redacts a daily news every day, user will need to guess
+                several vocabulary to fill the redacted blanks and find the news
+                title to win!
+              </Text>
+              <br />
+              <HStack>
+                <Button colorScheme="facebook" variant="solid">
+                  Login with Your Account
+                </Button>{" "}
+                <Text opacity="0.5">Continue without login</Text>
+              </HStack>
             </Container>
             <Container px="0" fontSize="6.5vmin" fontWeight="900">
               Playing RedaNews, Get Catch-Up With The Latest News
