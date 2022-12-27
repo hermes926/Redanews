@@ -7,6 +7,7 @@ const theme = extendTheme({
     body: `'Montserrat', sans-serif`,
   },
   colors: {
+    primary: "#2E424D",
     transparent: "transparent",
     black: "#000",
     white: "#fff",

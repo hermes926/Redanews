@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Box, Container, HStack, Text, Button } from "@chakra-ui/react";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import NewsCard from "../Components/ui/NewsCard";
 
 const Home = () => {
+  const navigate = useNavigate();
   const news = [
     {
       title: "Test News 1",
@@ -35,7 +38,7 @@ const Home = () => {
         opacity="0.1"
         position="absolute"
       />
-      <Container maxW="90%" height="100%" px="0">
+      <Container maxW="90%" height="90vh" px="0">
         <HStack justify="space-between" height="100%">
           <Box
             width="45%"
@@ -59,11 +62,23 @@ const Home = () => {
                 title to win!
               </Text>
               <br />
-              <HStack>
-                <Button colorScheme="facebook" variant="solid">
+              <HStack fontSize="2.5vmin">
+                <Button
+                  colorScheme="facebook"
+                  variant="solid"
+                  width="fit-content"
+                  fontSize="2.5vmin"
+                  onClick={() => navigate("/login")}
+                >
                   Login with Your Account
                 </Button>{" "}
-                <Text opacity="0.5">Continue without login</Text>
+                <Text
+                  opacity="0.5"
+                  onClick={() => navigate("/game")}
+                  _hover={{ cursor: "pointer" }}
+                >
+                  Continue without login
+                </Text>
               </HStack>
             </Container>
             <Container px="0" fontSize="6.5vmin" fontWeight="900">
