@@ -2,53 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Stack, HStack, Text, Divider } from "@chakra-ui/react";
 
-const GuessTable = () => {
-  const guessHistory = [
-    {
-      vocab: "Test1",
-      count: 1,
-    },
-    {
-      vocab: "Test2",
-      count: 1,
-    },
-    {
-      vocab: "Test2",
-      count: 1,
-    },
-    {
-      vocab: "Test2",
-      count: 1,
-    },
-    {
-      vocab: "Test2",
-      count: 1,
-    },
-    {
-      vocab: "Test2",
-      count: 1,
-    },
-    {
-      vocab: "Test2",
-      count: 1,
-    },
-    {
-      vocab: "Test2",
-      count: 1,
-    },
-    {
-      vocab: "Test2",
-      count: 1,
-    },
-    {
-      vocab: "Test2",
-      count: 1,
-    },
-    {
-      vocab: "Test2",
-      count: 1,
-    },
-  ];
+const GuessTable = ({ guesses }) => {
   return (
     <Box
       width="30vw"
@@ -84,24 +38,28 @@ const GuessTable = () => {
           </Box>
         </HStack>
       </Box>
-      <Divider />
       <Stack>
-        {guessHistory.reverse().map((guess, i) => (
-          <Box align="left" color="redanews-grey">
-            <HStack spacing="0" py="2">
-              <Box width="20%" height="10%" paddingLeft="2">
-                <Text>{guessHistory.length - i}</Text>
+        {Array.from(guesses)
+          .reverse()
+          .map((guess, i) => (
+            <>
+              <Divider />
+              <Box align="left" color="redanews-grey" key={i}>
+                <HStack spacing="0" py="2">
+                  <Box width="20%" height="10%" paddingLeft="2">
+                    <Text>{guesses.length - i}</Text>
+                  </Box>
+                  <Box width="60%" height="10%">
+                    <Text>{guess.vocab}</Text>
+                  </Box>
+                  <Box width="20%" height="10%">
+                    {guess.count}
+                  </Box>
+                </HStack>
               </Box>
-              <Box width="60%" height="10%">
-                <Text>{guess.vocab}</Text>
-              </Box>
-              <Box width="20%" height="10%">
-                {guess.count}
-              </Box>
-            </HStack>
-            <Divider />
-          </Box>
-        ))}
+            </>
+          ))}
+        <Text> </Text>
       </Stack>
     </Box>
   );

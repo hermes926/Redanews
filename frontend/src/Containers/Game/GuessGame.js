@@ -12,31 +12,54 @@ import {
   InputLeftAddon,
   InputRightElement,
   IconButton,
+  useToast,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
-import Paragraph from "./Paragraph";
+
+import Paragraph from "../../Components/Paragraph";
 import GuessTable from "./GuessTable";
 
+import handleGuess from "../utils/handleGuess";
+import { news } from "../utils/variables";
+
 const GuessGame = () => {
-  const handleGuess = () => {};
+  const displayToast = useToast();
+  const [currentGuess, setCurrentGuess] = useState("");
+  const [guesses, setGuesses] = useState([]);
+
   return (
     <Box height="90vh" width="100vw" align="center">
       <HStack height="100%" width="100%" spacing="0">
         <Box width="70%" height="100%" bgColor="redanews-black">
           <Stack height="100%" width="100%">
-            <Paragraph />
+            <Paragraph news={news} guesses={guesses} />
             <Center width="100%" height="12%" bgColor="primary.700">
-              <InputGroup width="40%" padding="0">
+              <InputGroup width="40%" minW="300px" padding="0">
                 <InputLeftAddon variant="link" children="Top" />
                 <Input
-                  type="tel"
+                  type="string"
+                  value={currentGuess}
+                  onChange={(e) => {
+                    setCurrentGuess(e.target.value);
+                  }}
+                  color="white"
                   placeholder="Guess a Word"
                   focusBorderColor="redanews-grey"
                   _focus={{ borderColor: "gray.700" }}
                 />
                 <InputRightElement>
                   <IconButton
-                    onClick={handleGuess}
+                    onClick={() => {
+                      const result = handleGuess(
+                        currentGuess,
+                        setCurrentGuess,
+                        guesses,
+                        setGuesses
+                      );
+                      if (result != true) {
+                        displayToast(result);
+                      }
+                    }}
                     icon={<AddIcon />}
                     variant="link"
                     color="white"
@@ -56,7 +79,7 @@ const GuessGame = () => {
             </Center>
           </Stack>
         </Box>
-        <GuessTable />
+        <GuessTable guesses={guesses} />
       </HStack>
     </Box>
   );
