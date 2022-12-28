@@ -8,6 +8,7 @@ import Body from "./Body";
 import Home from "./Home";
 import Login from "./Accounts/Login";
 import SignUp from "./Accounts/SignUp";
+import GuessGame from "./Game/GuessGame";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/game" element={<Body />} />
+          <Route path="/game" element={<GuessGame />} />
         </Routes>
       </Router>
     </>
