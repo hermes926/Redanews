@@ -120,6 +120,8 @@ const marks = [
   "?",
   ":",
   ";",
+  "'",
+  '"',
 ];
 
 export { news, marks, commonWords };
