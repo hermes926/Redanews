@@ -20,6 +20,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
+import axios from "../../api";
 
 function checkPassword(password1, password2) {
   if (password1 === password2) {
@@ -53,7 +54,8 @@ const SignUpModal = () => {
 
   const labelName = ["username", "email", "password", "confirmPassword"];
 
-  const onSubmit = () => {
+  const onSubmit = async (e) => {
+    e.preventDefault();
     const newInputs = labelName.reduce(
       (acc, item) => ({ ...acc, [item]: inputs[item].trim() }),
       {}
@@ -82,15 +84,30 @@ const SignUpModal = () => {
     }
 
     if (!hasError) {
-      // TODO: Send Register API
-      //   dispatch(
-      //     userRegister(
-      //       inputs.username.trim(),
-      //       inputs.fullName.trim(),
-      //       inputs.email.trim(),
-      //       inputs.password
-      //     )
-      //   );
+        const res = await axios.post('/auth/signup', {
+          username: inputs.username.trim(),
+          email: inputs.email.trim(),
+          password: inputs.password.trim(),
+        }).catch(() => {
+          errorToast({
+            title: "Signup Failed",
+            description: "Username exist.",
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+        });
+        
+        if (res !== undefined) {
+          errorToast({
+            title: "Signup Successful",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+          });
+          navigate("/");
+        }
+
       setHasRequest(true);
     } else {
       if (errors.passwordLength === true) {
@@ -326,7 +343,7 @@ const SignUpModal = () => {
                 }}
                 size="md"
                 type="submit"
-                onClick={() => onSubmit()}
+                onClick={(e) => onSubmit(e)}
               >
                 Sign up
               </Button>
