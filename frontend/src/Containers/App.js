@@ -1,27 +1,26 @@
-import Header from "../Components/Header";
-import Body from "./Body";
-import Home from "./Home";
 import styled from "styled-components";
 import Paper from "@material-ui/core/Paper";
 
-const Wrapper = styled.div`
-  margin: auto;
-  width: 100%;
-  height: 90vh;
-  display: flex;
-  flex-direction: column;
-`;
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-const StyledPaper = styled(Paper)`
-  padding: 2em;
-`;
+import Header from "../Components/Header";
+import Body from "./Body";
+import Home from "./Home";
+import Login from "./Accounts/Login";
+import SignUp from "./Accounts/SignUp";
 
 function App() {
-  const isHome = true;
   return (
     <>
       <Header />
-      <Wrapper>{isHome ? <Home /> : <Body />}</Wrapper>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/game" element={<Body />} />
+        </Routes>
+      </Router>
     </>
   );
 }
