@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Box, Stack, Heading, Text } from "@chakra-ui/react";
+import redact from "../utils/redact";
 
 const Paragraph = () => {
   const news = {
     title:
-      "This is a Test Title This is a Test Content. This is a Test Content. ",
+      "Zero-Covid was supposed to prove China’s supremacy. How did it all go so wrong for Xi Jinping?",
     content:
-      "This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. This is a Test Content. ",
+      "2022 was supposed to be a triumphant year for China and its leader Xi Jinping, as he began his second decade in power with a pledge to restore the nation to greatness. Instead, China had its most difficult year under Xi’s rule as it reeled from his costly zero-Covid policy – from months of overzealous enforcement that crushed the economy and stoked historic public discontent, to a wholesale abandonment so abrupt that left a fragile health system scrambling to cope with an explosion of cases. The chaos and disarray is a stark contrast to the start of the year, when Beijing showcased the success of its Covid containment measures by keeping the coronavirus largely at bay from the Winter Olympics.",
   };
   return (
     <Stack
@@ -29,18 +30,25 @@ const Paragraph = () => {
         },
       }}
     >
-      <Heading color="redanews-grey" opacity="0.8" px="5" pt="5" align="left">
-        {news.title}
+      <Heading
+        color="redanews-grey"
+        lineHeight="1.5"
+        opacity="0.8"
+        px="5"
+        pt="2"
+        align="left"
+      >
+        {redact(news.title, [])}
       </Heading>
       <Text
         color="redanews-grey"
         opacity="0.8"
-        fontSize="md"
+        fontSize="lg"
         px="5"
         align="left"
         as="samp"
       >
-        {news.content}
+        {redact(news.content, [])}
       </Text>
     </Stack>
   );
