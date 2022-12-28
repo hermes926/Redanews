@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Header from "../Components/Header";
 //import Body from "./Body";
+import Game from "./Game"
 import Home from "./Home";
 import Login from "./Accounts/Login";
 import SignUp from "./Accounts/SignUp";
@@ -18,8 +19,8 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
-          {/* waiting for Body complete
-          <Route path="/game" element={<Body />} />*/}
+          {/* waiting for Body complete*/}
+          <Route path="/game" element={<Game />} />
         </Routes>
       </Router>
     </>
