@@ -237,11 +237,14 @@ const colors = {
     400: "#3C505B",
     500: "#556270",
     600: "#2E424D",
+    700: "#152229",
+    800: "#0A1820",
   },
   redanews: "#2E424D",
   "redanews-blue": "#5B8291",
   "redanews-teal": "#98DAD9",
   "redanews-grey": "#EAEBED",
+  "redanews-black": "#1A1A1A",
 };
 
 export default colors;
