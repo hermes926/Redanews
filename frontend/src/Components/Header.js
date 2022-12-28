@@ -23,7 +23,7 @@ const Header = () => {
       as="nav"
       bg="bg-surface"
       boxShadow={useColorModeValue("sm", "sm-dark")}
-      backgroundColor="primary"
+      backgroundColor="redanews"
     >
       <Container
         py={{
