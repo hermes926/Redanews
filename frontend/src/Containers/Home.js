@@ -69,8 +69,9 @@ const Home = () => {
                   width="fit-content"
                   fontSize="2.5vmin"
                   onClick={() => navigate("/login")}
+                  style={{ "white-space": "normal" }}
                 >
-                  Login with Your Account
+                  Login Now
                 </Button>{" "}
                 <Text
                   opacity="0.5"
