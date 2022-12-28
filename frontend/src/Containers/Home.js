@@ -69,7 +69,7 @@ const Home = () => {
                   width="fit-content"
                   fontSize="2.5vmin"
                   onClick={() => navigate("/login")}
-                  style={{ "white-space": "normal" }}
+                  style={{ whiteSpace: "normal" }}
                 >
                   Login Now
                 </Button>{" "}
@@ -111,6 +111,7 @@ const Home = () => {
                 title={piece.title}
                 summary={piece.summary}
                 link={piece.link}
+                key={i}
               />
             ))}
           </Box>

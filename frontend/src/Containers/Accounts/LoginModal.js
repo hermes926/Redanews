@@ -69,7 +69,7 @@ const LoginModal = () => {
         duration: 2000,
         isClosable: true,
       });
-      navigate("/");
+      navigate("/game");
     }
 
   };
