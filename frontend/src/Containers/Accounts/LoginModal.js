@@ -95,8 +95,8 @@ const LoginModal = () => {
                   </Text>
                   <Link
                     fontSize="sm"
-                    color="redanews-grey"
-                    fontWeight={800}
+                    color="redanews-teal"
+                    fontWeight={600}
                     to="/"
                   >
                     Forgot your password?
