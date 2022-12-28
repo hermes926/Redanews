@@ -7,6 +7,7 @@ import Header from "../Components/Header";
 import Body from "./Body";
 import Home from "./Home";
 import Login from "./Accounts/Login";
+import SignUp from "./Accounts/SignUp";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/game" element={<Body />} />
         </Routes>
       </Router>
