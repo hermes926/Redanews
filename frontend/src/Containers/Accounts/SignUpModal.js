@@ -40,9 +40,11 @@ const SignUpModal = () => {
   const [errors, setErrors] = useState({
     username: false,
     email: false,
-    password: false,
+    passwordLength: false,
     confirmPassword: false,
   });
+
+  const errorToast = useToast();
 
   const [hasRequest, setHasRequest] = useState(false);
 
@@ -90,6 +92,24 @@ const SignUpModal = () => {
       //     )
       //   );
       setHasRequest(true);
+    } else {
+      if (errors.passwordLength === true) {
+        errorToast({
+          title: "Register Fail",
+          description: "Password is required to have at least 8 characters",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+      } else if (errors.confirmPassword === true) {
+        errorToast({
+          title: "Register Fail",
+          description: "Password Not Match",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+      }
     }
   };
 
@@ -111,6 +131,14 @@ const SignUpModal = () => {
       }
     }
 
+    if (name === "password") {
+      if (value.length < 8) {
+        setErrors((input) => ({ ...input, passwordLength: true }));
+      } else {
+        setErrors((input) => ({ ...input, passwordLength: false }));
+      }
+    }
+
     if (name === "username") {
       setErrors((input) => ({ ...input, username: false }));
     }
@@ -121,8 +149,6 @@ const SignUpModal = () => {
 
     setHasRequest(false);
   };
-
-  const handleSubmit = () => {};
 
   const onClickReveal = () => {
     setIsOpen(!isOpen);
@@ -143,7 +169,7 @@ const SignUpModal = () => {
         </Center>
       </CardHeader>
       <CardBody>
-        <form onSubmit={(e) => handleSubmit(e)}>
+        <form>
           <Stack spacing={4}>
             <Stack spacing={2}>
               <Stack>
