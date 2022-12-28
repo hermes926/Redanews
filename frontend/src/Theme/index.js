@@ -1,5 +1,5 @@
 import { extendTheme } from "@chakra-ui/react";
-import Components from "./Components";
+import components from "./Components";
 import foundations from "./Foundations";
 
 const theme = extendTheme({
@@ -11,7 +11,7 @@ const theme = extendTheme({
     redanews: "5px",
   },
   ...foundations,
-  ...Components,
+  ...components,
 });
 
 export default theme;
