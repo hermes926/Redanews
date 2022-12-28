@@ -17,8 +17,11 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  useToast
 } from "@chakra-ui/react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
+import axios from "../../api";
+import { setCookie } from "../../Utils/CookieUsage";
 
 const LoginModal = () => {
   const navigate = useNavigate();
@@ -26,6 +29,10 @@ const LoginModal = () => {
   const [password, setPassword] = useState("");
   const [inputError, setInputError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [guessId, setGuessId] = useState("");
+
+  const displayToast = useToast();
 
   const handleUsernameChange = (e) => {
     if (e.target.value !== "") {
@@ -41,7 +48,31 @@ const LoginModal = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await axios.post('/auth/login', {username, password}).catch(() => {
+      displayToast({
+        title: "Login Failed",
+        description: "Username or password incorrect.",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    });
+
+    if (res !== undefined) {
+      setCookie("userId", res.data.account_id, 5);
+      setCookie("guessId", res.data.guess_id, 5);
+      displayToast({
+        title: "Login Successful",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+      navigate("/");
+    }
+
+  };
 
   const onClickReveal = () => {
     setIsOpen(!isOpen);
@@ -157,6 +188,7 @@ const LoginModal = () => {
                 }}
                 size="md"
                 type="submit"
+                onClick={(e) => {handleSubmit(e)}}
               >
                 Sign in
               </Button>
