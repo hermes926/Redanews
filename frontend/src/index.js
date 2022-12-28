@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./Containers/App";
 import reportWebVitals from "./reportWebVitals";
-import { ScoreCardProvider } from "./Hooks/useScoreCard";
+//import { ScoreCardProvider } from "./Hooks/useScoreCard";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./Theme";
 
@@ -11,9 +11,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      <ScoreCardProvider>
+      {/*<ScoreCardProvider>*/}
         <App />
-      </ScoreCardProvider>
+      {/*</ScoreCardProvider>*/}
     </ChakraProvider>
   </React.StrictMode>
 );
