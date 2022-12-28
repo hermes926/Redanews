@@ -11,7 +11,7 @@ function NewsCard(props) {
         variant="outline"
         mb="2"
         textAlign="left"
-        style={{ border: "1px solid primary", borderRadius: "15px" }}
+        style={{ border: "1px solid redanews", borderRadius: "15px" }}
         _hover={{ boxShadow: "0px 2px 2px #18191F" }}
       >
         <CardBody>
