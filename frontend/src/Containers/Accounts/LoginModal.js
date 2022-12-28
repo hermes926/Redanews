@@ -64,9 +64,9 @@ const LoginModal = () => {
       <CardBody>
         <form onSubmit={(e) => handleSubmit(e)}>
           <Stack spacing={4}>
-            <Stack spacing={4}>
+            <Stack spacing={2}>
               <Stack>
-                <Text fontWeight="700" color="primary.500">
+                <Text fontSize="2vmin" fontWeight="700" color="primary.500">
                   Username
                 </Text>
                 <FormControl id="username">
@@ -83,19 +83,19 @@ const LoginModal = () => {
                     borderWidth="2px"
                     borderRadius="10px"
                     isInvalid={inputError}
-                    size="lg"
+                    size="md"
                     required
                   />
                 </FormControl>
               </Stack>
               <Stack>
                 <HStack justify="space-between">
-                  <Text fontWeight="700" color="primary.500">
+                  <Text fontSize="2vmin" fontWeight="700" color="primary.500">
                     Password
                   </Text>
                   <Link
-                    fontSize="sm"
                     color="redanews-teal"
+                    fontSize="2vmin"
                     fontWeight={600}
                     to="/"
                   >
@@ -109,6 +109,7 @@ const LoginModal = () => {
                       id="login-password"
                       type={isOpen ? "text" : "password"}
                       label="Password"
+                      placeholder="Password"
                       value={password}
                       onChange={(e) => handlePasswordChange(e)}
                       borderColor="primary.200"
@@ -117,7 +118,7 @@ const LoginModal = () => {
                       borderWidth="2px"
                       borderRadius="10px"
                       isInvalid={inputError}
-                      size="lg"
+                      size="md"
                       required
                     />
                     <InputRightElement>
@@ -129,15 +130,14 @@ const LoginModal = () => {
                         }
                         variant="link"
                         border="none"
-                        marginTop="8px"
                         _focus={{
                           bg: "gray.100",
                           border: "none",
                           borderRadius: "full",
                         }}
                         marginRight="10px"
-                        paddingY="5px"
-                        fontSize="24px"
+                        paddingY="2px"
+                        fontSize="md"
                         isRound
                       />
                     </InputRightElement>
@@ -145,7 +145,7 @@ const LoginModal = () => {
                 </FormControl>
               </Stack>
             </Stack>
-            <Stack spacing={4} pt="2vmin">
+            <Stack spacing={2} pt="2vmin">
               <Button
                 backgroundColor="white"
                 border="2px"
@@ -155,7 +155,7 @@ const LoginModal = () => {
                   border: "0",
                   color: "white",
                 }}
-                size="lg"
+                size="md"
                 type="submit"
               >
                 Sign in
@@ -166,6 +166,7 @@ const LoginModal = () => {
                   onClick={() => {
                     navigate("/signup");
                   }}
+                  fontSize="2vmin"
                 >
                   Don't have an account?{" "}
                 </Link>
