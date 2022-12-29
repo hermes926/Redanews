@@ -4,19 +4,44 @@ import {
   ButtonGroup,
   Container,
   Flex,
-  HStack,
   IconButton,
   useBreakpointValue,
   useColorModeValue,
+  Input,
+  Badge,
+  Text,
+  Divider,
 } from "@chakra-ui/react";
 import * as React from "react";
 import { FiMenu } from "react-icons/fi";
 import Logo from "./ui/Logo";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+} from '@chakra-ui/react'
+import {useState} from 'react'
+import { Stack, HStack, VStack } from '@chakra-ui/react'
+import { Center, Square, Circle } from '@chakra-ui/react'
 
 // Reference: https://pro.chakra-ui.com/components/marketing/navbars
 
 const Header = () => {
   const signIn = true;
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [isLogin, setIsLogin] = useState(false)
+
+  const MenuClick=()=> {
+    if(menuOpen)
+      setMenuOpen(false)
+    else
+      setMenuOpen(true)
+  }
+
   return (
     <Box
       height="10vh"
@@ -43,7 +68,36 @@ const Header = () => {
                 variant="none"
                 icon={<FiMenu fontSize="1.25rem" color="white" />}
                 aria-label="Open Menu"
+                onClick={MenuClick}
               />
+              {/*this is for Menu*/}
+              <Drawer                                          
+                isOpen={menuOpen}
+                placement='right'
+                onClose={MenuClick}
+              >
+                <DrawerOverlay />
+                <DrawerContent>
+                  <DrawerCloseButton />
+                  <DrawerHeader><Center w="100%">Menu</Center><Divider colorScheme='redanews'/></DrawerHeader>
+
+                  <DrawerBody>
+                    <VStack spacing='20px' h='100%'>
+                      <Box>Info</Box>
+                      <Box>Stats</Box>
+                      <Box>History</Box>
+                    </VStack>
+                  </DrawerBody>
+
+                  <DrawerFooter>
+                    <Button variant='outline' mr={3}>
+                      Logout
+                    </Button>
+                    <Button colorScheme='blue'>Login</Button>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>        
+              {/*this is for Menu*/}                               
               {signIn ? (
                 <></>
               ) : (
