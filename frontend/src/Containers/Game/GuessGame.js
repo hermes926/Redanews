@@ -22,7 +22,6 @@ import GuessTable from "./GuessTable";
 
 // Functions, Utils
 import handleGuess from "../utils/handleGuess";
-// import { news } from "../utils/variables";
 import axios from "../../api";
 
 const GuessGame = () => {
@@ -83,8 +82,8 @@ const GuessGame = () => {
                   />
                   <InputRightElement>
                     <IconButton
-                      onClick={() => {
-                        const result = handleGuess(
+                      onClick={async () => {
+                        const result = await handleGuess(
                           currentGuess,
                           setCurrentGuess,
                           guesses,

@@ -1,4 +1,6 @@
 import { commonWords, marks } from "./variables";
+import axios from "../../api";
+import { getCookie } from "../../Utils/CookieUsage";
 
 // Function for counting word hits with the today's quiz
 const countHits = (currentGuess, news) => {
@@ -20,7 +22,7 @@ const countHits = (currentGuess, news) => {
 
 // Handling guess submission
 // Return type: true for successfully make a guess; toast body for providing warning or error
-const handleGuess = (currentGuess, setCurrentGuess, guesses, setGuesses, news) => {
+const handleGuess = async (currentGuess, setCurrentGuess, guesses, setGuesses, news) => {
   if (currentGuess === "") {
     return {
       title: "Fail to guess",
@@ -55,12 +57,22 @@ const handleGuess = (currentGuess, setCurrentGuess, guesses, setGuesses, news) =
       isClosable: true,
     };
   } else {
+    const guessId = getCookie("guessId");
+    const cntHit = countHits(currentGuess, news);
+    if(guessId){
+      await axios.patch("/guess/" + guessId, {
+        vocabulary: currentGuess,
+        correct: (cntHit > 0),
+      }).catch((e) =>{
+        console.log(e);
+      })
+    }
     setCurrentGuess("");
     setGuesses([
       ...guesses,
       {
         vocab: currentGuess,
-        count: countHits(currentGuess, news),
+        count: cntHit,
       },
     ]);
     return true;
