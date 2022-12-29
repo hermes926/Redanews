@@ -26,14 +26,14 @@ import { FiMenu } from "react-icons/fi";
 import Logo from "./ui/Logo";
 import Info from "./Info";
 import Account from './Account'
+import {useScoreCard} from '../hooks/useScoreCard'
 
 // Reference: https://pro.chakra-ui.com/components/marketing/navbars
 
 // Header with a Logo and NavBar
 const Header = () => {
-  const signIn = true;
+  const {isLogin, setIsLogin} = useScoreCard();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -46,6 +46,7 @@ const Header = () => {
     if (menuOpen) setMenuOpen(false);
     else setMenuOpen(true);
   };
+  //console.log(isLogin)
 
   return (
     <Box
@@ -87,6 +88,7 @@ const Header = () => {
                   <DrawerBody>
                     <VStack spacing="30px" h="100%" pt="5px">
                       <Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/")}}>MainPage</Button>
+                      {(isLogin)? (<>
                       <Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/game")}}>Game</Button>
                       <Button variant="link" onClick={InfoClick}>
                         Info
@@ -101,6 +103,7 @@ const Header = () => {
                       <Center>
                         <Account navigate={navigate} MenuClick={MenuClick}/>
                       </Center>
+                      </>) : <></>}
                     </VStack>
                   </DrawerBody>
 
@@ -111,6 +114,7 @@ const Header = () => {
                       onClick={() => {
                         MenuClick();
                         navigate("/");
+                        //setIsLogin(false)
                       }}
                     >
                       Logout
@@ -128,7 +132,7 @@ const Header = () => {
                 </DrawerContent>
               </Drawer>
               {/*this is for Menu*/}
-              {signIn ? (
+              {/*isLogin ? (
                 <></>
               ) : (
                 <Button borderRadius="10px">
@@ -147,7 +151,7 @@ const Header = () => {
                     />
                   </svg>
                 </Button>
-              )}
+              )*/}
             </HStack>
           </Flex>
         </HStack>

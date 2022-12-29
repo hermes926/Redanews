@@ -5,51 +5,22 @@ const REGULAR_MESSAGE_COLOR = '#2b2e4a';
 const ERROR_MESSAGE_COLOR = '#fb3640';
 
 const ScoreCardContext = createContext({
-  messages: [],
+  /*messages: [],
 
   addCardMessage: () => {},
   addRegularMessage: () => {},
-  addErrorMessage: () => {},
+  addErrorMessage: () => {},*/
+  isLogin: Boolean,
+  setIsLogin: ()=>{},
 });
 
-const makeMessage = (message, color) => {
-  return { message, color };
-};
-
 const ScoreCardProvider = (props) => {
-  const [messages, setMessages] = useState([]);
-
-  const addCardMessage = (message) => {
-    setMessages([...messages, makeMessage(message, ADD_MESSAGE_COLOR)]);
-  };
-
-  const addRegularMessage = (ms) => {
-    const t = ms.split('\n');
-    if(t[0] === 'Database cleared'){
-      setMessages([
-        ...t.map((m) => makeMessage(m, REGULAR_MESSAGE_COLOR)),
-      ]);
-    } else {
-      setMessages([
-        ...messages,
-        ...t.map((m) => makeMessage(m, REGULAR_MESSAGE_COLOR)),
-      ]);
-    }
-
-    // setMessages([...messages, makeMessage(message, REGULAR_MESSAGE_COLOR)]);
-  };
-
-  const addErrorMessage = (message) => {
-    setMessages([...messages, makeMessage(message, ERROR_MESSAGE_COLOR)]);
-  };
+  const [isLogin, setIsLogin] = useState(true)
 
   return (
     <ScoreCardContext.Provider
       value={{
-        messages,
-        addCardMessage,
-        addRegularMessage,
-        addErrorMessage,
+        isLogin, setIsLogin
       }}
       {...props}
     />
