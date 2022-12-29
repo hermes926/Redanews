@@ -19,8 +19,9 @@ import {
 } from "@chakra-ui/react";
 import { FiLock, FiCheck } from "react-icons/fi";
 import { HiEye, HiEyeOff } from "react-icons/hi";
+import { useEffect } from "react";
 
-const PasswordSetting = ({ user }) => {
+const PasswordSetting = () => {
   const [orgPassword, setOrgPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -51,16 +52,14 @@ const PasswordSetting = ({ user }) => {
     let newState = isOpen;
     if (type === "orgPassword") {
       newState.orgPassword = !isOpen.orgPassword;
-      setIsOpen(newState);
     }
     if (type === "newPassword") {
       newState.newPassword = !isOpen.newPassword;
-      setIsOpen(newState);
     }
     if (type === "confirmPassword") {
       newState.confirmPassword = !isOpen.confirmPassword;
-      setIsOpen(newState);
     }
+    setIsOpen(newState);
   };
 
   return (
