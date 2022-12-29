@@ -27,6 +27,7 @@ import {
 import {useState} from 'react'
 import { Stack, HStack, VStack } from '@chakra-ui/react'
 import { Center, Square, Circle } from '@chakra-ui/react'
+import Info from './Info'
 
 // Reference: https://pro.chakra-ui.com/components/marketing/navbars
 
@@ -34,6 +35,14 @@ const Header = () => {
   const signIn = true;
   const [menuOpen, setMenuOpen] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
+  const [infoOpen, setInfoOpen] = useState(false)
+
+  const InfoClick=()=> {
+    if(infoOpen)
+      setInfoOpen(false)
+    else
+      setInfoOpen(true)
+    }
 
   const MenuClick=()=> {
     if(menuOpen)
@@ -41,6 +50,7 @@ const Header = () => {
     else
       setMenuOpen(true)
   }
+  
 
   return (
     <Box
@@ -80,12 +90,12 @@ const Header = () => {
                 <DrawerContent>
                   <DrawerCloseButton />
                   <DrawerHeader><Center w="100%">Menu</Center><Divider colorScheme='redanews'/></DrawerHeader>
-
                   <DrawerBody>
-                    <VStack spacing='20px' h='100%'>
-                      <Box>Info</Box>
-                      <Box>Stats</Box>
-                      <Box>History</Box>
+                    <VStack spacing='30px' h='100%'>
+                      <Button w='90%' variant='link' onClick={InfoClick}>Info</Button>
+                      <Info infoOpen={infoOpen} InfoClick={InfoClick}/>
+                      <Button w='90%' variant='link'>Stats</Button>
+                      <Button w='90%' variant='link'>History</Button>
                     </VStack>
                   </DrawerBody>
 
