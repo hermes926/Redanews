@@ -1,6 +1,7 @@
 // React Utils, UI Components
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { getCookie } from "../../Utils/CookieUsage";
 import {
   Flex,
   Box,
@@ -21,7 +22,7 @@ import Paragraph from "../../Components/Paragraph";
 import GuessTable from "./GuessTable";
 
 // Functions, Utils
-import handleGuess from "../utils/handleGuess";
+import { handleGuess, countHits } from "../utils/handleGuess";
 import axios from "../../api";
 
 const GuessGame = () => {
@@ -30,11 +31,45 @@ const GuessGame = () => {
   const [currentGuess, setCurrentGuess] = useState("");
   const [guesses, setGuesses] = useState([]);
   const [news, setNews] = useState("");
+  const [loadGuess, setLoadGuess] = useState(false);
 
+  useEffect(() => {
+    const getGuessRecord = async () => {
+      const guessId = getCookie("guessId");
+      if (guessId) {
+        await axios.get("/guess/" + guessId).catch((e) => {
+          displayToast({
+            title: "Fetch Guess Record",
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+          navigate("/");
+        }).then((res) => {
+          if (res !== undefined) {
+            const guessedVocabs = res.data.vocabularies;
+            let guessRecord = [];
+            guessedVocabs.map((vocab) => {
+              const cnt = countHits(vocab, news);
+              guessRecord = [...guessRecord, {
+                vocab: vocab,
+                count: cnt,
+              }];
+            })
+            setGuesses(guessRecord);
+            setLoadGuess(true);
+          }
+        })
+      } else {
+          setLoadGuess(true);
+      } 
+    }
+    getGuessRecord();
+  }, [news]);
 
   useEffect(() => {
     const getTodayNews = async () => {
-      const res = await axios.get("/news/today").catch((e) => {
+      await axios.get("/news/today").catch((e) => {
         displayToast({
           title: "Fetch Today News Failed!",
           status: "error",
@@ -42,20 +77,20 @@ const GuessGame = () => {
           isClosable: true,
         });
         navigate("/");
-      });
-  
-      if (res !== undefined) {
-        setNews({
-          title: res.data.title,
-          content: res.data.article,
-        });
-      }
+      }).then((res) => {
+        if (res !== undefined) {
+          setNews({
+            title: res.data.title,
+            content: res.data.article,
+          });
+        }
+      })
     }
     getTodayNews();
   }, []);
 
 
-  if(news === "") {
+  if(!loadGuess) {
     return (
       <></>
     );

@@ -79,4 +79,4 @@ const handleGuess = async (currentGuess, setCurrentGuess, guesses, setGuesses, n
   }
 };
 
-export default handleGuess;
+export { handleGuess, countHits };
