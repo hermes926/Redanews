@@ -6,6 +6,7 @@ import Home from "./Home";
 import Login from "./Auth/Login";
 import SignUp from "./Auth/SignUp";
 import GuessGame from "./Game/GuessGame";
+import Account from "./Account/index";
 
 import Header from "../Components/Header";
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/game" element={<GuessGame />} />
+          <Route path="/account/*" element={<Account />} />
         </Routes>
       </Router>
     </>
