@@ -1,7 +1,7 @@
-import { news, commonWords, marks } from "./variables";
+import { commonWords, marks } from "./variables";
 
 // Function for counting word hits with the today's quiz
-const countHits = (currentGuess) => {
+const countHits = (currentGuess, news) => {
   let count = 0;
   const words = news.title.split(" ").concat(news.content.split(" "));
   for (let i = 0; i < words.length; i++) {
@@ -20,7 +20,7 @@ const countHits = (currentGuess) => {
 
 // Handling guess submission
 // Return type: true for successfully make a guess; toast body for providing warning or error
-const handleGuess = (currentGuess, setCurrentGuess, guesses, setGuesses) => {
+const handleGuess = (currentGuess, setCurrentGuess, guesses, setGuesses, news) => {
   if (currentGuess === "") {
     return {
       title: "Fail to guess",
@@ -60,7 +60,7 @@ const handleGuess = (currentGuess, setCurrentGuess, guesses, setGuesses) => {
       ...guesses,
       {
         vocab: currentGuess,
-        count: countHits(currentGuess),
+        count: countHits(currentGuess, news),
       },
     ]);
     return true;
