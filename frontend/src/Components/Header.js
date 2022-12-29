@@ -25,6 +25,7 @@ import { FiMenu } from "react-icons/fi";
 // User-defined Components, Container
 import Logo from "./ui/Logo";
 import Info from "./Info";
+import Account from './Account'
 
 // Reference: https://pro.chakra-ui.com/components/marketing/navbars
 
@@ -85,17 +86,21 @@ const Header = () => {
                   <Divider colorScheme="redanews" />
                   <DrawerBody>
                     <VStack spacing="30px" h="100%" pt="5px">
-                      {/*<Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/")}}>MainPage</Button>*/}
-                      <Button w="90%" variant="link" onClick={InfoClick}>
+                      <Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/")}}>MainPage</Button>
+                      <Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/game")}}>Game</Button>
+                      <Button variant="link" onClick={InfoClick}>
                         Info
                       </Button>
                       <Info infoOpen={infoOpen} InfoClick={InfoClick} />
-                      <Button w="90%" variant="link">
+                      <Button variant="link">
                         Stats
                       </Button>
-                      <Button w="90%" variant="link">
+                      <Button variant="link">
                         History
                       </Button>
+                      <Center>
+                        <Account navigate={navigate} MenuClick={MenuClick}/>
+                      </Center>
                     </VStack>
                   </DrawerBody>
 
