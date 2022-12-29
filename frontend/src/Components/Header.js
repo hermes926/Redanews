@@ -6,21 +6,58 @@ import {
   ButtonGroup,
   Container,
   Flex,
-  HStack,
   IconButton,
   useBreakpointValue,
   useColorModeValue,
+  Input,
+  Badge,
+  Text,
+  Divider,
 } from "@chakra-ui/react";
 import { FiMenu } from "react-icons/fi";
 
 // User-defined Components, Container
 import Logo from "./ui/Logo";
+import {
+  Drawer,
+  DrawerBody,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+} from '@chakra-ui/react'
+import {useState} from 'react'
+import { Stack, HStack, VStack } from '@chakra-ui/react'
+import { Center, Square, Circle } from '@chakra-ui/react'
+import Info from './Info'
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Reference: https://pro.chakra-ui.com/components/marketing/navbars
 
 // Header with a Logo and NavBar
 const Header = () => {
   const signIn = true;
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [isLogin, setIsLogin] = useState(false)
+  const [infoOpen, setInfoOpen] = useState(false)
+  const navigate = useNavigate()
+
+  const InfoClick=()=> {
+    if(infoOpen)
+      setInfoOpen(false)
+    else
+      setInfoOpen(true)
+    }
+
+  const MenuClick=()=> {
+    if(menuOpen)
+      setMenuOpen(false)
+    else
+      setMenuOpen(true)
+  }
+  
+
   return (
     <Box
       height="10vh"
@@ -47,7 +84,37 @@ const Header = () => {
                 variant="none"
                 icon={<FiMenu fontSize="1.25rem" color="white" />}
                 aria-label="Open Menu"
+                onClick={MenuClick}
               />
+              {/*this is for Menu*/}
+              <Drawer                                          
+                isOpen={menuOpen}
+                placement='right'
+                onClose={MenuClick}
+              >
+                <DrawerOverlay />
+                <DrawerContent>
+                  <DrawerCloseButton />
+                  <DrawerHeader><Center w="100%">Menu</Center><Divider colorScheme='redanews'/></DrawerHeader>
+                  <DrawerBody>
+                    <VStack spacing='30px' h='100%'>
+                                                        {/*<Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/")}}>MainPage</Button>*/}
+                      <Button w='90%' variant='link' onClick={InfoClick}>Info</Button>
+                      <Info infoOpen={infoOpen} InfoClick={InfoClick}/>
+                      <Button w='90%' variant='link'>Stats</Button>
+                      <Button w='90%' variant='link'>History</Button>
+                    </VStack>
+                  </DrawerBody>
+
+                  <DrawerFooter>
+                    <Button variant='outline' mr={3} onClick={()=>{MenuClick(); navigate("/")}}>
+                      Logout
+                    </Button>
+                    <Button colorScheme='blue' onClick={()=>{MenuClick(); navigate("/login")}}>Login</Button>
+                  </DrawerFooter>
+                </DrawerContent>
+              </Drawer>        
+              {/*this is for Menu*/}                               
               {signIn ? (
                 <></>
               ) : (
