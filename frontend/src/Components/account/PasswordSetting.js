@@ -49,17 +49,8 @@ const PasswordSetting = () => {
   };
 
   const onClickReveal = (type) => {
-    let newState = isOpen;
-    if (type === "orgPassword") {
-      newState.orgPassword = !isOpen.orgPassword;
-    }
-    if (type === "newPassword") {
-      newState.newPassword = !isOpen.newPassword;
-    }
-    if (type === "confirmPassword") {
-      newState.confirmPassword = !isOpen.confirmPassword;
-    }
-    setIsOpen(newState);
+    console.log(isOpen);
+    setIsOpen({ ...isOpen, [type]: !isOpen[type] });
   };
 
   return (
