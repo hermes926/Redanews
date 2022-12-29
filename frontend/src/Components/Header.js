@@ -1,3 +1,5 @@
+// React Utils, UI Components
+import * as React from "react";
 import {
   Box,
   Button,
@@ -9,12 +11,14 @@ import {
   useBreakpointValue,
   useColorModeValue,
 } from "@chakra-ui/react";
-import * as React from "react";
 import { FiMenu } from "react-icons/fi";
+
+// User-defined Components, Container
 import Logo from "./ui/Logo";
 
 // Reference: https://pro.chakra-ui.com/components/marketing/navbars
 
+// Header with a Logo and NavBar
 const Header = () => {
   const signIn = true;
   return (

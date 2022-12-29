@@ -1,5 +1,8 @@
+// React Utils, UI Components
 import React, { useState, useEffect } from "react";
 import { Box, Stack, Heading, Text } from "@chakra-ui/react";
+
+// Functions, Utils
 import redact from "../Containers/utils/redact";
 
 const Paragraph = ({ news, guesses }) => {

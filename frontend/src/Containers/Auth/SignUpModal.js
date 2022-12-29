@@ -1,3 +1,4 @@
+// React Utils, UI Components
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
@@ -20,6 +21,8 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
+
+// Functions, Utils
 import axios from "../../api";
 
 function checkPassword(password1, password2) {
@@ -84,11 +87,13 @@ const SignUpModal = () => {
     }
 
     if (!hasError) {
-        const res = await axios.post('/auth/signup', {
+      const res = await axios
+        .post("/auth/signup", {
           username: inputs.username.trim(),
           email: inputs.email.trim(),
           password: inputs.password.trim(),
-        }).catch(() => {
+        })
+        .catch(() => {
           errorToast({
             title: "Signup Failed",
             description: "Username exist.",
@@ -97,16 +102,16 @@ const SignUpModal = () => {
             isClosable: true,
           });
         });
-        
-        if (res !== undefined) {
-          errorToast({
-            title: "Signup Successful",
-            status: "success",
-            duration: 2000,
-            isClosable: true,
-          });
-          navigate("/");
-        }
+
+      if (res !== undefined) {
+        errorToast({
+          title: "Signup Successful",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
+        navigate("/");
+      }
 
       setHasRequest(true);
     } else {
