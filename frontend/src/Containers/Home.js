@@ -1,7 +1,9 @@
+// React Utils, UI Components
 import { useState } from "react";
 import { Box, Container, HStack, Text, Button } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
 
+// User-defined Components, Container
 import NewsCard from "../Components/ui/NewsCard";
 
 const Home = () => {

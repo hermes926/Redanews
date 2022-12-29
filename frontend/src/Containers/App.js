@@ -1,15 +1,13 @@
-import styled from "styled-components";
-import Paper from "@material-ui/core/Paper";
-
+// React Utils, UI Components
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Header from "../Components/Header";
-//import Body from "./Body";
-import Game from "./Game"
+// User-defined Components, Container
 import Home from "./Home";
-import Login from "./Accounts/Login";
-import SignUp from "./Accounts/SignUp";
+import Login from "./Auth/Login";
+import SignUp from "./Auth/SignUp";
 import GuessGame from "./Game/GuessGame";
+
+import Header from "../Components/Header";
 
 function App() {
   return (
@@ -20,7 +18,6 @@ function App() {
           <Route path="/login" element={<><Header /><Login /></>} />
           <Route path="/signup" element={<><Header /><SignUp /></>} />
           <Route path="/game" element={<><Header /><GuessGame /></>} />
-
         </Routes>
       </Router>
     </>

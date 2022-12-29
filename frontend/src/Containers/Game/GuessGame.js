@@ -1,3 +1,4 @@
+// React Utils, UI Components
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
@@ -6,7 +7,6 @@ import {
   Stack,
   HStack,
   Center,
-  Divider,
   Input,
   InputGroup,
   InputLeftAddon,
@@ -16,9 +16,11 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
+// Functions, Utils
 import Paragraph from "../../Components/Paragraph";
 import GuessTable from "./GuessTable";
 
+// Functions, Utils
 import handleGuess from "../utils/handleGuess";
 import { news } from "../utils/variables";
 

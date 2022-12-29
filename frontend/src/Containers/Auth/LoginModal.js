@@ -1,3 +1,4 @@
+// React Utils, UI Components
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
@@ -17,9 +18,11 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  useToast
+  useToast,
 } from "@chakra-ui/react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
+
+// Functions, Utils
 import axios from "../../api";
 import { setCookie } from "../../Utils/CookieUsage";
 
@@ -50,15 +53,17 @@ const LoginModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await axios.post('/auth/login', {username, password}).catch(() => {
-      displayToast({
-        title: "Login Failed",
-        description: "Username or password incorrect.",
-        status: "error",
-        duration: 2000,
-        isClosable: true,
+    const res = await axios
+      .post("/auth/login", { username, password })
+      .catch(() => {
+        displayToast({
+          title: "Login Failed",
+          description: "Username or password incorrect.",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
       });
-    });
 
     if (res !== undefined) {
       setCookie("userId", res.data.account_id, 5);
@@ -71,7 +76,6 @@ const LoginModal = () => {
       });
       navigate("/game");
     }
-
   };
 
   const onClickReveal = () => {
@@ -188,7 +192,9 @@ const LoginModal = () => {
                 }}
                 size="md"
                 type="submit"
-                onClick={(e) => {handleSubmit(e)}}
+                onClick={(e) => {
+                  handleSubmit(e);
+                }}
               >
                 Sign in
               </Button>

@@ -1,10 +1,10 @@
-import { Flex, Stack, Box, useColorModeValue } from "@chakra-ui/react";
-import { useNavigate, useLocation } from "react-router-dom";
+// React Utils, UI Components
+import { Flex, Box } from "@chakra-ui/react";
 
-import SignUpModal from "./SignUpModal";
+// User-defined Components, Container
+import LoginModal from "./LoginModal";
 
-const SignUp = () => {
-  const navigate = useNavigate();
+const Login = () => {
   return (
     <Flex height="90vh" align="center" justify="center">
       <Box
@@ -14,9 +14,9 @@ const SignUp = () => {
         opacity="0.1"
         position="absolute"
       />
-      <SignUpModal />
+      <LoginModal />
     </Flex>
   );
 };
 
-export default SignUp;
+export default Login;
