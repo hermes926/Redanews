@@ -1,5 +1,7 @@
+// React Utils, UI Components
 import { Card, CardBody, Heading, Text } from "@chakra-ui/react";
 
+// NewsCard designed for Homepage daily news display
 function NewsCard(props) {
   return (
     <a target="_blank" href={props.link}>

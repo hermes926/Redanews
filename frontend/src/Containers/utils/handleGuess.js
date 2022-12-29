@@ -1,5 +1,6 @@
 import { news, commonWords, marks } from "./variables";
 
+// Function for counting word hits with the today's quiz
 const countHits = (currentGuess) => {
   let count = 0;
   const words = news.title.split(" ").concat(news.content.split(" "));
@@ -17,6 +18,8 @@ const countHits = (currentGuess) => {
   return count;
 };
 
+// Handling guess submission
+// Return type: true for successfully make a guess; toast body for providing warning or error
 const handleGuess = (currentGuess, setCurrentGuess, guesses, setGuesses) => {
   if (currentGuess === "") {
     return {
