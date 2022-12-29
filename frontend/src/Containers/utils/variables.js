@@ -124,4 +124,16 @@ const marks = [
   '"',
 ];
 
-export { news, marks, commonWords };
+const history = [
+  {
+    guess_id: 123,
+    correctCnt: 5,
+    guessesCnt: 100,
+    news_id: 12323,
+    newsTitle: "aakdsa ddksdos ",
+    newsDate: "2022-12-15",
+    newsLink: "https://www.euronews.com/tag/die-linke",
+  },
+];
+
+export { news, marks, commonWords, history };
