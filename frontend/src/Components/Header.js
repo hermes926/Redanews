@@ -1,5 +1,5 @@
 // React Utils, UI Components
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
@@ -25,12 +25,12 @@ import { FiMenu } from "react-icons/fi";
 // User-defined Components, Container
 import Logo from "./ui/Logo";
 import Info from "./Info";
+import { getCookie, deleteCookie } from "../Utils/CookieUsage";
 
 // Reference: https://pro.chakra-ui.com/components/marketing/navbars
 
 // Header with a Logo and NavBar
 const Header = () => {
-  const signIn = true;
   const [menuOpen, setMenuOpen] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -44,6 +44,7 @@ const Header = () => {
   const MenuClick = () => {
     if (menuOpen) setMenuOpen(false);
     else setMenuOpen(true);
+    setIsLogin(getCookie("userId") !== "");
   };
 
   return (
@@ -100,16 +101,19 @@ const Header = () => {
                   </DrawerBody>
 
                   <DrawerFooter>
+                    { isLogin ?
                     <Button
                       variant="outline"
                       mr={3}
                       onClick={() => {
                         MenuClick();
                         navigate("/");
+                        deleteCookie("userId");
+                        deleteCookie("guessId");
                       }}
                     >
                       Logout
-                    </Button>
+                    </Button> :
                     <Button
                       colorScheme="blue"
                       onClick={() => {
@@ -119,30 +123,10 @@ const Header = () => {
                     >
                       Login
                     </Button>
+                    }
                   </DrawerFooter>
                 </DrawerContent>
               </Drawer>
-              {/*this is for Menu*/}
-              {signIn ? (
-                <></>
-              ) : (
-                <Button borderRadius="10px">
-                  Sign in{" "}
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    class="bi bi-arrow-right"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fill-rule="evenodd"
-                      d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"
-                    />
-                  </svg>
-                </Button>
-              )}
             </HStack>
           </Flex>
         </HStack>

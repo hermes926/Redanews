@@ -44,6 +44,7 @@ const Paragraph = ({ news, guesses }) => {
         px="5"
         align="left"
         as="samp"
+        whiteSpace="pre-line"
       >
         {redact(news.content, guesses)}
       </Text>

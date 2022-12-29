@@ -61,6 +61,7 @@ const GuessGame = () => {
           }
         })
       } else {
+        if(news)
           setLoadGuess(true);
       } 
     }
