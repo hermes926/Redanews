@@ -2,10 +2,11 @@ import { Router } from "express";
 import News from "../models/News.js";
 import Guess from "../models/Guess.js";
 import mongoose from 'mongoose';
+import today from "../utils/today.js";
 
 const router = Router();
 
-router.get('/:id', async (req, res) => {
+router.get('/all/:id', async (req, res) => {
     if (mongoose.isValidObjectId(req.params.id)) {
         const news = await News.findById(req.params.id);
         if (!news) {
@@ -22,7 +23,26 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id/stat', async (req, res) => {
+router.get('/today', async (req, res) => {
+    let date = today.getToday();
+    const news = await News.findOne({date: date});
+    // if (mongoose.isValidObjectId(req.params.id)) {
+    //     const news = await News.findById(req.params.id);
+    if (!news) {
+        res.status(403).send({message: "Unauthorized"});
+    } else {
+        res.status(200).send({
+            title: news.title,
+            article: news.article,
+            date: news.date,
+        });
+    }
+    // } else {
+    //     res.status(403).send({message: "Unauthorized"});
+    // }
+})
+
+router.get('/all/:id/stat', async (req, res) => {
     if (mongoose.isValidObjectId(req.params.id)) {
         const news = await News.findById(req.params.id);
         if (!news) {

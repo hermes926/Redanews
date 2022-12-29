@@ -6,7 +6,6 @@ import { Box, Stack, Heading, Text } from "@chakra-ui/react";
 import redact from "../Containers/utils/redact";
 
 const Paragraph = ({ news, guesses }) => {
-  console.log(guesses);
   return (
     <Stack
       width="100%"

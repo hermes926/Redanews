@@ -8,7 +8,7 @@ dotenv.config();
 let subscriptionKey = process.env['GUARDIANS_KEY'];
 
 let today_date = today.getToday();
-let endpoint = "http://content.guardianapis.com/search?format=json&section=world&from-date=" + today_date + "&order-by=newest&show-blocks=all&api-key=" + subscriptionKey;
+let endpoint = "http://content.guardianapis.com/search?format=json&from-date=" + today_date + "&order-by=newest&show-blocks=all&api-key=" + subscriptionKey;
 
 let request_params = {
     method: 'GET',
