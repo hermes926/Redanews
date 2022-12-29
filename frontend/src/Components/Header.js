@@ -94,7 +94,7 @@ const Header = () => {
                   <DrawerHeader><Center w="100%">Menu</Center><Divider colorScheme='redanews'/></DrawerHeader>
                   <DrawerBody>
                     <VStack spacing='30px' h='100%'>
-                      <Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/")}}>MainPage</Button>
+                                                        {/*<Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/")}}>MainPage</Button>*/}
                       <Button w='90%' variant='link' onClick={InfoClick}>Info</Button>
                       <Info infoOpen={infoOpen} InfoClick={InfoClick}/>
                       <Button w='90%' variant='link'>Stats</Button>
@@ -103,7 +103,7 @@ const Header = () => {
                   </DrawerBody>
 
                   <DrawerFooter>
-                    <Button variant='outline' mr={3}>
+                    <Button variant='outline' mr={3} onClick={()=>{MenuClick(); navigate("/")}}>
                       Logout
                     </Button>
                     <Button colorScheme='blue' onClick={()=>{MenuClick(); navigate("/login")}}>Login</Button>
