@@ -4,7 +4,8 @@ import { commonWords, marks } from "./variables";
 // Return the redacted content
 function redact(content, guesses) {
   let redacted = "";
-  const words = content.split(" ");
+  let cnt = 0;
+  const words = content.split(/[\n\s]+/);
   for (let i = 0; i < words.length; i++) {
     let word = "";
     let mark = "";
@@ -20,14 +21,15 @@ function redact(content, guesses) {
       ) ||
       commonWords.find((commonWord) => commonWord === word.toLowerCase())
     ) {
-      redacted += " " + word;
+      redacted += (cnt > 0 ? content[cnt - 1]: " ") + word;
     } else {
-      redacted += " " + "█".repeat(word.length);
+      redacted += (cnt > 0 ? content[cnt - 1]: " ") + "█".repeat(word.length);
     }
     redacted += mark;
+    cnt += (words[i].length + 1);
   }
 
-  return redacted.substring(1);
+  return redacted.substring(1).replace(/(?:\r\n|\r|\n)/g, '\n\n');
 }
 
 export default redact;
