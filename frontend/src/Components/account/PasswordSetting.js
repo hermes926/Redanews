@@ -34,7 +34,25 @@ const PasswordSetting = () => {
 
   const displayToast = useToast();
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    if (newPassword.length < 8) {
+      displayToast({
+        title: "Fail to Change Password",
+        description: "Password is required to have at least 8 characters",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    } else if (newPassword !== confirmPassword) {
+      displayToast({
+        title: "Fail to Change Password",
+        description: "New password not match with confirm password",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  };
 
   const onCancel = () => {
     displayToast({
@@ -49,7 +67,6 @@ const PasswordSetting = () => {
   };
 
   const onClickReveal = (type) => {
-    console.log(isOpen);
     setIsOpen({ ...isOpen, [type]: !isOpen[type] });
   };
 
