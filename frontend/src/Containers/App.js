@@ -13,14 +13,15 @@ import Header from "../Components/Header";
 function App() {
   return (
     <>
-      <Header />
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/game" element={<GuessGame />} />
-          <Route path="/account/*" element={<Account />} />
+
+          <Route path="/" element={<><Header /><Home /></>} />
+          <Route path="/login" element={<><Header /><Login /></>} />
+          <Route path="/signup" element={<><Header /><SignUp /></>} />
+          <Route path="/game" element={<><Header /><GuessGame /></>} />
+          <Route path="/account/*" element={<><Header/><Account /></>} />
+
         </Routes>
       </Router>
     </>
