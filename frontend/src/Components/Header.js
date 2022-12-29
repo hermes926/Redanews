@@ -1,24 +1,17 @@
 // React Utils, UI Components
-import * as React from "react";
+import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   Box,
   Button,
-  ButtonGroup,
   Container,
+  Center,
+  HStack,
+  VStack,
   Flex,
   IconButton,
-  useBreakpointValue,
   useColorModeValue,
-  Input,
-  Badge,
-  Text,
   Divider,
-} from "@chakra-ui/react";
-import { FiMenu } from "react-icons/fi";
-
-// User-defined Components, Container
-import Logo from "./ui/Logo";
-import {
   Drawer,
   DrawerBody,
   DrawerFooter,
@@ -26,37 +19,32 @@ import {
   DrawerOverlay,
   DrawerContent,
   DrawerCloseButton,
-} from '@chakra-ui/react'
-import {useState} from 'react'
-import { Stack, HStack, VStack } from '@chakra-ui/react'
-import { Center, Square, Circle } from '@chakra-ui/react'
-import Info from './Info'
-import { useNavigate, useLocation } from "react-router-dom";
+} from "@chakra-ui/react";
+import { FiMenu } from "react-icons/fi";
+
+// User-defined Components, Container
+import Logo from "./ui/Logo";
+import Info from "./Info";
 
 // Reference: https://pro.chakra-ui.com/components/marketing/navbars
 
 // Header with a Logo and NavBar
 const Header = () => {
   const signIn = true;
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [isLogin, setIsLogin] = useState(false)
-  const [infoOpen, setInfoOpen] = useState(false)
-  const navigate = useNavigate()
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
+  const navigate = useNavigate();
 
-  const InfoClick=()=> {
-    if(infoOpen)
-      setInfoOpen(false)
-    else
-      setInfoOpen(true)
-    }
+  const InfoClick = () => {
+    if (infoOpen) setInfoOpen(false);
+    else setInfoOpen(true);
+  };
 
-  const MenuClick=()=> {
-    if(menuOpen)
-      setMenuOpen(false)
-    else
-      setMenuOpen(true)
-  }
-  
+  const MenuClick = () => {
+    if (menuOpen) setMenuOpen(false);
+    else setMenuOpen(true);
+  };
 
   return (
     <Box
@@ -87,34 +75,54 @@ const Header = () => {
                 onClick={MenuClick}
               />
               {/*this is for Menu*/}
-              <Drawer                                          
-                isOpen={menuOpen}
-                placement='right'
-                onClose={MenuClick}
-              >
+              <Drawer isOpen={menuOpen} placement="right" onClose={MenuClick}>
                 <DrawerOverlay />
                 <DrawerContent>
                   <DrawerCloseButton />
-                  <DrawerHeader><Center w="100%">Menu</Center><Divider colorScheme='redanews'/></DrawerHeader>
+                  <DrawerHeader>
+                    <Center w="100%">Menu</Center>
+                  </DrawerHeader>
+                  <Divider colorScheme="redanews" />
                   <DrawerBody>
-                    <VStack spacing='30px' h='100%'>
-                                                        {/*<Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/")}}>MainPage</Button>*/}
-                      <Button w='90%' variant='link' onClick={InfoClick}>Info</Button>
-                      <Info infoOpen={infoOpen} InfoClick={InfoClick}/>
-                      <Button w='90%' variant='link'>Stats</Button>
-                      <Button w='90%' variant='link'>History</Button>
+                    <VStack spacing="30px" h="100%" pt="5px">
+                      {/*<Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/")}}>MainPage</Button>*/}
+                      <Button w="90%" variant="link" onClick={InfoClick}>
+                        Info
+                      </Button>
+                      <Info infoOpen={infoOpen} InfoClick={InfoClick} />
+                      <Button w="90%" variant="link">
+                        Stats
+                      </Button>
+                      <Button w="90%" variant="link">
+                        History
+                      </Button>
                     </VStack>
                   </DrawerBody>
 
                   <DrawerFooter>
-                    <Button variant='outline' mr={3} onClick={()=>{MenuClick(); navigate("/")}}>
+                    <Button
+                      variant="outline"
+                      mr={3}
+                      onClick={() => {
+                        MenuClick();
+                        navigate("/");
+                      }}
+                    >
                       Logout
                     </Button>
-                    <Button colorScheme='blue' onClick={()=>{MenuClick(); navigate("/login")}}>Login</Button>
+                    <Button
+                      colorScheme="blue"
+                      onClick={() => {
+                        MenuClick();
+                        navigate("/login");
+                      }}
+                    >
+                      Login
+                    </Button>
                   </DrawerFooter>
                 </DrawerContent>
-              </Drawer>        
-              {/*this is for Menu*/}                               
+              </Drawer>
+              {/*this is for Menu*/}
               {signIn ? (
                 <></>
               ) : (
