@@ -31,6 +31,19 @@ const GuessGame = () => {
   const [news, setNews] = useState("");
   const [loadGuess, setLoadGuess] = useState(false);
 
+  const submitGuess = async () => {
+    const result = await handleGuess(
+      currentGuess,
+      setCurrentGuess,
+      guesses,
+      setGuesses,
+      news
+    );
+    if (result !== true) {
+      displayToast(result);
+    }
+  };
+
   useEffect(() => {
     const getGuessRecord = async () => {
       const guessId = getCookie("guessId");
@@ -114,6 +127,11 @@ const GuessGame = () => {
                     onChange={(e) => {
                       setCurrentGuess(e.target.value);
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        submitGuess();
+                      }
+                    }}
                     color="white"
                     placeholder="Guess a Word"
                     focusBorderColor="redanews-grey"
@@ -127,18 +145,7 @@ const GuessGame = () => {
                       fontSize="md"
                       icon={<AddIcon />}
                       _hover={{ bgColor: "primary.200" }}
-                      onClick={async () => {
-                        const result = await handleGuess(
-                          currentGuess,
-                          setCurrentGuess,
-                          guesses,
-                          setGuesses,
-                          news
-                        );
-                        if (result !== true) {
-                          displayToast(result);
-                        }
-                      }}
+                      onClick={submitGuess}
                     />
                   </InputRightElement>
                 </InputGroup>
