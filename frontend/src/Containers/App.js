@@ -14,13 +14,12 @@ import GuessGame from "./Game/GuessGame";
 function App() {
   return (
     <>
-      <Header />
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/game" element={<GuessGame />} />
+          <Route path="/" element={<><Header /><Home /></>} />
+          <Route path="/login" element={<><Header /><Login /></>} />
+          <Route path="/signup" element={<><Header /><SignUp /></>} />
+          <Route path="/game" element={<><Header /><GuessGame /></>} />
 
         </Routes>
       </Router>

@@ -28,6 +28,7 @@ import {useState} from 'react'
 import { Stack, HStack, VStack } from '@chakra-ui/react'
 import { Center, Square, Circle } from '@chakra-ui/react'
 import Info from './Info'
+import { useNavigate, useLocation } from "react-router-dom";
 
 // Reference: https://pro.chakra-ui.com/components/marketing/navbars
 
@@ -36,6 +37,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
   const [infoOpen, setInfoOpen] = useState(false)
+  const navigate = useNavigate()
 
   const InfoClick=()=> {
     if(infoOpen)
@@ -92,6 +94,7 @@ const Header = () => {
                   <DrawerHeader><Center w="100%">Menu</Center><Divider colorScheme='redanews'/></DrawerHeader>
                   <DrawerBody>
                     <VStack spacing='30px' h='100%'>
+                      <Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/")}}>MainPage</Button>
                       <Button w='90%' variant='link' onClick={InfoClick}>Info</Button>
                       <Info infoOpen={infoOpen} InfoClick={InfoClick}/>
                       <Button w='90%' variant='link'>Stats</Button>
@@ -103,7 +106,7 @@ const Header = () => {
                     <Button variant='outline' mr={3}>
                       Logout
                     </Button>
-                    <Button colorScheme='blue'>Login</Button>
+                    <Button colorScheme='blue' onClick={()=>{MenuClick(); navigate("/login")}}>Login</Button>
                   </DrawerFooter>
                 </DrawerContent>
               </Drawer>        
