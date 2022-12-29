@@ -91,39 +91,54 @@ const Header = () => {
                         Info
                       </Button>
                       <Info infoOpen={infoOpen} InfoClick={InfoClick} />
-                      <Button w="90%" variant="link">
-                        Stats
+                      <Button
+                        w="90%"
+                        variant="link"
+                        onClick={() => {
+                          navigate("/account/");
+                          MenuClick();
+                        }}
+                      >
+                        Profile
                       </Button>
-                      <Button w="90%" variant="link">
+                      <Button
+                        w="90%"
+                        variant="link"
+                        onClick={() => {
+                          navigate("/account/history");
+                          MenuClick();
+                        }}
+                      >
                         History
                       </Button>
                     </VStack>
                   </DrawerBody>
 
                   <DrawerFooter>
-                    { isLogin ?
-                    <Button
-                      variant="outline"
-                      mr={3}
-                      onClick={() => {
-                        MenuClick();
-                        navigate("/");
-                        deleteCookie("userId");
-                        deleteCookie("guessId");
-                      }}
-                    >
-                      Logout
-                    </Button> :
-                    <Button
-                      colorScheme="blue"
-                      onClick={() => {
-                        MenuClick();
-                        navigate("/login");
-                      }}
-                    >
-                      Login
-                    </Button>
-                    }
+                    {isLogin ? (
+                      <Button
+                        variant="outline"
+                        mr={3}
+                        onClick={() => {
+                          MenuClick();
+                          navigate("/");
+                          deleteCookie("userId");
+                          deleteCookie("guessId");
+                        }}
+                      >
+                        Logout
+                      </Button>
+                    ) : (
+                      <Button
+                        colorScheme="blue"
+                        onClick={() => {
+                          MenuClick();
+                          navigate("/login");
+                        }}
+                      >
+                        Login
+                      </Button>
+                    )}
                   </DrawerFooter>
                 </DrawerContent>
               </Drawer>
