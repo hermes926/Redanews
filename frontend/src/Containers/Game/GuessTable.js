@@ -13,6 +13,7 @@ const GuessTable = ({ guesses }) => {
       overflowY="auto"
       sx={{
         "&::-webkit-scrollbar": {
+          display: "none",
           width: "16px",
           borderRadius: "8px",
           backgroundColor: `rgba(0, 0, 0, 0.05)`,

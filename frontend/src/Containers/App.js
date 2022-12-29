@@ -6,6 +6,7 @@ import Home from "./Home";
 import Login from "./Auth/Login";
 import SignUp from "./Auth/SignUp";
 import GuessGame from "./Game/GuessGame";
+import Account from "./Account/index";
 
 import Header from "../Components/Header";
 
@@ -14,10 +15,13 @@ function App() {
     <>
       <Router>
         <Routes>
+
           <Route path="/" element={<><Header /><Home /></>} />
           <Route path="/login" element={<><Header /><Login /></>} />
           <Route path="/signup" element={<><Header /><SignUp /></>} />
           <Route path="/game" element={<><Header /><GuessGame /></>} />
+          <Route path="/account/*" element={<><Header/><Account /></>} />
+
         </Routes>
       </Router>
     </>
