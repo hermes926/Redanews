@@ -16,7 +16,7 @@ router.post("/login",  async (req, res) => {
         let existGuess = undefined;
         for (let i = 0; i < existingUser.guesses_id.length; i += 1){
             const guess = await Guess.findById(existingUser.guesses_id[i]);
-            if(guess.date === date){
+            if(guess && guess.date === date){
                 existGuess = guess;
                 break;
             }
