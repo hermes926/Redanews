@@ -138,7 +138,8 @@ const Header = () => {
                     </VStack>
                   </DrawerBody>
 
-                  <DrawerFooter>
+                  <DrawerFooter display='flex' justifyContent='space-around'>
+                    <Button colorScheme='blue' onClick={()=>{MenuClick(); navigate("/game");}}>Play Game</Button>
                     {login ? (
                       <Button
                         variant="outline"
