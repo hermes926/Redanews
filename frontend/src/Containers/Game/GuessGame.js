@@ -47,7 +47,7 @@ const GuessGame = () => {
   useEffect(() => {
     const getGuessRecord = async () => {
       const guessId = getCookie("guessId");
-      if (guessId) {
+      if (guessId && news) {
         await axios
           .get("/guess/" + guessId)
           .catch((e) => {
