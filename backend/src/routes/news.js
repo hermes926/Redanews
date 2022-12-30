@@ -3,6 +3,7 @@ import News from "../models/News.js";
 import Guess from "../models/Guess.js";
 import mongoose from 'mongoose';
 import today from "../utils/today.js";
+import newsAPI from '../newsAPI.js';
 
 const router = Router();
 
@@ -25,9 +26,11 @@ router.get('/all/:id', async (req, res) => {
 
 router.get('/today', async (req, res) => {
     let date = today.getToday();
-    const news = await News.findOne({date: date});
-    // if (mongoose.isValidObjectId(req.params.id)) {
-    //     const news = await News.findById(req.params.id);
+    let news = await News.findOne({date: date});
+    if (!news) {
+        await newsAPI.UpdateNews();
+    }
+    news = await News.findOne({date: date});
     if (!news) {
         res.status(403).send({message: "Unauthorized"});
     } else {
