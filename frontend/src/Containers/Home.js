@@ -1,34 +1,16 @@
 // React Utils, UI Components
-import { useEffect, useState } from "react";
 import { Box, Container, HStack, Text, Button } from "@chakra-ui/react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // User-defined Components, Container
 import NewsCard from "../Components/ui/NewsCard";
-
-// Functions, Utils
-import { getCookie } from "../Utils/CookieUsage";
-import axios from "../api";
 
 // Redanews Context Provider
 import { useRedanews } from "../Hooks/useRedanews";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { load, login, user, setLoad, loginUser, trendingNews } = useRedanews();
-
-  useEffect(() => {
-    if (!load) {
-      if (getCookie("userId") !== "") {
-        loginUser({
-          username: "testU",
-          email: "test@",
-        });
-      }
-      setLoad(true);
-    }
-    console.log(user, getCookie("userId"));
-  }, [load]);
+  const { login, trendingNews } = useRedanews();
 
   return (
     <Box width="100%" height="100%" align="center" margin="0 0 0 0">
