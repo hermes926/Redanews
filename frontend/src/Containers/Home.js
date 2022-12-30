@@ -11,7 +11,7 @@ import { useRedanews } from "../Hooks/useRedanews";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { trendingNews } = useRedanews();
+  const { login, trendingNews } = useRedanews();
 
   return (
     <Box width="100%" height="100%" align="center" margin="0 0 0 0">
@@ -47,23 +47,38 @@ const Home = () => {
               </Text>
               <br />
               <HStack fontSize="2.5vmin">
-                <Button
-                  colorScheme="facebook"
-                  variant="solid"
-                  width="fit-content"
-                  fontSize="2.5vmin"
-                  onClick={() => navigate("/login")}
-                  style={{ whiteSpace: "normal" }}
-                >
-                  Login Now
-                </Button>{" "}
-                <Text
-                  opacity="0.5"
-                  onClick={() => navigate("/game")}
-                  _hover={{ cursor: "pointer" }}
-                >
-                  Continue without login
-                </Text>
+                {login ? (
+                  <Button
+                    colorScheme="facebook"
+                    variant="solid"
+                    width="10vw"
+                    fontSize="2.5vmin"
+                    onClick={() => navigate("/game")}
+                    style={{ whiteSpace: "normal" }}
+                  >
+                    Play Now
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      colorScheme="facebook"
+                      variant="solid"
+                      width="fit-content"
+                      fontSize="2.5vmin"
+                      onClick={() => navigate("/login")}
+                      style={{ whiteSpace: "normal" }}
+                    >
+                      Login Now
+                    </Button>{" "}
+                    <Text
+                      opacity="0.5"
+                      onClick={() => navigate("/game")}
+                      _hover={{ cursor: "pointer" }}
+                    >
+                      Continue without login
+                    </Text>
+                  </>
+                )}
               </HStack>
             </Container>
             <Container px="0" fontSize="6.5vmin" fontWeight="900">
