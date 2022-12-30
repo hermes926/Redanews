@@ -18,20 +18,30 @@ let request_params = {
 
 
 export default {
-    UpdateNews : () => {
-        request(request_params, async function (error, response, body) {
-            if (error) {
-                console.log(error);
-            } else {
-                const newNews = new News({
-                    title: body.response.results[0].webTitle,
-                    article: body.response.results[0].blocks.body[0].bodyTextSummary,
-                    date: today_date, 
-                });
-                await newNews.save();
-                console.log("News at:" + today + " is " + body.response.results[0].webTitle + ".\n");
-            }
-        })
+    UpdateNews : async () => {
+        const date = today.getToday();
+        const news = await News.findOne({date: date});
+        if(!news){
+            request(request_params, async function (error, response, body) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    for(let i = 0; i < body.response.results.length; i += 1){
+                        if(body.response.results[i].webTitle !== "" && body.response.results[i].blocks.body[0].bodyTextSummary !== ""){
+                            const newNews = new News({
+                                title: body.response.results[i].webTitle,
+                                article: body.response.results[i].blocks.body[0].bodyTextSummary,
+                                date: today_date, 
+                            });
+                            await newNews.save();
+                            console.log("News at:" + today + " is " + body.response.results[i].webTitle + ".\n");
+                            break;
+                        }
+                    }
+                    
+                }
+            })
+        }
     }
 }
 
