@@ -12,6 +12,7 @@ const RedanewsContext = createContext({
   guessId: String,
   guesses: [],
   history: [],
+  win: Boolean,
   difficulty: String,
 
   loginUser: () => {},
@@ -26,13 +27,14 @@ const RedanewsContext = createContext({
   setUserId: () => {},
   setNews: () => {},
   setGuesses: () => {},
-  setDifficulty: ()=>{},
+  setWin: () => {},
+  setDifficulty: () => {},
 });
 
 const RedanewsProvider = (props) => {
   const [load, setLoad] = useState(false);
   const [login, setLogin] = useState(false);
-  const [difficulty, setDifficulty] = useState('Hard')
+  const [difficulty, setDifficulty] = useState("Hard");
 
   const [user, setUser] = useState({
     username: "",
@@ -72,6 +74,7 @@ const RedanewsProvider = (props) => {
 
   const [guessId, setGuessId] = useState("");
   const [guesses, setGuesses] = useState([]);
+  const [win, setWin] = useState(false);
 
   const [history, setHistory] = useState([
     {
@@ -133,6 +136,7 @@ const RedanewsProvider = (props) => {
         trendingNews,
         guessId,
         guesses,
+        win,
         history,
         setLoad,
         setLogin,
@@ -144,9 +148,10 @@ const RedanewsProvider = (props) => {
         updateNews,
         setTrendingNews,
         setGuesses,
+        setWin,
         updateGuessHistory,
         difficulty,
-        setDifficulty
+        setDifficulty,
       }}
       {...props}
     />

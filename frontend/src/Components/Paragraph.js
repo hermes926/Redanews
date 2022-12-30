@@ -5,7 +5,7 @@ import { Box, Stack, Heading, Text } from "@chakra-ui/react";
 // Functions, Utils
 import redact from "../Containers/utils/redact";
 
-const Paragraph = ({ news, guesses, difficulty }) => {
+const Paragraph = ({ news, guesses, win, difficulty }) => {
   return (
     <Stack
       width="100%"
@@ -35,7 +35,9 @@ const Paragraph = ({ news, guesses, difficulty }) => {
         pt="2"
         align="left"
       >
-        {redact(news.title, guesses, difficulty)}
+        {win
+          ? news.title.replace(/(?:\r\n|\r|\n)/g, "\n\n")
+          : redact(news.title, guesses, difficulty)}
       </Heading>
       <Text
         color="redanews-grey"
@@ -46,7 +48,9 @@ const Paragraph = ({ news, guesses, difficulty }) => {
         as="samp"
         whiteSpace="pre-line"
       >
-        {redact(news.content, guesses, difficulty)}
+        {win
+          ? news.content.replace(/(?:\r\n|\r|\n)/g, "\n\n")
+          : redact(news.content, guesses, difficulty)}
       </Text>
     </Stack>
   );
