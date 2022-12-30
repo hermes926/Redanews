@@ -1,17 +1,34 @@
 // React Utils, UI Components
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Box, Container, HStack, Text, Button } from "@chakra-ui/react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 // User-defined Components, Container
 import NewsCard from "../Components/ui/NewsCard";
 
-// Hook
+// Functions, Utils
+import { getCookie } from "../Utils/CookieUsage";
+import axios from "../api";
+
+// Redanews Context Provider
 import { useRedanews } from "../Hooks/useRedanews";
 
 const Home = () => {
   const navigate = useNavigate();
-  const { login, trendingNews } = useRedanews();
+  const { load, login, user, setLoad, loginUser, trendingNews } = useRedanews();
+
+  useEffect(() => {
+    if (!load) {
+      if (getCookie("userId") !== "") {
+        loginUser({
+          username: "testU",
+          email: "test@",
+        });
+      }
+      setLoad(true);
+    }
+    console.log(user, getCookie("userId"));
+  }, [load]);
 
   return (
     <Box width="100%" height="100%" align="center" margin="0 0 0 0">
@@ -51,8 +68,8 @@ const Home = () => {
                   <Button
                     colorScheme="facebook"
                     variant="solid"
-                    width="10vw"
-                    fontSize="2.5vmin"
+                    width="fit-content"
+                    fontSize="lg"
                     onClick={() => navigate("/game")}
                     style={{ whiteSpace: "normal" }}
                   >

@@ -1,8 +1,12 @@
 import { createContext, useContext, useState } from "react";
+import { setCookie, deleteCookie } from "../Utils/CookieUsage";
 
 const RedanewsContext = createContext({
+  load: Boolean,
   login: Boolean,
   user: {},
+  userId: String,
+  String,
   news: {},
   trendingNews: [],
   guessId: String,
@@ -16,16 +20,23 @@ const RedanewsContext = createContext({
   updateGuesses: () => {},
   updateGuessHistory: () => {},
 
+  setLoad: () => {},
+  setLogin: () => {},
+  setUserId: () => {},
+  setNews: () => {},
   setGuesses: () => {},
 });
 
 const RedanewsProvider = (props) => {
+  const [load, setLoad] = useState(false);
   const [login, setLogin] = useState(false);
 
   const [user, setUser] = useState({
     username: "",
     email: "",
   });
+
+  const [userId, setUserId] = useState("");
 
   const [news, setNews] = useState({
     title: "",
@@ -61,14 +72,22 @@ const RedanewsProvider = (props) => {
 
   const [history, setHistory] = useState([]);
 
-  const loginUser = (user) => {
-    setUser(user);
+  const loginUser = (userInfo) => {
     setLogin(true);
+    setUserId(userInfo.userId);
+    setUser(userInfo);
+    setGuessId(userInfo.guessId);
+
+    setCookie("userId", userInfo.userId, 5);
+    setCookie("guessId", userInfo.guessId, 5);
   };
 
   const logOutUser = () => {
-    setUser({});
     setLogin(false);
+    setUser({});
+
+    deleteCookie("userId");
+    deleteCookie("guessId");
   };
 
   const updateNews = (newsToUpdate) => {
@@ -86,15 +105,21 @@ const RedanewsProvider = (props) => {
   return (
     <RedanewsContext.Provider
       value={{
+        load,
         login,
         user,
+        userId,
         news,
         trendingNews,
         guessId,
         guesses,
         history,
+        setLoad,
+        setLogin,
+        setUserId,
         loginUser,
         logOutUser,
+        setNews,
         updateNews,
         setTrendingNews,
         updateGuesses,
