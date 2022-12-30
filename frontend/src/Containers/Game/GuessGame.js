@@ -48,6 +48,8 @@ const GuessGame = () => {
     );
     if (result !== true) {
       displayToast(result);
+    } else {
+      findSpan(currentGuess);
     }
   };
 
@@ -134,6 +136,19 @@ const GuessGame = () => {
     topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  const clearStyle = () => {
+    Array.from(document.getElementsByTagName("span")).forEach((element) => {
+      element.style.cssText = "";
+    });
+  };
+
+  const findSpan = (word) => {
+    clearStyle();
+    Array.from(document.getElementsByClassName(word)).forEach((element) => {
+      element.style.cssText += "color:black;background-color:gray";
+    });
+  };
+
   if (!loadGuess) {
     return <></>;
   } else {
@@ -188,7 +203,7 @@ const GuessGame = () => {
               </Center>
             </Stack>
           </Box>
-          <GuessTable guesses={guesses} />
+          <GuessTable guesses={guesses} findSpan={findSpan} />
         </HStack>
       </Box>
     );
