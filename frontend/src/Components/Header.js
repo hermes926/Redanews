@@ -27,14 +27,19 @@ import Logo from "./ui/Logo";
 import Info from "./Info";
 import { getCookie, deleteCookie } from "../Utils/CookieUsage";
 
+// Redanews Context Provider
+import { useRedanews } from "../Hooks/useRedanews";
+
 // Reference: https://pro.chakra-ui.com/components/marketing/navbars
 
 // Header with a Logo and NavBar
 const Header = () => {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
-  const [infoOpen, setInfoOpen] = useState(false);
   const navigate = useNavigate();
+
+  const { login, logOutUser } = useRedanews();
+
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [infoOpen, setInfoOpen] = useState(false);
 
   const InfoClick = () => {
     if (infoOpen) setInfoOpen(false);
@@ -44,7 +49,7 @@ const Header = () => {
   const MenuClick = () => {
     if (menuOpen) setMenuOpen(false);
     else setMenuOpen(true);
-    setIsLogin(getCookie("userId") !== "");
+    // setIsLogin(getCookie("userId") !== "");
   };
 
   return (
@@ -115,15 +120,14 @@ const Header = () => {
                   </DrawerBody>
 
                   <DrawerFooter>
-                    {isLogin ? (
+                    {login ? (
                       <Button
                         variant="outline"
                         mr={3}
                         onClick={() => {
                           MenuClick();
                           navigate("/");
-                          deleteCookie("userId");
-                          deleteCookie("guessId");
+                          logOutUser();
                         }}
                       >
                         Logout

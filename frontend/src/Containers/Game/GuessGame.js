@@ -1,7 +1,6 @@
 // React Utils, UI Components
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getCookie } from "../../Utils/CookieUsage";
 import {
   Flex,
   Box,
@@ -17,18 +16,25 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
-// Functions, Utils
+// User-defined Components, Container
 import Paragraph from "../../Components/Paragraph";
 import GuessTable from "./GuessTable";
+
+// Functions, Utils
 import { handleGuess, countHits } from "../utils/handleGuess";
+import { getCookie } from "../../Utils/CookieUsage";
 import axios from "../../api";
+
+// Redanews Context Provider
+import { useRedanews } from "../../Hooks/useRedanews";
 
 const GuessGame = () => {
   const navigate = useNavigate();
   const displayToast = useToast();
+
+  const { guesses, news, setGuesses, setNews } = useRedanews();
   const [currentGuess, setCurrentGuess] = useState("");
-  const [guesses, setGuesses] = useState([]);
-  const [news, setNews] = useState("");
+
   const [loadGuess, setLoadGuess] = useState(false);
 
   const submitGuess = async () => {

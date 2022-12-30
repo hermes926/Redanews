@@ -24,16 +24,19 @@ import { HiEye, HiEyeOff } from "react-icons/hi";
 
 // Functions, Utils
 import axios from "../../api";
-import { setCookie } from "../../Utils/CookieUsage";
+
+// Redanews Context Provider
+import { useRedanews } from "../../Hooks/useRedanews";
 
 const LoginModal = () => {
   const navigate = useNavigate();
+
+  const { userId, setUserId, guessId, setGuessId, loginUser } = useRedanews();
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [inputError, setInputError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [userId, setUserId] = useState("");
-  const [guessId, setGuessId] = useState("");
 
   const displayToast = useToast();
 
@@ -66,8 +69,12 @@ const LoginModal = () => {
       });
 
     if (res !== undefined) {
-      setCookie("userId", res.data.account_id, 5);
-      setCookie("guessId", res.data.guess_id, 5);
+      loginUser({
+        username,
+        email: "test@example.com",
+        userId: res.data.account_id,
+        guessId: res.data.guess_id,
+      });
       displayToast({
         title: "Login Successful",
         status: "success",

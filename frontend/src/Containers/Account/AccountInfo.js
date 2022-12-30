@@ -15,11 +15,11 @@ import Profile from "../../Components/account/Profile";
 import Setting from "../../Components/account/Setting";
 import PasswordSetting from "../../Components/account/PasswordSetting";
 
+// Redanews Context Provider
+import { useRedanews } from "../../Hooks/useRedanews";
+
 const AccountInfo = () => {
-  const [user, setUser] = useState({
-    username: "test",
-    email: "test@mail.com",
-  });
+  const { user } = useRedanews();
 
   const [pages, setPages] = useState([
     {
