@@ -25,7 +25,10 @@ import { FiMenu } from "react-icons/fi";
 // User-defined Components, Container
 import Logo from "./ui/Logo";
 import Info from "./Info";
-import { getCookie, deleteCookie } from "../Utils/CookieUsage";
+
+// Functions, Utils
+import { getCookie } from "../Utils/CookieUsage";
+import fetchUser from "../Containers/utils/fetchUser";
 
 // Redanews Context Provider
 import { useRedanews } from "../Hooks/useRedanews";
@@ -36,7 +39,7 @@ import { useRedanews } from "../Hooks/useRedanews";
 const Header = () => {
   const navigate = useNavigate();
 
-  const { login, logOutUser } = useRedanews();
+  const { login, load, setLoad, loginUser, logOutUser } = useRedanews();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -51,6 +54,16 @@ const Header = () => {
     else setMenuOpen(true);
     // setIsLogin(getCookie("userId") !== "");
   };
+
+  useEffect(() => {
+    if (!load) {
+      const id = getCookie("userId");
+      if (id !== "" && id != "undefined") {
+        fetchUser(id, loginUser);
+      }
+      setLoad(true);
+    }
+  }, [load]);
 
   return (
     <Box
@@ -96,26 +109,32 @@ const Header = () => {
                         Info
                       </Button>
                       <Info infoOpen={infoOpen} InfoClick={InfoClick} />
-                      <Button
-                        w="90%"
-                        variant="link"
-                        onClick={() => {
-                          navigate("/account/");
-                          MenuClick();
-                        }}
-                      >
-                        Profile
-                      </Button>
-                      <Button
-                        w="90%"
-                        variant="link"
-                        onClick={() => {
-                          navigate("/account/history");
-                          MenuClick();
-                        }}
-                      >
-                        History
-                      </Button>
+                      {login ? (
+                        <>
+                          <Button
+                            w="90%"
+                            variant="link"
+                            onClick={() => {
+                              navigate("/account/");
+                              MenuClick();
+                            }}
+                          >
+                            Profile
+                          </Button>
+                          <Button
+                            w="90%"
+                            variant="link"
+                            onClick={() => {
+                              navigate("/account/history");
+                              MenuClick();
+                            }}
+                          >
+                            History
+                          </Button>
+                        </>
+                      ) : (
+                        <></>
+                      )}
                     </VStack>
                   </DrawerBody>
 
