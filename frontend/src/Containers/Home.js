@@ -6,31 +6,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 // User-defined Components, Container
 import NewsCard from "../Components/ui/NewsCard";
 
+// Hook
+import { useRedanews } from "../Hooks/useRedanews";
+
 const Home = () => {
   const navigate = useNavigate();
-  const news = [
-    {
-      title: "Test News 1",
-      summary:
-        "This is test content. This is test content. This is test content. ",
-      link: "https://edition.cnn.com/",
-    },
-    {
-      title: "Test News 2",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
-    },
-    {
-      title: "Test News 3",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
-    },
-    {
-      title: "Test News 3",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
-    },
-  ];
+  const { trendingNews } = useRedanews();
+
   return (
     <Box width="100%" height="100%" align="center" margin="0 0 0 0">
       <Box
@@ -108,7 +90,7 @@ const Home = () => {
               },
             }}
           >
-            {news.map((piece, i) => (
+            {trendingNews.map((piece, i) => (
               <NewsCard
                 title={piece.title}
                 summary={piece.summary}
