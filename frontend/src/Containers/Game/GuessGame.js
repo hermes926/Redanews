@@ -1,5 +1,5 @@
 // React Utils, UI Components
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Flex,
@@ -128,6 +128,12 @@ const GuessGame = () => {
     getTodayNews();
   }, []);
 
+  const topRef = useRef(null);
+
+  const scrollToTop = () => {
+    topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   if (!loadGuess) {
     return <></>;
   } else {
@@ -141,10 +147,16 @@ const GuessGame = () => {
                 win={win}
                 guesses={guesses}
                 difficulty={difficulty}
+                topRef={topRef}
               />
               <Center width="100%" height="12%" bgColor="primary.700">
                 <InputGroup width="40%" minW="300px" padding="0">
-                  <InputLeftAddon variant="link" children="Top" />
+                  <InputLeftAddon
+                    as="button"
+                    variant="link"
+                    children="Top"
+                    onClick={scrollToTop}
+                  />
                   <Input
                     type="string"
                     value={currentGuess}

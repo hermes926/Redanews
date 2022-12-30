@@ -1,11 +1,16 @@
 // React Utils, UI Components
 import React, { useState, useEffect } from "react";
 import { Box, Stack, Heading, Text } from "@chakra-ui/react";
+import styled from "@emotion/styled";
 
 // Functions, Utils
 import redact from "../Containers/utils/redact";
 
-const Paragraph = ({ news, guesses, win, difficulty }) => {
+const TopRef = styled.div`
+  height: 1px;
+`;
+
+const Paragraph = ({ news, guesses, win, difficulty, topRef }) => {
   return (
     <Stack
       width="100%"
@@ -27,6 +32,7 @@ const Paragraph = ({ news, guesses, win, difficulty }) => {
         },
       }}
     >
+      <TopRef ref={topRef} />
       <Heading
         color="redanews-grey"
         lineHeight="1.5"
