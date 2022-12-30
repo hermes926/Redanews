@@ -10,7 +10,9 @@ router.get("/:id", async (req, res) => {
     if (!user) {
       res.status(403).send({ message: "Unauthorized" });
     } else {
-      res.status(200).send({ user });
+      res
+        .status(200)
+        .send({ user: { username: user.username, email: user.email } });
     }
   } else {
     res.status(403).send({ message: "Unauthorized" });
