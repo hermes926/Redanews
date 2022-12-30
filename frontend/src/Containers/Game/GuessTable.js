@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Stack, HStack, Text, Divider } from "@chakra-ui/react";
 
-const GuessTable = ({ guesses }) => {
+const GuessTable = ({ guesses, findSpan }) => {
   return (
     <Box
       width="30vw"
@@ -40,26 +40,34 @@ const GuessTable = ({ guesses }) => {
           </Box>
         </HStack>
       </Box>
-      <Stack>
+      <Stack spacing="0">
         {Array.from(guesses)
           .reverse()
           .map((guess, i) => (
-            <>
-              <Divider />
-              <Box align="left" color="redanews-grey" key={i}>
+            <Box
+              key={i}
+              _hover={{ bgColor: "primary.300" }}
+              margin="0"
+              py="1px"
+            >
+              <Box
+                align="left"
+                color="redanews-grey"
+                borderTop="1px solid gray"
+                key={i}
+                onClick={() => findSpan(guess.vocab.toLowerCase())}
+              >
                 <HStack spacing="0" py="2">
-                  <Box width="20%" height="10%" paddingLeft="2">
+                  <Box width="20%" paddingLeft="2">
                     <Text>{guesses.length - i}</Text>
                   </Box>
-                  <Box width="60%" height="10%">
+                  <Box width="60%">
                     <Text>{guess.vocab}</Text>
                   </Box>
-                  <Box width="20%" height="10%">
-                    {guess.count}
-                  </Box>
+                  <Box width="20%">{guess.count}</Box>
                 </HStack>
               </Box>
-            </>
+            </Box>
           ))}
         <Text> </Text>
       </Stack>
