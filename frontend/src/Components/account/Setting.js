@@ -1,5 +1,4 @@
 // React Utils, UI Components
-// React Utils, UI Components
 import { useState } from "react";
 import {
   Flex,
@@ -17,13 +16,39 @@ import {
 
 import { FiUser, FiAtSign, FiMail, FiEdit2 } from "react-icons/fi";
 
-const Setting = ({ user }) => {
+// Functions, Utils
+import axios from "../../api";
+import fetchUser from "../../Containers/utils/fetchUser";
+
+const Setting = ({ user, userId, updateUser }) => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
 
   const displayToast = useToast();
 
-  const onSubmit = () => {};
+  const onSubmit = async () => {
+    if (userId) {
+      await axios
+        .patch("/user/" + userId, {
+          username,
+          email,
+        })
+        .catch((e) => {
+          console.log(e);
+        })
+        .then((res) => {
+          displayToast({
+            title: "Update Profile Successful",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+          });
+          setEmail("");
+          setUsername("");
+          fetchUser(userId, updateUser);
+        });
+    }
+  };
 
   const onCancel = () => {
     displayToast({

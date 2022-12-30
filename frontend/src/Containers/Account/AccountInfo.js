@@ -1,5 +1,5 @@
 // React Utils, UI Components
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Flex,
   Box,
@@ -19,7 +19,7 @@ import PasswordSetting from "../../Components/account/PasswordSetting";
 import { useRedanews } from "../../Hooks/useRedanews";
 
 const AccountInfo = () => {
-  const { user } = useRedanews();
+  const { user, userId, updateUser } = useRedanews();
 
   const [pages, setPages] = useState([
     {
@@ -28,11 +28,11 @@ const AccountInfo = () => {
     },
     {
       label: "Setting",
-      content: <Setting />,
+      content: <Setting user={user} userId={userId} updateUser={updateUser} />,
     },
     {
       label: "Change Password",
-      content: <PasswordSetting />,
+      content: <PasswordSetting userId={userId} />,
     },
   ]);
 
