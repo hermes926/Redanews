@@ -19,6 +19,8 @@ import {
 import { FiLock, FiCheck } from "react-icons/fi";
 import { HiEye, HiEyeOff } from "react-icons/hi";
 import { useEffect } from "react";
+import { getCookie } from "../../Utils/CookieUsage";
+import axios from "../../api";
 
 const PasswordSetting = () => {
   const [orgPassword, setOrgPassword] = useState("");
@@ -32,8 +34,9 @@ const PasswordSetting = () => {
   });
 
   const displayToast = useToast();
+  const userId = getCookie("userId");
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (newPassword.length < 8) {
       displayToast({
         title: "Fail to Change Password",
@@ -50,6 +53,34 @@ const PasswordSetting = () => {
         duration: 2000,
         isClosable: true,
       });
+    } else {
+      if (userId) {
+        await axios
+          .post("/user/" + userId + "/password", {
+            orgPassword, newPassword
+          })
+          .catch((e) => {
+            displayToast({
+              title: "Your password is not correct",
+              status: "error",
+              duration: 2000,
+              isClosable: true,
+            });
+          })
+          .then((res) => {
+            if(res.status === 200){
+              displayToast({
+                title: "Update Profile Successful",
+                status: "success",
+                duration: 2000,
+                isClosable: true,
+              });
+            }
+          });
+          setOrgPassword("");
+          setNewPassword("");
+          setConfirmPassword("");
+      }
     }
   };
 

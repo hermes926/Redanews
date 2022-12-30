@@ -39,4 +39,21 @@ router.patch("/:id", async (req, res) => {
   }
 });
 
+router.post("/:id/password", async (req, res) => {
+  if (mongoose.isValidObjectId(req.params.id)) {
+    const user = await User.findById(req.params.id);
+    if (!user || user.password !== req.body.orgPassword) {
+      res.status(403).send({ message: "Unauthorized" });
+    } else {
+      user.password = req.body.newPassword;
+      await user.save();
+      res.status(200).send({ message: "OK" });
+    }
+  } else {
+    res.status(403).send({ message: "Unauthorized" });
+  }
+});
+
+
+
 export default router;
