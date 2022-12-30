@@ -5,7 +5,7 @@ import { Box, Stack, Heading, Text } from "@chakra-ui/react";
 // Functions, Utils
 import redact from "../Containers/utils/redact";
 
-const Paragraph = ({ news, guesses }) => {
+const Paragraph = ({ news, guesses, difficulty }) => {
   return (
     <Stack
       width="100%"
@@ -35,7 +35,7 @@ const Paragraph = ({ news, guesses }) => {
         pt="2"
         align="left"
       >
-        {redact(news.title, guesses)}
+        {redact(news.title, guesses, difficulty)}
       </Heading>
       <Text
         color="redanews-grey"

@@ -32,7 +32,7 @@ const GuessGame = () => {
   const navigate = useNavigate();
   const displayToast = useToast();
 
-  const { guesses, news, setGuesses, setNews } = useRedanews();
+  const { guesses, news, setGuesses, setNews, difficulty } = useRedanews();
   const [currentGuess, setCurrentGuess] = useState("");
 
   const [loadGuess, setLoadGuess] = useState(false);
@@ -123,7 +123,7 @@ const GuessGame = () => {
         <HStack height="100%" width="100%" spacing="0">
           <Box width="70%" height="100%" bgColor="redanews-black">
             <Stack height="100%" width="100%">
-              <Paragraph news={news} guesses={guesses} />
+              <Paragraph news={news} guesses={guesses} difficulty={difficulty}/>
               <Center width="100%" height="12%" bgColor="primary.700">
                 <InputGroup width="40%" minW="300px" padding="0">
                   <InputLeftAddon variant="link" children="Top" />

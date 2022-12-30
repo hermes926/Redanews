@@ -2,7 +2,7 @@ import { commonWords, marks } from "./variables";
 
 // Function for redacting given content with guesses and commonWords revealed
 // Return the redacted content
-function redact(content, guesses) {
+function redact(content, guesses, difficulty) {
   let redacted = "";
   let cnt = 0;
   const words = content.split(/[\n\s]+/);
@@ -22,9 +22,16 @@ function redact(content, guesses) {
       commonWords.find((commonWord) => commonWord === word.toLowerCase())
     ) {
       redacted += (cnt > 0 ? content[cnt - 1]: " ") + word;
-    } else {
+    } else if(difficulty==='Hard' || word.length < 3){
       redacted += (cnt > 0 ? content[cnt - 1]: " ") + "█".repeat(word.length);
     }
+    else if(difficulty==='Medium'){
+      redacted += (cnt > 0 ? content[cnt - 1]: " ") + word[0] + "█".repeat(word.length-2) + word[word.length-1];
+    }
+    else if(difficulty==='Easy'){
+      redacted += (cnt > 0 ? content[cnt - 1]: " ") + word[0] + "▉".repeat(word.length-2) + word[word.length-1];
+    }
+
     redacted += mark;
     cnt += (words[i].length + 1);
   }

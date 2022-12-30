@@ -122,6 +122,7 @@ const marks = [
   ";",
   "'",
   '"',
+  "–"
 ];
 
 const history = [
