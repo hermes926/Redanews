@@ -84,7 +84,7 @@ const RedanewsProvider = (props) => {
   const loginUser = (userInfo) => {
     setLogin(true);
     setUserId(userInfo.userId);
-    setUser(userInfo);
+    setUser(...user, userInfo);
     setGuessId(userInfo.guessId);
 
     setCookie("userId", userInfo.userId, 5);
