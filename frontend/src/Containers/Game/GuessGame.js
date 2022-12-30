@@ -35,6 +35,8 @@ const GuessGame = () => {
   const { guesses, news, win, setGuesses, setWin, setNews, difficulty } =
     useRedanews();
   const [currentGuess, setCurrentGuess] = useState("");
+  const [preClickGuess, setPreClickGuess] = useState("");
+  const [currentFocus, setCurrentFocus] = useState(0);
 
   const [loadGuess, setLoadGuess] = useState(false);
 
@@ -144,8 +146,21 @@ const GuessGame = () => {
 
   const findSpan = (word) => {
     clearStyle();
-    Array.from(document.getElementsByClassName(word)).forEach((element) => {
-      element.style.cssText += "color:black;background-color:gray";
+    setPreClickGuess(word);
+    let toFocus = 0;
+    if (word === preClickGuess) {
+      toFocus = currentFocus + 1;
+    }
+    setCurrentFocus(toFocus);
+
+    const elements = Array.from(document.getElementsByClassName(word));
+    elements.forEach((element, i) => {
+      if (toFocus % elements.length === i) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+        element.style.cssText += "color:black;background-color:teal;opacity:1";
+      } else {
+        element.style.cssText += "color:black;background-color:gray";
+      }
     });
   };
 

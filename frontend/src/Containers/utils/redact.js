@@ -48,13 +48,26 @@ function redact(content, guesses, difficulty) {
         .substring(1)
         .replace(/(?:\r\n|\r|\n)/g, "\n\n")
         .split(" ")
-        .map((str, i) => (
-          <>
-            <span key={str + "-" + i} class={str.toLowerCase()}>
-              {str}
-            </span>{" "}
-          </>
-        ))}
+        .map((str, i) => {
+          if (!marks.find((m) => m === str[str.length - 1])) {
+            return (
+              <span key={str + "-" + i}>
+                <span className={str.toLowerCase()}>{str}</span>{" "}
+              </span>
+            );
+          } else {
+            return (
+              <span key={str + "-" + i}>
+                <span
+                  className={str.substring(0, str.length - 1).toLowerCase()}
+                >
+                  {str.substring(0, str.length - 1)}
+                </span>
+                <span>{str[str.length - 1]}</span>{" "}
+              </span>
+            );
+          }
+        })}
     </>
   );
 }
