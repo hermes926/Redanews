@@ -8,7 +8,6 @@ async function fetchUser(id, loginUser) {
     })
     .then((res) => {
       if (res !== undefined) {
-        console.log(res.data.user, id);
         loginUser(res.data.user);
       }
     });
