@@ -10,7 +10,7 @@ import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./Theme";
 
-// Context Provider
+// Redanews Context Provider
 import { RedanewsProvider } from "./Hooks/useRedanews";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
