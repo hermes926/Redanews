@@ -25,6 +25,7 @@ import { FiMenu } from "react-icons/fi";
 // User-defined Components, Container
 import Logo from "./ui/Logo";
 import Info from "./Info";
+import Difficulty from "./Difficulty"
 
 // Functions, Utils
 import { getCookie } from "../Utils/CookieUsage";
@@ -39,7 +40,7 @@ import { useRedanews } from "../Hooks/useRedanews";
 const Header = () => {
   const navigate = useNavigate();
 
-  const { login, load, setLoad, loginUser, logOutUser } = useRedanews();
+  const { login, load, setLoad, loginUser, logOutUser, difficulty, setDifficulty } = useRedanews();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
@@ -135,7 +136,9 @@ const Header = () => {
                       ) : (
                         <></>
                       )}
+                    <Difficulty difficulty={difficulty} setDifficulty={setDifficulty}/>
                     </VStack>
+
                   </DrawerBody>
 
                   <DrawerFooter display='flex' justifyContent='space-around'>
