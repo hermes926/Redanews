@@ -24,6 +24,7 @@ import { HiEye, HiEyeOff } from "react-icons/hi";
 
 // Functions, Utils
 import axios from "../../api";
+import fetchUser from "../utils/fetchUser";
 
 // Redanews Context Provider
 import { useRedanews } from "../../Hooks/useRedanews";
@@ -31,7 +32,7 @@ import { useRedanews } from "../../Hooks/useRedanews";
 const LoginModal = () => {
   const navigate = useNavigate();
 
-  const { userId, setUserId, guessId, setGuessId, loginUser } = useRedanews();
+  const { guessId, setLoad, loginUser } = useRedanews();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -71,7 +72,6 @@ const LoginModal = () => {
     if (res !== undefined) {
       loginUser({
         username,
-        email: "test@example.com",
         userId: res.data.account_id,
         guessId: res.data.guess_id,
       });
@@ -81,6 +81,7 @@ const LoginModal = () => {
         duration: 2000,
         isClosable: true,
       });
+      fetchUser(res.data.account_id, loginUser);
       navigate("/game");
     }
   };
