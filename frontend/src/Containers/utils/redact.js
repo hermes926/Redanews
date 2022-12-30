@@ -3,7 +3,6 @@ import { commonWords, marks } from "./variables";
 // Function for redacting given content with guesses and commonWords revealed
 // Return the redacted content
 function redact(content, guesses, difficulty) {
-  console.log(content)
   let redacted = "";
   let cnt = 0;
   const words = content.split(/[\n\s]+/);
