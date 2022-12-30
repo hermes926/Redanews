@@ -1,36 +1,17 @@
 // React Utils, UI Components
-import { useState } from "react";
 import { Box, Container, HStack, Text, Button } from "@chakra-ui/react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // User-defined Components, Container
 import NewsCard from "../Components/ui/NewsCard";
 
+// Redanews Context Provider
+import { useRedanews } from "../Hooks/useRedanews";
+
 const Home = () => {
   const navigate = useNavigate();
-  const news = [
-    {
-      title: "Test News 1",
-      summary:
-        "This is test content. This is test content. This is test content. ",
-      link: "https://edition.cnn.com/",
-    },
-    {
-      title: "Test News 2",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
-    },
-    {
-      title: "Test News 3",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
-    },
-    {
-      title: "Test News 3",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
-    },
-  ];
+  const { login, trendingNews } = useRedanews();
+
   return (
     <Box width="100%" height="100%" align="center" margin="0 0 0 0">
       <Box
@@ -65,23 +46,38 @@ const Home = () => {
               </Text>
               <br />
               <HStack fontSize="2.5vmin">
-                <Button
-                  colorScheme="facebook"
-                  variant="solid"
-                  width="fit-content"
-                  fontSize="2.5vmin"
-                  onClick={() => navigate("/login")}
-                  style={{ whiteSpace: "normal" }}
-                >
-                  Login Now
-                </Button>{" "}
-                <Text
-                  opacity="0.5"
-                  onClick={() => navigate("/game")}
-                  _hover={{ cursor: "pointer" }}
-                >
-                  Continue without login
-                </Text>
+                {login ? (
+                  <Button
+                    colorScheme="facebook"
+                    variant="solid"
+                    width="fit-content"
+                    fontSize="lg"
+                    onClick={() => navigate("/game")}
+                    style={{ whiteSpace: "normal" }}
+                  >
+                    Play Now
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      colorScheme="facebook"
+                      variant="solid"
+                      width="fit-content"
+                      fontSize="2.5vmin"
+                      onClick={() => navigate("/login")}
+                      style={{ whiteSpace: "normal" }}
+                    >
+                      Login Now
+                    </Button>{" "}
+                    <Text
+                      opacity="0.5"
+                      onClick={() => navigate("/game")}
+                      _hover={{ cursor: "pointer" }}
+                    >
+                      Continue without login
+                    </Text>
+                  </>
+                )}
               </HStack>
             </Container>
             <Container px="0" fontSize="6.5vmin" fontWeight="900">
@@ -108,7 +104,7 @@ const Home = () => {
               },
             }}
           >
-            {news.map((piece, i) => (
+            {trendingNews.map((piece, i) => (
               <NewsCard
                 title={piece.title}
                 summary={piece.summary}

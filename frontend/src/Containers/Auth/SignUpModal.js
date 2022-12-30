@@ -110,7 +110,7 @@ const SignUpModal = () => {
           duration: 2000,
           isClosable: true,
         });
-        navigate("/");
+        navigate("/login");
       }
 
       setHasRequest(true);

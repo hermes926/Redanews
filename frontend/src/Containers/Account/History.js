@@ -4,10 +4,11 @@ import { Flex, Box, Heading } from "@chakra-ui/react";
 // User-defined Components, Container
 import HistoryTable from "../../Components/ui/HistoryTable";
 
-import { history } from "../utils/variables";
+// Redanews Context Provider
+import { useRedanews } from "../../Hooks/useRedanews";
 
 const History = () => {
-  const username = "Test User";
+  const { username, history } = useRedanews();
   return (
     <Flex height="90vh" direction="column" align="center" justify="center">
       <Box

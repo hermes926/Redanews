@@ -1,19 +1,25 @@
+// React Packages
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./Containers/App";
 import reportWebVitals from "./reportWebVitals";
 //import { ScoreCardProvider } from "./Hooks/useScoreCard";
+
+// Chakra UI/UX Provider
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "./Theme";
+
+// Redanews Context Provider
+import { RedanewsProvider } from "./Hooks/useRedanews";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ChakraProvider theme={theme}>
-      {/*<ScoreCardProvider>*/}
+      <RedanewsProvider>
         <App />
-      {/*</ScoreCardProvider>*/}
+      </RedanewsProvider>
     </ChakraProvider>
   </React.StrictMode>
 );
