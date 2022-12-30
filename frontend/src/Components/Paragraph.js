@@ -46,7 +46,7 @@ const Paragraph = ({ news, guesses, difficulty }) => {
         as="samp"
         whiteSpace="pre-line"
       >
-        {redact(news.content, guesses)}
+        {redact(news.content, guesses, difficulty)}
       </Text>
     </Stack>
   );
