@@ -17,7 +17,6 @@ const RedanewsContext = createContext({
   logOutUser: () => {},
 
   updateNews: () => {},
-  updateGuesses: () => {},
   updateGuessHistory: () => {},
 
   setLoad: () => {},
@@ -70,7 +69,17 @@ const RedanewsProvider = (props) => {
   const [guessId, setGuessId] = useState("");
   const [guesses, setGuesses] = useState([]);
 
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState([
+    {
+      guess_id: 123,
+      correctCnt: 5,
+      guessesCnt: 100,
+      news_id: 12323,
+      newsTitle: "aakdsa ddksdos ",
+      newsDate: "2022-12-15",
+      newsLink: "https://www.euronews.com/tag/die-linke",
+    },
+  ]);
 
   const loginUser = (userInfo) => {
     setLogin(true);
@@ -85,6 +94,8 @@ const RedanewsProvider = (props) => {
   const logOutUser = () => {
     setLogin(false);
     setUser({});
+    setUserId("");
+    setGuessId("");
 
     deleteCookie("userId");
     deleteCookie("guessId");
@@ -92,10 +103,6 @@ const RedanewsProvider = (props) => {
 
   const updateNews = (newsToUpdate) => {
     setNews(newsToUpdate);
-  };
-
-  const updateGuesses = (newGuess) => {
-    setGuesses([...guesses, newGuess]);
   };
 
   const updateGuessHistory = (newHistory) => {
@@ -122,7 +129,6 @@ const RedanewsProvider = (props) => {
         setNews,
         updateNews,
         setTrendingNews,
-        updateGuesses,
         setGuesses,
         updateGuessHistory,
       }}
