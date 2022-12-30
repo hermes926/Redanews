@@ -48,7 +48,7 @@ const SignUpModal = () => {
     confirmPassword: false,
   });
 
-  const errorToast = useToast();
+  const displayToast = useToast();
 
   const [hasRequest, setHasRequest] = useState(false);
 
@@ -94,7 +94,7 @@ const SignUpModal = () => {
           password: inputs.password.trim(),
         })
         .catch(() => {
-          errorToast({
+          displayToast({
             title: "Signup Failed",
             description: "Username exist.",
             status: "error",
@@ -104,7 +104,7 @@ const SignUpModal = () => {
         });
 
       if (res !== undefined) {
-        errorToast({
+        displayToast({
           title: "Signup Successful",
           status: "success",
           duration: 2000,
@@ -116,7 +116,7 @@ const SignUpModal = () => {
       setHasRequest(true);
     } else {
       if (errors.passwordLength === true) {
-        errorToast({
+        displayToast({
           title: "Register Fail",
           description: "Password is required to have at least 8 characters",
           status: "error",
@@ -124,7 +124,7 @@ const SignUpModal = () => {
           isClosable: true,
         });
       } else if (errors.confirmPassword === true) {
-        errorToast({
+        displayToast({
           title: "Register Fail",
           description: "Password Not Match",
           status: "error",

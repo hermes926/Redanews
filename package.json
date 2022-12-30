@@ -1,0 +1,12 @@
+{
+  "name": "Redanews",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd frontend && yarn start",
+    "server": "cd backend && yarn start"
+  },
+  "repository": "https://github.com/hermes926/Redanews",
+  "author": "ChienYu-1215 <b08705034@ntu.edu.tw>",
+  "license": "MIT"
+}

@@ -20,8 +20,6 @@ import { AddIcon } from "@chakra-ui/icons";
 // Functions, Utils
 import Paragraph from "../../Components/Paragraph";
 import GuessTable from "./GuessTable";
-
-// Functions, Utils
 import { handleGuess, countHits } from "../utils/handleGuess";
 import axios from "../../api";
 
@@ -33,68 +31,86 @@ const GuessGame = () => {
   const [news, setNews] = useState("");
   const [loadGuess, setLoadGuess] = useState(false);
 
+  const submitGuess = async () => {
+    const result = await handleGuess(
+      currentGuess,
+      setCurrentGuess,
+      guesses,
+      setGuesses,
+      news
+    );
+    if (result !== true) {
+      displayToast(result);
+    }
+  };
+
   useEffect(() => {
     const getGuessRecord = async () => {
       const guessId = getCookie("guessId");
       if (guessId && news) {
-        await axios.get("/guess/" + guessId).catch((e) => {
-          displayToast({
-            title: "Fetch Guess Record",
-            status: "error",
-            duration: 2000,
-            isClosable: true,
+        await axios
+          .get("/guess/" + guessId)
+          .catch((e) => {
+            displayToast({
+              title: "Fetch Guess Record",
+              status: "error",
+              duration: 2000,
+              isClosable: true,
+            });
+            navigate("/");
+          })
+          .then((res) => {
+            if (res !== undefined) {
+              const guessedVocabs = res.data.vocabularies;
+              let guessRecord = [];
+              guessedVocabs.map((vocab) => {
+                const cnt = countHits(vocab, news);
+                guessRecord = [
+                  ...guessRecord,
+                  {
+                    vocab: vocab,
+                    count: cnt,
+                  },
+                ];
+              });
+              setGuesses(guessRecord);
+              setLoadGuess(true);
+            }
           });
-          navigate("/");
-        }).then((res) => {
-          if (res !== undefined) {
-            const guessedVocabs = res.data.vocabularies;
-            let guessRecord = [];
-            guessedVocabs.map((vocab) => {
-              const cnt = countHits(vocab, news);
-              guessRecord = [...guessRecord, {
-                vocab: vocab,
-                count: cnt,
-              }];
-            })
-            setGuesses(guessRecord);
-            setLoadGuess(true);
-          }
-        })
       } else {
-        if(news)
-          setLoadGuess(true);
-      } 
-    }
+        if (news) setLoadGuess(true);
+      }
+    };
     getGuessRecord();
   }, [news]);
 
   useEffect(() => {
     const getTodayNews = async () => {
-      await axios.get("/news/today").catch((e) => {
-        displayToast({
-          title: "Fetch Today News Failed!",
-          status: "error",
-          duration: 2000,
-          isClosable: true,
-        });
-        navigate("/");
-      }).then((res) => {
-        if (res !== undefined) {
-          setNews({
-            title: res.data.title,
-            content: res.data.article,
+      await axios
+        .get("/news/today")
+        .catch((e) => {
+          displayToast({
+            title: "Fetch Today News Failed!",
+            status: "error",
+            duration: 2000,
+            isClosable: true,
           });
-        }
-      })
-    }
+          navigate("/");
+        })
+        .then((res) => {
+          if (res !== undefined) {
+            setNews({
+              title: res.data.title,
+              content: res.data.article,
+            });
+          }
+        });
+    };
     getTodayNews();
   }, []);
 
-
-  if(!loadGuess) {
-    return (
-      <></>
-    );
+  if (!loadGuess) {
+    return <></>;
   } else {
     return (
       <Box height="90vh" width="100vw" align="center">
@@ -111,6 +127,11 @@ const GuessGame = () => {
                     onChange={(e) => {
                       setCurrentGuess(e.target.value);
                     }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        submitGuess();
+                      }
+                    }}
                     color="white"
                     placeholder="Guess a Word"
                     focusBorderColor="redanews-grey"
@@ -118,31 +139,13 @@ const GuessGame = () => {
                   />
                   <InputRightElement>
                     <IconButton
-                      onClick={async () => {
-                        const result = await handleGuess(
-                          currentGuess,
-                          setCurrentGuess,
-                          guesses,
-                          setGuesses,
-                          news
-                        );
-                        if (result !== true) {
-                          displayToast(result);
-                        }
-                      }}
-                      icon={<AddIcon />}
-                      variant="link"
+                      aria-label="Send Guess"
+                      colorScheme="transparent"
                       color="white"
-                      border="none"
-                      _focus={{
-                        bg: "gray.100",
-                        border: "none",
-                        borderRadius: "full",
-                      }}
-                      marginRight="10px"
-                      paddingY="2px"
                       fontSize="md"
-                      isRound
+                      icon={<AddIcon />}
+                      _hover={{ bgColor: "primary.200" }}
+                      onClick={submitGuess}
                     />
                   </InputRightElement>
                 </InputGroup>

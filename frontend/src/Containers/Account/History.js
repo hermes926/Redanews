@@ -13,7 +13,7 @@ const History = () => {
       <Box
         width="100%"
         height="90vh"
-        bgColor="primary.300"
+        bgImage="https://cdn.pixabay.com/photo/2017/03/12/17/54/quiz-2137664_1280.jpg"
         opacity="0.2"
         position="absolute"
       />
