@@ -17,6 +17,7 @@ const RedanewsContext = createContext({
   loginUser: () => {},
   logOutUser: () => {},
 
+  updateUser: () => {},
   updateNews: () => {},
   updateGuessHistory: () => {},
 
@@ -86,7 +87,6 @@ const RedanewsProvider = (props) => {
 
   const loginUser = (userInfo) => {
     setLogin(true);
-
     setUser(userInfo);
 
     if (userInfo.userId) {
@@ -98,6 +98,10 @@ const RedanewsProvider = (props) => {
       setGuessId(userInfo.guessId);
       setCookie("guessId", userInfo.guessId, 5);
     }
+  };
+
+  const updateUser = (userInfo) => {
+    setUser({ username: userInfo.username, email: userInfo.email });
   };
 
   const logOutUser = () => {
@@ -135,6 +139,7 @@ const RedanewsProvider = (props) => {
         setUserId,
         loginUser,
         logOutUser,
+        updateUser,
         setNews,
         updateNews,
         setTrendingNews,

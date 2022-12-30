@@ -32,7 +32,7 @@ import { useRedanews } from "../../Hooks/useRedanews";
 const LoginModal = () => {
   const navigate = useNavigate();
 
-  const { guessId, setLoad, loginUser } = useRedanews();
+  const { guessId, setLoad, loginUser, updateUser } = useRedanews();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -81,7 +81,7 @@ const LoginModal = () => {
         duration: 2000,
         isClosable: true,
       });
-      fetchUser(res.data.account_id, loginUser);
+      fetchUser(res.data.account_id, updateUser);
       navigate("/game");
     }
   };

@@ -1,6 +1,6 @@
 import axios from "../../api";
 
-async function fetchUser(id, loginUser) {
+async function fetchUser(id, updateUser) {
   await axios
     .get("/user/" + id)
     .catch((e) => {
@@ -8,7 +8,7 @@ async function fetchUser(id, loginUser) {
     })
     .then((res) => {
       if (res !== undefined) {
-        loginUser(res.data.user);
+        updateUser(res.data.user);
       }
     });
 }
