@@ -83,12 +83,18 @@ const RedanewsProvider = (props) => {
 
   const loginUser = (userInfo) => {
     setLogin(true);
-    setUserId(userInfo.userId);
-    setUser(...user, userInfo);
-    setGuessId(userInfo.guessId);
 
-    setCookie("userId", userInfo.userId, 5);
-    setCookie("guessId", userInfo.guessId, 5);
+    setUser(userInfo);
+
+    if (userInfo.userId) {
+      setUserId(userInfo.userId);
+      setCookie("userId", userInfo.userId, 5);
+    }
+
+    if (userInfo.guessId) {
+      setGuessId(userInfo.guessId);
+      setCookie("guessId", userInfo.guessId, 5);
+    }
   };
 
   const logOutUser = () => {
