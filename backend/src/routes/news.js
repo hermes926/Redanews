@@ -1,6 +1,7 @@
 import { Router } from "express";
 import News from "../models/News.js";
 import Guess from "../models/Guess.js";
+import TrendingNews from "../models/TrendingNews.js";
 import mongoose from 'mongoose';
 import today from "../utils/today.js";
 import newsAPI from '../newsAPI.js';
@@ -24,6 +25,20 @@ router.get('/all/:id', async (req, res) => {
     }
 })
 
+router.get('/trending', async (req, res) => {
+    let date = today.getToday();
+    let news = await TrendingNews.find({date: date});
+    if (!news) {
+        await newsAPI.UpdateTrendingNews();
+    }
+    news = await TrendingNews.find({date: date});
+    if (!news) {
+        res.status(403).send({message: "Unauthorized"});
+    } else {
+        res.status(200).send(news);
+    }
+})
+
 router.get('/today', async (req, res) => {
     let date = today.getToday();
     let news = await News.findOne({date: date});
@@ -40,9 +55,6 @@ router.get('/today', async (req, res) => {
             date: news.date,
         });
     }
-    // } else {
-    //     res.status(403).send({message: "Unauthorized"});
-    // }
 })
 
 router.get('/all/:id/stat', async (req, res) => {

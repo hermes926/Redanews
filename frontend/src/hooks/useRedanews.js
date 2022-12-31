@@ -50,25 +50,19 @@ const RedanewsProvider = (props) => {
 
   const [trendingNews, setTrendingNews] = useState([
     {
-      title: "Test News 1",
-      summary:
-        "This is test content. This is test content. This is test content. ",
-      link: "https://edition.cnn.com/",
+      title: "Loading...",
     },
     {
-      title: "Test News 2",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
+      title: "Loading...",
     },
     {
-      title: "Test News 3",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
+      title: "Loading...",
     },
     {
-      title: "Test News 3",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
+      title: "Loading...",
+    },
+    {
+      title: "Loading...",
     },
   ]);
 
