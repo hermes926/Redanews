@@ -5,53 +5,57 @@ import axios from "../../api";
 
 // User-defined Components, Container
 import HistoryTable from "../../Components/ui/HistoryTable";
-
-// Redanews Context Provider
 import { getCookie } from "../../Utils/CookieUsage";
 
+// Redanews Context Provider
+import { useRedanews } from "../../Hooks/useRedanews";
+
 const History = () => {
+  const { history, updateGuessHistory, setUserId } = useRedanews();
   const [username, setUsername] = useState("");
-  const [history, setHistory] = useState([]);
   const userId = getCookie("userId");
   const displayToast = useToast();
 
   useEffect(() => {
     const getHistory = async () => {
-      console.log(userId);
-      await axios.get('/user/' + userId + '/history').catch((e) => {
-        displayToast({
-          title: "Fetch Histroy Failed",
-          status: "error",
-          duration: 2000,
-          isClosable: true,
-        });
-      }).then((res) => {
-        if(res.status === 200){
-          let newGuessHistory = [];
-          for(let i = 0; i < res.data.guesses.length; i++){
-            const newGuess = {
-              guess_id: 1,
-              correctCnt: res.data.guesses[i].correctCnt,
-              guessesCnt: res.data.guesses[i].guessCnt,
-              news_id: 1,
-              newsTitle: res.data.guesses[i].title,
-              newsDate: res.data.guesses[i].date,
-              newsLink: res.data.guesses[i].link,
-              avgGuess: res.data.guesses[i].avgGuess,
-            };
-            newGuessHistory = [...newGuessHistory, newGuess];
+      setUserId(userId);
+      await axios
+        .get("/user/" + userId + "/history")
+        .catch((e) => {
+          displayToast({
+            title: "Fetch Histroy Failed",
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+        })
+        .then((res) => {
+          if (res.status === 200) {
+            let newGuessHistory = [];
+            for (let i = 0; i < res.data.guesses.length; i++) {
+              const newGuess = {
+                guess_id: 1,
+                correctCnt: res.data.guesses[i].correctCnt,
+                guessesCnt: res.data.guesses[i].guessCnt,
+                news_id: 1,
+                newsTitle: res.data.guesses[i].title,
+                newsDate: res.data.guesses[i].date,
+                newsLink: res.data.guesses[i].link,
+                avgGuess: res.data.guesses[i].avgGuess,
+              };
+              newGuessHistory = [...newGuessHistory, newGuess];
+            }
+            updateGuessHistory(newGuessHistory);
+            setUsername(res.data.username);
           }
-          setHistory(newGuessHistory);
-          setUsername(res.data.username);
-        }
-      });
-    }
+        });
+    };
     getHistory();
   }, []);
 
-  if(!history || !username){
+  if (!history || !username) {
     return <></>;
-  }else{
+  } else {
     return (
       <Flex height="90vh" direction="column" align="center" justify="center">
         <Box
