@@ -68,7 +68,6 @@ const History = () => {
       </Flex>
     );
   }
-  
 };
 
 export default History;
