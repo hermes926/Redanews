@@ -50,7 +50,6 @@ router.get("/:id/history", async (req, res) => {
         };
         guesses = [...guesses, newGuess];
       }
-      console.log(guesses);
       res
         .status(200)
         .send({ 
