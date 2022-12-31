@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react";
-import { setCookie, deleteCookie } from "../Utils/CookieUsage";
+import { createContext, useContext, useEffect, useState } from "react";
+import { setCookie, deleteCookie, getCookie } from "../Utils/CookieUsage";
 
 const RedanewsContext = createContext({
   load: Boolean,
@@ -41,7 +41,7 @@ const RedanewsProvider = (props) => {
     email: "",
   });
 
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState(getCookie("userId"));
 
   const [news, setNews] = useState({
     title: "",
@@ -72,7 +72,7 @@ const RedanewsProvider = (props) => {
     },
   ]);
 
-  const [guessId, setGuessId] = useState("");
+  const [guessId, setGuessId] = useState(getCookie("guessId"));
   const [guesses, setGuesses] = useState([]);
   const [win, setWin] = useState(false);
 

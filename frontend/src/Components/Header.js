@@ -64,7 +64,6 @@ const Header = () => {
   const MenuClick = () => {
     if (menuOpen) setMenuOpen(false);
     else setMenuOpen(true);
-    // setIsLogin(getCookie("userId") !== "");
   };
 
   useEffect(() => {
