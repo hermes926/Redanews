@@ -65,7 +65,7 @@ const HistoryTable = ({ history }) => {
           {Array.from(history)
             .reverse()
             .map((record, i) => (
-              <>
+              
                 <Box
                   color="redanews-blue"
                   key={i}
@@ -115,7 +115,7 @@ const HistoryTable = ({ history }) => {
                     </HStack>
                   </Center>
                 </Box>
-              </>
+              
             ))}
         </Stack>
       </Box>
