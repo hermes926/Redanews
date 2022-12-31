@@ -94,12 +94,12 @@ const RedanewsProvider = (props) => {
 
     if (userInfo.userId) {
       setUserId(userInfo.userId);
-      setCookie("userId", userInfo.userId, 5);
+      setCookie("userId", userInfo.userId, 30);
     }
 
     if (userInfo.guessId) {
       setGuessId(userInfo.guessId);
-      setCookie("guessId", userInfo.guessId, 5);
+      setCookie("guessId", userInfo.guessId, 30);
     }
   };
 

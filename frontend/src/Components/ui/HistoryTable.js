@@ -82,7 +82,7 @@ const HistoryTable = ({ history }) => {
                         paddingLeft="2"
                         margin="0"
                       >
-                        <Text noOfLines={1}>{record.news_id}</Text>
+                        <Text noOfLines={1}>{i}</Text>
                       </Box>
                       <Text>|</Text>
                       <Box width="15%" height="10%" align="center">
@@ -93,13 +93,15 @@ const HistoryTable = ({ history }) => {
                         width="45%"
                         height="10%"
                         _hover={{ color: "redanews-teal" }}
-                        to={record.newsLink}
+                        href={record.newsLink}
+                        noOfLines={1}
+                        isExternal
                       >
                         {record.newsTitle}
                       </Link>
                       <Text>|</Text>
                       <Box width="10%" height="10%">
-                        {record.correctCnt}
+                        {record.guessesCnt}
                       </Box>
                       <Text>|</Text>
                       <Box width="10%" height="10%">
@@ -110,7 +112,7 @@ const HistoryTable = ({ history }) => {
                       </Box>
                       <Text>|</Text>
                       <Box width="10%" height="10%">
-                        {"52.20%"}
+                        {record.avgGuess} %
                       </Box>
                     </HStack>
                   </Center>

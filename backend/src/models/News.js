@@ -5,6 +5,7 @@ const NewsSchema = new Schema({
     title: String,
     article: String,
     date: String,
+    link: String,
     guesses_id: [{ type: mongoose.Types.ObjectId, ref: 'Guess' }],
 });
 
