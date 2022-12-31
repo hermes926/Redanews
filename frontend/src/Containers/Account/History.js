@@ -8,7 +8,7 @@ import HistoryTable from "../../Components/ui/HistoryTable";
 import { useRedanews } from "../../Hooks/useRedanews";
 
 const History = () => {
-  const { username, history } = useRedanews();
+  const { user, history } = useRedanews();
   return (
     <Flex height="90vh" direction="column" align="center" justify="center">
       <Box
@@ -19,7 +19,7 @@ const History = () => {
         position="absolute"
       />
       <Heading py="3vh" align="left">
-        {username + "'s Guessing History"}
+        {user.username + "'s Guessing History"}
       </Heading>
       <HistoryTable history={history} />
     </Flex>
