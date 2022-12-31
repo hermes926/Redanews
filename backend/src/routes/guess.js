@@ -37,4 +37,19 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.patch('/:id/win', async (req, res) => {
+    if (mongoose.isValidObjectId(req.params.id)) {
+        const guess = await Guess.findById(req.params.id);
+        if (!guess) {
+            res.status(403).send({message: "Unauthorized"});
+        } else {
+            guess.win = true;
+            await guess.save();
+            res.status(200).send({message: "OK"});
+        }
+    } else {
+        res.status(403).send({message: "Unauthorized"});
+    }
+})
+
 export default router;

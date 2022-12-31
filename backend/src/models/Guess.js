@@ -6,6 +6,7 @@ const GuessSchema = new Schema({
     correctCnt: Number,
     guessCnt: Number,
     date: String, 
+    win: Boolean,
     user_id:  { type: mongoose.Types.ObjectId, ref: 'User' },
     news_id:  { type: mongoose.Types.ObjectId, ref: 'News' },
 });

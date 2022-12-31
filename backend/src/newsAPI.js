@@ -31,10 +31,11 @@ export default {
                             const newNews = new News({
                                 title: body.response.results[i].webTitle,
                                 article: body.response.results[i].blocks.body[0].bodyTextSummary,
+                                link: body.response.results[i].webUrl,
                                 date: today_date, 
                             });
                             await newNews.save();
-                            console.log("News at:" + today + " is " + body.response.results[i].webTitle + ".\n");
+                            console.log("News at:" + today_date + " is " + body.response.results[i].webTitle + ".\n");
                             break;
                         }
                     }
