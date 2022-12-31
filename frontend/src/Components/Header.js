@@ -75,7 +75,7 @@ const Header = () => {
       }
       setLoad(true);
     }
-  }, []);
+  }, [load]);
 
   return (
     <Box
