@@ -34,6 +34,7 @@ router.post("/login",  async (req, res) => {
                 correctCnt: 0,
                 guessCnt: 0,
                 date: date, 
+                win: false,
                 user_id: existingUser._id,
                 news_id: todayNews._id,
             })

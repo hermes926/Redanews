@@ -1,5 +1,5 @@
-import { createContext, useContext, useState } from "react";
-import { setCookie, deleteCookie } from "../Utils/CookieUsage";
+import { createContext, useContext, useEffect, useState } from "react";
+import { setCookie, deleteCookie, getCookie } from "../Utils/CookieUsage";
 
 const RedanewsContext = createContext({
   load: Boolean,
@@ -41,7 +41,7 @@ const RedanewsProvider = (props) => {
     email: "",
   });
 
-  const [userId, setUserId] = useState("");
+  const [userId, setUserId] = useState(getCookie("userId"));
 
   const [news, setNews] = useState({
     title: "",
@@ -50,29 +50,23 @@ const RedanewsProvider = (props) => {
 
   const [trendingNews, setTrendingNews] = useState([
     {
-      title: "Test News 1",
-      summary:
-        "This is test content. This is test content. This is test content. ",
-      link: "https://edition.cnn.com/",
+      title: "Loading...",
     },
     {
-      title: "Test News 2",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
+      title: "Loading...",
     },
     {
-      title: "Test News 3",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
+      title: "Loading...",
     },
     {
-      title: "Test News 3",
-      summary: "This is test content. ",
-      link: "https://edition.cnn.com/",
+      title: "Loading...",
+    },
+    {
+      title: "Loading...",
     },
   ]);
 
-  const [guessId, setGuessId] = useState("");
+  const [guessId, setGuessId] = useState(getCookie("guessId"));
   const [guesses, setGuesses] = useState([]);
   const [win, setWin] = useState(false);
 
@@ -94,12 +88,12 @@ const RedanewsProvider = (props) => {
 
     if (userInfo.userId) {
       setUserId(userInfo.userId);
-      setCookie("userId", userInfo.userId, 5);
+      setCookie("userId", userInfo.userId, 30);
     }
 
     if (userInfo.guessId) {
       setGuessId(userInfo.guessId);
-      setCookie("guessId", userInfo.guessId, 5);
+      setCookie("guessId", userInfo.guessId, 30);
     }
   };
 

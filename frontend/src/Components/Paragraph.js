@@ -34,9 +34,8 @@ const Paragraph = ({ news, guesses, win, difficulty, topRef }) => {
     >
       <TopRef ref={topRef} />
       <Heading
-        color="redanews-grey"
+        color="redanews-word-grey"
         lineHeight="1.5"
-        opacity="0.8"
         px="5"
         pt="2"
         align="left"
@@ -46,8 +45,7 @@ const Paragraph = ({ news, guesses, win, difficulty, topRef }) => {
           : redact(news.title, guesses, difficulty)}
       </Heading>
       <Text
-        color="redanews-grey"
-        opacity="0.8"
+        color="redanews-word-grey"
         fontSize="lg"
         px="5"
         align="left"

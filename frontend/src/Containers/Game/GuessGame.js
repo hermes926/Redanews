@@ -49,9 +49,17 @@ const GuessGame = () => {
       news
     );
     if (result !== true) {
+      if (result.description.includes("has already been guessed")) {
+        findSpan(currentGuess);
+      }
       displayToast(result);
+      setPreClickGuess("");
     } else {
       findSpan(currentGuess);
+      tableTopRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
     }
   };
 
@@ -133,6 +141,7 @@ const GuessGame = () => {
   }, []);
 
   const topRef = useRef(null);
+  const tableTopRef = useRef(null);
 
   const scrollToTop = () => {
     topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -146,21 +155,25 @@ const GuessGame = () => {
 
   const findSpan = (word) => {
     clearStyle();
-    setPreClickGuess(word);
     let toFocus = 0;
     if (word === preClickGuess) {
       toFocus = currentFocus + 1;
     }
+
     setCurrentFocus(toFocus);
+    setPreClickGuess(word);
 
     const elements = Array.from(document.getElementsByClassName(word));
     elements.forEach((element, i) => {
       if (toFocus % elements.length === i) {
-        element.scrollIntoView({ behavior: "smooth", block: "center" });
-        element.style.cssText += "color:black;background-color:teal;opacity:1";
+        element.style.cssText += "color:black;background-color:aqua;";
       } else {
-        element.style.cssText += "color:black;background-color:gray";
+        element.style.cssText += "color:black;background-color:gray;";
       }
+    });
+    elements[toFocus % elements.length].current?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
     });
   };
 
@@ -218,7 +231,11 @@ const GuessGame = () => {
               </Center>
             </Stack>
           </Box>
-          <GuessTable guesses={guesses} findSpan={findSpan} />
+          <GuessTable
+            guesses={guesses}
+            tableTopRef={tableTopRef}
+            findSpan={findSpan}
+          />
         </HStack>
       </Box>
     );

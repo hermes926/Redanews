@@ -17,10 +17,10 @@ function NewsCard(props) {
         _hover={{ boxShadow: "0px 2px 2px #18191F" }}
       >
         <CardBody>
-          <Heading size="m" noOfLines={1}>
+          <Heading size="m" noOfLines={2}>
             {props.title}
           </Heading>
-          <Text noOfLines={3}>{props.summary}</Text>
+          <Text noOfLines={2} >{props.summary}</Text>
         </CardBody>
       </Card>
     </a>

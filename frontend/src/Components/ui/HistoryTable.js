@@ -47,15 +47,15 @@ const HistoryTable = ({ history }) => {
               <Text>News Title</Text>
             </Box>
             <Text>|</Text>
-            <Box width="10%" height="10%">
+            <Box width="10%" height="10%" noOfLines={1}>
               <Text>Guesses</Text>
             </Box>
             <Text>|</Text>
-            <Box width="10%" height="10%">
+            <Box width="10%" height="10%" noOfLines={1}>
               <Text>Accuracy</Text>
             </Box>
             <Text>|</Text>
-            <Box width="10%" height="10%">
+            <Box width="10%" height="10%" noOfLines={1}>
               <Text>Average</Text>
             </Box>
           </HStack>
@@ -77,7 +77,7 @@ const HistoryTable = ({ history }) => {
           {Array.from(history)
             .reverse()
             .map((record, i) => (
-              
+
                 <Box
                   color="redanews-blue"
                   key={i}
@@ -94,7 +94,7 @@ const HistoryTable = ({ history }) => {
                         paddingLeft="2"
                         margin="0"
                       >
-                        <Text noOfLines={1}>{record.news_id}</Text>
+                        <Text noOfLines={1}>{i}</Text>
                       </Box>
                       <Text>|</Text>
                       <Box width="15%" height="10%" align="center">
@@ -105,30 +105,36 @@ const HistoryTable = ({ history }) => {
                         width="45%"
                         height="10%"
                         _hover={{ color: "redanews-teal" }}
+
                         variant='link'
                         onClick={()=>{recordOpenClick(); setIndex(i)}}
+
+                        //href={record.newsLink}
+                        noOfLines={1}
+                        //isExternal
+
                       >
                         {record.newsTitle}
                       </Button>
                       <Text>|</Text>
-                      <Box width="10%" height="10%">
-                        {record.correctCnt}
+                      <Box width="10%" height="10%" noOfLines={1}>
+                        {record.guessesCnt}
                       </Box>
                       <Text>|</Text>
-                      <Box width="10%" height="10%">
+                      <Box width="10%" height="10%" noOfLines={1}>
                         {Number(
                           ((record.correctCnt / record.guessesCnt) * 10000) /
                             100
                         ).toFixed(2) + "%"}
                       </Box>
                       <Text>|</Text>
-                      <Box width="10%" height="10%">
-                        {"52.20%"}
+                      <Box width="10%" height="10%" noOfLines={1}>
+                        {record.avgGuess} %
                       </Box>
                     </HStack>
                   </Center>
                 </Box>
-              
+
             ))}
         </Stack>
 

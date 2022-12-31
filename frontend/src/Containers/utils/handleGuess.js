@@ -22,7 +22,13 @@ const countHits = (currentGuess, news) => {
 
 // Handling guess submission
 // Return type: true for successfully make a guess; toast body for providing warning or error
-const handleGuess = async (currentGuess, setCurrentGuess, guesses, setGuesses, news) => {
+const handleGuess = async (
+  currentGuess,
+  setCurrentGuess,
+  guesses,
+  setGuesses,
+  news
+) => {
   if (currentGuess === "") {
     return {
       title: "Fail to guess",
@@ -38,6 +44,16 @@ const handleGuess = async (currentGuess, setCurrentGuess, guesses, setGuesses, n
     )
   ) {
     setCurrentGuess("");
+    Array.from(
+      document.getElementsByClassName(
+        "guess_history_" + currentGuess.toLowerCase()
+      )
+    )[0].click();
+    Array.from(
+      document.getElementsByClassName(
+        "guess_history_" + currentGuess.toLowerCase()
+      )
+    )[0].scrollIntoView({ behavior: "smooth", block: "center" });
     return {
       title: "Fail to guess",
       description: `"${currentGuess}" has already been guessed`,
@@ -59,13 +75,15 @@ const handleGuess = async (currentGuess, setCurrentGuess, guesses, setGuesses, n
   } else {
     const guessId = getCookie("guessId");
     const cntHit = countHits(currentGuess, news);
-    if(guessId){
-      await axios.patch("/guess/" + guessId, {
-        vocabulary: currentGuess,
-        correct: (cntHit > 0),
-      }).catch((e) =>{
-        console.log(e);
-      })
+    if (guessId) {
+      await axios
+        .patch("/guess/" + guessId, {
+          vocabulary: currentGuess,
+          correct: cntHit > 0,
+        })
+        .catch((e) => {
+          console.log(e);
+        });
     }
     setCurrentGuess("");
     setGuesses([
