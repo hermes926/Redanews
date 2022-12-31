@@ -7,15 +7,18 @@ import axios from "../../api";
 import HistoryTable from "../../Components/ui/HistoryTable";
 import { getCookie } from "../../Utils/CookieUsage";
 
+// Redanews Context Provider
+import { useRedanews } from "../../Hooks/useRedanews";
+
 const History = () => {
+  const { history, updateGuessHistory, setUserId } = useRedanews();
   const [username, setUsername] = useState("");
-  const [history, setHistory] = useState([]);
   const userId = getCookie("userId");
   const displayToast = useToast();
 
   useEffect(() => {
     const getHistory = async () => {
-      console.log(userId);
+      setUserId(userId);
       await axios
         .get("/user/" + userId + "/history")
         .catch((e) => {
@@ -42,7 +45,7 @@ const History = () => {
               };
               newGuessHistory = [...newGuessHistory, newGuess];
             }
-            setHistory(newGuessHistory);
+            updateGuessHistory(newGuessHistory);
             setUsername(res.data.username);
           }
         });
