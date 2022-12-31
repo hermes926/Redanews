@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Box, Stack, HStack, Text, Divider } from "@chakra-ui/react";
 
-const GuessTable = ({ guesses, findSpan }) => {
+const GuessTable = ({ guesses, tableTopRef, findSpan }) => {
   return (
     <Box
       width="30vw"
@@ -27,7 +27,13 @@ const GuessTable = ({ guesses, findSpan }) => {
         },
       }}
     >
-      <Box align="left" fontWeight="600" color="redanews-grey" py="2">
+      <Box
+        align="left"
+        fontWeight="600"
+        color="redanews-grey"
+        py="2"
+        ref={tableTopRef}
+      >
         <HStack spacing="0">
           <Box width="20%" height="10%" paddingLeft="2">
             <Text>#</Text>
@@ -45,7 +51,8 @@ const GuessTable = ({ guesses, findSpan }) => {
           .reverse()
           .map((guess, i) => (
             <Box
-              key={i}
+              key={"guess_history_" + guess.vocab.toLowerCase()}
+              className={"guess_history_" + guess.vocab.toLowerCase()}
               _hover={{ bgColor: "primary.300" }}
               margin="0"
               py="1px"
