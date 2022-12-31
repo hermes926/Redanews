@@ -1,3 +1,4 @@
+// Ref: https://www.quackit.com/css/css_color_codes.cfm
 const colors = {
   transparent: "transparent",
   current: "currentColor",
@@ -244,6 +245,8 @@ const colors = {
   "redanews-blue": "#5B8291",
   "redanews-teal": "#98DAD9",
   "redanews-grey": "#EAEBED",
+  "redanews-word-grey": "#989898",
+  "redanews-word-highlight": "#39f3f2",
   "redanews-black": "#1A1A1A",
 };
 
