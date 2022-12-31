@@ -1,5 +1,5 @@
 // React Utils, UI Components
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import {
   Flex,
@@ -35,6 +35,8 @@ const GuessGame = () => {
   const { guesses, news, win, setGuesses, setWin, setNews, difficulty } =
     useRedanews();
   const [currentGuess, setCurrentGuess] = useState("");
+  const [preClickGuess, setPreClickGuess] = useState("");
+  const [currentFocus, setCurrentFocus] = useState(0);
 
   const [loadGuess, setLoadGuess] = useState(false);
 
@@ -48,6 +50,8 @@ const GuessGame = () => {
     );
     if (result !== true) {
       displayToast(result);
+    } else {
+      findSpan(currentGuess);
     }
   };
 
@@ -128,6 +132,38 @@ const GuessGame = () => {
     getTodayNews();
   }, []);
 
+  const topRef = useRef(null);
+
+  const scrollToTop = () => {
+    topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
+  const clearStyle = () => {
+    Array.from(document.getElementsByTagName("span")).forEach((element) => {
+      element.style.cssText = "";
+    });
+  };
+
+  const findSpan = (word) => {
+    clearStyle();
+    setPreClickGuess(word);
+    let toFocus = 0;
+    if (word === preClickGuess) {
+      toFocus = currentFocus + 1;
+    }
+    setCurrentFocus(toFocus);
+
+    const elements = Array.from(document.getElementsByClassName(word));
+    elements.forEach((element, i) => {
+      if (toFocus % elements.length === i) {
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+        element.style.cssText += "color:black;background-color:teal;opacity:1";
+      } else {
+        element.style.cssText += "color:black;background-color:gray";
+      }
+    });
+  };
+
   if (!loadGuess) {
     return <></>;
   } else {
@@ -141,10 +177,16 @@ const GuessGame = () => {
                 win={win}
                 guesses={guesses}
                 difficulty={difficulty}
+                topRef={topRef}
               />
               <Center width="100%" height="12%" bgColor="primary.700">
                 <InputGroup width="40%" minW="300px" padding="0">
-                  <InputLeftAddon variant="link" children="Top" />
+                  <InputLeftAddon
+                    as="button"
+                    variant="link"
+                    children="Top"
+                    onClick={scrollToTop}
+                  />
                   <Input
                     type="string"
                     value={currentGuess}
@@ -176,7 +218,7 @@ const GuessGame = () => {
               </Center>
             </Stack>
           </Box>
-          <GuessTable guesses={guesses} />
+          <GuessTable guesses={guesses} findSpan={findSpan} />
         </HStack>
       </Box>
     );
