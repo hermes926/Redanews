@@ -8,9 +8,19 @@ import {
   Text,
   Link,
   Divider,
+  Button
 } from "@chakra-ui/react";
+import Record from 'Record'
 
 const HistoryTable = ({ history }) => {
+	const [recordOpen, setRecordOpen] = useState(false)
+	const recordOpenClick=()=>{
+		if(recordOpen)
+			setRecordOpen(false)
+		else
+			setRecordOpen(true)
+	}
+
   return (
     <Box width="80vw" borderRadius="10px" bgColor="primary.300" align="center">
       <Box
@@ -89,14 +99,16 @@ const HistoryTable = ({ history }) => {
                         <Text>{record.newsDate}</Text>
                       </Box>
                       <Text>|</Text>
-                      <Link
+                      <Button
                         width="45%"
                         height="10%"
                         _hover={{ color: "redanews-teal" }}
-                        to={record.newsLink}
+                        variant='link'
+                        onClick={()=>{recordOpenClick()}}
                       >
                         {record.newsTitle}
-                      </Link>
+                        <Record history={history}/>
+                      </Button>
                       <Text>|</Text>
                       <Box width="10%" height="10%">
                         {record.correctCnt}
