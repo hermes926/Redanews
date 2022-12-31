@@ -68,13 +68,13 @@ const Header = () => {
   };
 
   useEffect(() => {
-    
+    if (!load) {
       const id = getCookie("userId");
       if (id !== "" && id != "undefined") {
         fetchUser(id, loginUser);
       }
       setLoad(true);
-    
+    }
   }, []);
 
   return (
