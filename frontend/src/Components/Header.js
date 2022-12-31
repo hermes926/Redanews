@@ -25,7 +25,8 @@ import { FiMenu } from "react-icons/fi";
 // User-defined Components, Container
 import Logo from "./ui/Logo";
 import Info from "./Info";
-import Difficulty from "./Difficulty"
+import Difficulty from "./Difficulty";
+import DrawerButton from "./ui/DrawerButton";
 
 // Functions, Utils
 import { getCookie } from "../Utils/CookieUsage";
@@ -34,18 +35,28 @@ import fetchUser from "../Containers/utils/fetchUser";
 // Redanews Context Provider
 import { useRedanews } from "../Hooks/useRedanews";
 
-// Reference: https://pro.chakra-ui.com/components/marketing/navbars
+// Ref for Header: https://pro.chakra-ui.com/components/marketing/navbars
 
 // Header with a Logo and NavBar
 const Header = () => {
   const navigate = useNavigate();
 
-  const { login, load, setLoad, loginUser, logOutUser, difficulty, setDifficulty } = useRedanews();
+  const {
+    login,
+    load,
+    setLoad,
+    loginUser,
+    logOutUser,
+    difficulty,
+    setDifficulty,
+  } = useRedanews();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [infoOpen, setInfoOpen] = useState(false);
+  const [difficultyOpen, setDifficultyOpen] = useState(false);
 
   const InfoClick = () => {
+    document.getElementById("drawer_button_Info").blur();
     if (infoOpen) setInfoOpen(false);
     else setInfoOpen(true);
   };
@@ -94,8 +105,12 @@ const Header = () => {
                 aria-label="Open Menu"
                 onClick={MenuClick}
               />
-              {/*this is for Menu*/}
-              <Drawer isOpen={menuOpen} placement="right" onClose={MenuClick}>
+              <Drawer
+                w="100%"
+                isOpen={menuOpen}
+                placement="right"
+                onClose={MenuClick}
+              >
                 <DrawerOverlay />
                 <DrawerContent>
                   <DrawerCloseButton />
@@ -103,49 +118,65 @@ const Header = () => {
                     <Center w="100%">Menu</Center>
                   </DrawerHeader>
                   <Divider colorScheme="redanews" />
-                  <DrawerBody>
-                    <VStack spacing="30px" h="100%" pt="5px">
-                      {/*<Button w='90%' variant='link' onClick={()=>{MenuClick(); navigate("/")}}>MainPage</Button>*/}
-                      <Button w="90%" variant="link" onClick={InfoClick}>
-                        Info
-                      </Button>
+                  <DrawerBody w="100%" px="0" py="0">
+                    <VStack h="100%" spacing="0">
+                      <DrawerButton onClickFn={InfoClick} text="Info" />
                       <Info infoOpen={infoOpen} InfoClick={InfoClick} />
                       {login ? (
                         <>
-                          <Button
-                            w="90%"
-                            variant="link"
-                            onClick={() => {
+                          <DrawerButton
+                            onClickFn={() => {
                               navigate("/account/");
                               MenuClick();
                             }}
-                          >
-                            Profile
-                          </Button>
-                          <Button
-                            w="90%"
-                            variant="link"
-                            onClick={() => {
+                            text="Profile"
+                          />
+                          <DrawerButton
+                            onClickFn={() => {
                               navigate("/account/history");
                               MenuClick();
                             }}
-                          >
-                            History
-                          </Button>
+                            text="History"
+                          />
                         </>
-                      ) : (
-                        <></>
-                      )}
-                    <Difficulty difficulty={difficulty} setDifficulty={setDifficulty}/>
+                      ) : null}
+                      <DrawerButton
+                        onClickFn={() => {
+                          if (difficultyOpen) {
+                            document
+                              .getElementById("drawer_button_Difficulty")
+                              .blur();
+                          }
+                          setDifficultyOpen(!difficultyOpen);
+                        }}
+                        text="Difficulty"
+                      />
+                      {difficultyOpen ? (
+                        <Difficulty
+                          difficulty={difficulty}
+                          setDifficulty={setDifficulty}
+                        />
+                      ) : null}
                     </VStack>
-
                   </DrawerBody>
 
-                  <DrawerFooter display='flex' justifyContent='space-around'>
-                    <Button colorScheme='blue' onClick={()=>{MenuClick(); navigate("/game");}}>Play Game</Button>
+                  <DrawerFooter
+                    display="flex"
+                    justifyContent="space-around"
+                    _focus={{ backgroundColor: "red" }}
+                  >
+                    <Button
+                      colorScheme="facebook"
+                      onClick={() => {
+                        MenuClick();
+                        navigate("/game");
+                      }}
+                    >
+                      Play Game
+                    </Button>
                     {login ? (
                       <Button
-                        variant="outline"
+                        colorScheme="facebook"
                         mr={3}
                         onClick={() => {
                           MenuClick();
@@ -157,7 +188,7 @@ const Header = () => {
                       </Button>
                     ) : (
                       <Button
-                        colorScheme="blue"
+                        colorScheme="facebook"
                         onClick={() => {
                           MenuClick();
                           navigate("/login");
