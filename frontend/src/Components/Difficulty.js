@@ -3,7 +3,7 @@ import {useState} from 'react'
 
 const Difficulty = ({difficulty, setDifficulty})=>{
 	const [open, setOpen] = useState(false)
-	console.log(difficulty)
+	//console.log(difficulty)
 	return (
 		<>
 		<Button w="90%" variant="link" onClick={()=>{
