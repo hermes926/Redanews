@@ -10,7 +10,8 @@ import {
   Divider,
   Button
 } from "@chakra-ui/react";
-import Record from 'Record'
+
+import Record from './Record'
 
 const HistoryTable = ({ history }) => {
 	const [recordOpen, setRecordOpen] = useState(false)
@@ -20,6 +21,7 @@ const HistoryTable = ({ history }) => {
 		else
 			setRecordOpen(true)
 	}
+	const [index, setIndex] = useState(0)
 
   return (
     <Box width="80vw" borderRadius="10px" bgColor="primary.300" align="center">
@@ -104,10 +106,9 @@ const HistoryTable = ({ history }) => {
                         height="10%"
                         _hover={{ color: "redanews-teal" }}
                         variant='link'
-                        onClick={()=>{recordOpenClick()}}
+                        onClick={()=>{recordOpenClick(); setIndex(i)}}
                       >
                         {record.newsTitle}
-                        <Record history={history}/>
                       </Button>
                       <Text>|</Text>
                       <Box width="10%" height="10%">
@@ -130,6 +131,9 @@ const HistoryTable = ({ history }) => {
               
             ))}
         </Stack>
+
+         <Record history={history[index]} recordOpen={recordOpen} recordOpenClick={recordOpenClick}/>
+
       </Box>
     </Box>
   );
