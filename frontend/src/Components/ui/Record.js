@@ -49,7 +49,7 @@ const Record=({history, recordOpen, recordOpenClick})=>{
           (guess) => guess.toLowerCase() === word.toLowerCase()
         ) 
       ){
-        redacted.push( <span key={i*2} style={{fontWeight: 'bold'}}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span> )
+        redacted.push( <span key={i*2} style={{fontWeight: 'bolder'}}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span> )
       }
       else if (commonWords.find((commonWord) => commonWord === word.toLowerCase())
       ) {
@@ -85,9 +85,9 @@ const Record=({history, recordOpen, recordOpenClick})=>{
               <ModalHeader>Record on {history.newsDate}</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <Text>News title: {history.newsTitle}</Text>
-                <Text>Link: <Link color="teal" href={history.newsLink} isExternal>{history.newsLink}</Link></Text>
-                <Text>Content: </Text>
+                <Text>News title : {history.newsTitle}</Text>
+                <Text>Link : <Link color="teal" href={history.newsLink} isExternal>{history.newsLink}</Link></Text>
+                <Text>Your answer : </Text>
                 <Heading>{title}</Heading>
                 {article}
               </ModalBody>
