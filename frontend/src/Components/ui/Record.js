@@ -10,6 +10,7 @@ import {
   Lorem,
   Text,
   Link,
+  Heading,
 } from '@chakra-ui/react'
 
 import {useState, useEffect} from 'react'
@@ -20,6 +21,7 @@ const Record=({history, recordOpen, recordOpenClick})=>{
   //const content = "'happy birthday' to you happy birthday, to you happy birthday to you!"
   //const guesses = ["happy", "birthday"]
   const [content, setContent] = useState("")
+  const [title, setTitle] = useState("")
   const [article, setArticle] = useState("")
   
   const getArtitle = async()=>{ 
@@ -28,11 +30,11 @@ const Record=({history, recordOpen, recordOpenClick})=>{
       setContent(payload.data.article)
   }
 
-  const makeRecord=()=>{   //copy from redact.js
+  const makeRecord=(contentt)=>{   //copy from redact.js
     const guesses = history.vocabs
     let redacted = [];
     let cnt = 0;
-    const words = content.split(/[\n\s]+/);
+    const words = contentt.split(/[\n\s]+/);
     for (let i = 0; i < words.length; i++) {
       let word = "";
       let mark = "";
@@ -45,12 +47,15 @@ const Record=({history, recordOpen, recordOpenClick})=>{
       if (
         guesses.find(
           (guess) => guess.toLowerCase() === word.toLowerCase()
-        ) ||
-        commonWords.find((commonWord) => commonWord === word.toLowerCase())
+        ) 
+      ){
+        redacted.push( <span key={i*2} style={{fontWeight: 'bold'}}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span> )
+      }
+      else if (commonWords.find((commonWord) => commonWord === word.toLowerCase())
       ) {
-        redacted.push( <span key={i*2}>{(cnt > 0 ? content[cnt - 1] : " ") + word}</span> )
+        redacted.push( <span key={i*2}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span> )
       } else{
-        redacted.push(<span key={i*2} style={{color: 'red'}}>{(cnt > 0 ? content[cnt - 1] : " ") + word}</span>)
+        redacted.push(<span key={i*2} style={{color: '#FFC9C9'}}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span>)
       }
 
       redacted.push(<span key={i*2+1}>{mark}</span>);
@@ -61,13 +66,15 @@ const Record=({history, recordOpen, recordOpenClick})=>{
 
   useEffect(()=>{
     if(content != ""){
-      setArticle(makeRecord())
+      setArticle(makeRecord(content))
+      setTitle(makeRecord(history.newsTitle))
     }
   }, [content])
 
   useEffect(()=>{
-    if(recordOpen)
+    if(recordOpen){
       getArtitle()
+    }
   }, [recordOpen])
   
 
@@ -79,8 +86,9 @@ const Record=({history, recordOpen, recordOpenClick})=>{
               <ModalCloseButton />
               <ModalBody>
                 <Text>News title: {history.newsTitle}</Text>
-                <Text>Link: <Link color="redanews-teal" href={history.newsLink} isExternal>{history.newsLink}</Link></Text>
+                <Text>Link: <Link color="teal" href={history.newsLink} isExternal>{history.newsLink}</Link></Text>
                 <Text>Content: </Text>
+                <Heading>{title}</Heading>
                 {article}
               </ModalBody>
 
