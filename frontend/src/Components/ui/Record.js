@@ -32,7 +32,7 @@ const Record=({history, recordOpen, recordOpenClick})=>{
 
   const makeRecord=(contentt)=>{   //copy from redact.js
     const guesses = history.vocabs
-    let redacted = [];
+    /*let redacted = [];       //this is old redact algorithm
     let cnt = 0;
     const words = contentt.split(/[\n\s]+/);
     for (let i = 0; i < words.length; i++) {
@@ -61,6 +61,35 @@ const Record=({history, recordOpen, recordOpenClick})=>{
       redacted.push(<span key={i*2+1}>{mark}</span>);
       cnt += words[i].length + 1;
     }
+    return redacted*/
+    let redacted = [];                     //this is new redact algorithm
+  const words = contentt.split(
+    /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/
+  );
+  let words_index = words[0] === "" ? 1 : 0;
+  for (let i = 0; i < contentt.length; i++) {
+    if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(contentt[i])) {
+      redacted.push(contentt[i]);
+    } else {
+      if (
+        guesses.find(
+          (guess) =>
+            guess.toLowerCase() === words[words_index].toLowerCase()
+        )){
+        redacted.push( <span key={i*2} style={{fontWeight: 'bolder'}}>{words[words_index]}</span> )    //for guessed words, text are thicker.
+      } else if (
+        commonWords.find(
+          (commonWord) => commonWord === words[words_index].toLowerCase()
+        )
+      ) {
+        redacted.push( <span key={i*2}>{words[words_index]}</span> )    //for given words, text are normal.
+      } else {
+        redacted.push(<span key={i*2} style={{color: '#FFC9C9'}}>{words[words_index]}</span>)    //for words not being guessed, text are red.
+      } 
+      i += words[words_index].length - 1;
+      words_index += 1;
+    }
+  }
     return redacted
   }
 
