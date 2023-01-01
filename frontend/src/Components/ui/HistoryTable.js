@@ -107,7 +107,7 @@ const HistoryTable = ({ history }) => {
                         _hover={{ color: "redanews-teal" }}
 
                         variant='link'
-                        onClick={()=>{recordOpenClick(); setIndex(i)}}
+                        onClick={()=>{recordOpenClick(); setIndex(history.length-1-i)}}
 
                         //href={record.newsLink}
                         noOfLines={1}
@@ -138,7 +138,7 @@ const HistoryTable = ({ history }) => {
             ))}
         </Stack>
 
-         <Record history={history[index]} recordOpen={recordOpen} recordOpenClick={recordOpenClick}/>
+         {<Record history={history[index]} recordOpen={recordOpen} recordOpenClick={recordOpenClick}/>}
 
       </Box>
     </Box>
