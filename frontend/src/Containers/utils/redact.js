@@ -3,7 +3,7 @@ import { commonWords, marks } from "./variables";
 // Function for redacting given content with guesses and commonWords revealed
 // Return the redacted content
 function redact(content, guesses, difficulty) {
-  let redacted = "";
+  let redacted = [];
   let cnt = 0;
   const words = content.split(
     /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/
@@ -11,7 +11,7 @@ function redact(content, guesses, difficulty) {
   let words_index = 1;
   for (let i = 0; i < content.length; i++) {
     if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(content[i])) {
-      redacted += content[i];
+      redacted.push(content[i]);
     } else {
       if (
         guesses.find(
@@ -22,19 +22,21 @@ function redact(content, guesses, difficulty) {
           (commonWord) => commonWord === words[words_index].toLowerCase()
         )
       ) {
-        redacted += words[words_index];
+        redacted.push(words[words_index]);
       } else if (difficulty === "Hard" || words[words_index].length < 3) {
-        redacted += "█".repeat(words[words_index].length);
+        redacted.push("█".repeat(words[words_index].length));
       } else if (difficulty === "Medium") {
-        redacted +=
+        redacted.push(
           words[words_index][0] +
-          "█".repeat(words[words_index].length - 2) +
-          words[words_index][words[words_index].length - 1];
+            "█".repeat(words[words_index].length - 2) +
+            words[words_index][words[words_index].length - 1]
+        );
       } else if (difficulty === "Easy") {
-        redacted +=
+        redacted.push(
           words[words_index][0] +
-          "▉".repeat(words[words_index].length - 2) +
-          words[words_index][words[words_index].length - 1];
+            "▉".repeat(words[words_index].length - 2) +
+            words[words_index][words[words_index].length - 1]
+        );
       }
       i += words[words_index].length - 1;
       words_index += 1;
@@ -43,29 +45,18 @@ function redact(content, guesses, difficulty) {
 
   return (
     <>
-      {redacted
-        .replace(/(?:\r\n|\r|\n)/g, "\n\n")
-        .split(" ")
-        .map((str, i) => {
-          if (!marks.find((m) => m === str[str.length - 1])) {
-            return (
-              <span key={str + "-" + i}>
-                <span className={str.toLowerCase()}>{str}</span>{" "}
-              </span>
-            );
-          } else {
-            return (
-              <span key={str + "-" + i}>
-                <span
-                  className={str.substring(0, str.length - 1).toLowerCase()}
-                >
-                  {str.substring(0, str.length - 1)}
-                </span>
-                <span>{str[str.length - 1]}</span>{" "}
-              </span>
-            );
-          }
-        })}
+      {redacted.map((str, i) => (
+        <span key={str + "-" + i}>
+          <span className={str.toLowerCase()}>{str}</span>
+          {!/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(str) &&
+          i !== redacted.length - 1 &&
+          !/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(
+            redacted[i + 1]
+          )
+            ? " "
+            : ""}
+        </span>
+      ))}
     </>
   );
 }
