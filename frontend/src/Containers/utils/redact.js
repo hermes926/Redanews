@@ -5,47 +5,45 @@ import { commonWords, marks } from "./variables";
 function redact(content, guesses, difficulty) {
   let redacted = "";
   let cnt = 0;
-  const words = content.split(/[\n\s]+/);
-  for (let i = 0; i < words.length; i++) {
-    let word = "";
-    let mark = "";
-    if (!marks.find((m) => m === words[i][words[i].length - 1])) {
-      word = words[i];
+  const words = content.split(
+    /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/
+  );
+  let words_index = 1;
+  for (let i = 0; i < content.length; i++) {
+    if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(content[i])) {
+      redacted += content[i];
     } else {
-      word = words[i].substring(0, words[i].length - 1);
-      mark = words[i][words[i].length - 1];
+      if (
+        guesses.find(
+          (guess) =>
+            guess.vocab.toLowerCase() === words[words_index].toLowerCase()
+        ) ||
+        commonWords.find(
+          (commonWord) => commonWord === words[words_index].toLowerCase()
+        )
+      ) {
+        redacted += words[words_index];
+      } else if (difficulty === "Hard" || words[words_index].length < 3) {
+        redacted += "█".repeat(words[words_index].length);
+      } else if (difficulty === "Medium") {
+        redacted +=
+          words[words_index][0] +
+          "█".repeat(words[words_index].length - 2) +
+          words[words_index][words[words_index].length - 1];
+      } else if (difficulty === "Easy") {
+        redacted +=
+          words[words_index][0] +
+          "▉".repeat(words[words_index].length - 2) +
+          words[words_index][words[words_index].length - 1];
+      }
+      i += words[words_index].length - 1;
+      words_index += 1;
     }
-    if (
-      guesses.find(
-        (guess) => guess.vocab.toLowerCase() === word.toLowerCase()
-      ) ||
-      commonWords.find((commonWord) => commonWord === word.toLowerCase())
-    ) {
-      redacted += (cnt > 0 ? content[cnt - 1] : " ") + word;
-    } else if (difficulty === "Hard" || word.length < 3) {
-      redacted += (cnt > 0 ? content[cnt - 1] : " ") + "█".repeat(word.length);
-    } else if (difficulty === "Medium") {
-      redacted +=
-        (cnt > 0 ? content[cnt - 1] : " ") +
-        word[0] +
-        "█".repeat(word.length - 2) +
-        word[word.length - 1];
-    } else if (difficulty === "Easy") {
-      redacted +=
-        (cnt > 0 ? content[cnt - 1] : " ") +
-        word[0] +
-        "▉".repeat(word.length - 2) +
-        word[word.length - 1];
-    }
-
-    redacted += mark;
-    cnt += words[i].length + 1;
   }
 
   return (
     <>
       {redacted
-        .substring(1)
         .replace(/(?:\r\n|\r|\n)/g, "\n\n")
         .split(" ")
         .map((str, i) => {
