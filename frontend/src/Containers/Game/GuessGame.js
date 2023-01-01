@@ -32,8 +32,17 @@ const GuessGame = () => {
   const navigate = useNavigate();
   const displayToast = useToast();
 
-  const { guesses, news, win, setGuesses, setWin, setNews, difficulty } =
-    useRedanews();
+  const {
+    guessId,
+    guesses,
+    news,
+    win,
+    setGuessId,
+    setGuesses,
+    setWin,
+    setNews,
+    difficulty,
+  } = useRedanews();
   const [currentGuess, setCurrentGuess] = useState("");
   const [preClickGuess, setPreClickGuess] = useState("");
   const [currentFocus, setCurrentFocus] = useState(0);
@@ -65,7 +74,6 @@ const GuessGame = () => {
 
   useEffect(() => {
     const getGuessRecord = async () => {
-      const guessId = getCookie("guessId");
       if (guessId && news) {
         await axios
           .get("/guess/" + guessId)
@@ -104,6 +112,16 @@ const GuessGame = () => {
   }, [news]);
 
   useEffect(() => {
+    const sendWinAPI = async () => {
+      await axios
+        .patch("/guess/" + guessId + "/win")
+        .catch((e) => {
+          console.log(e);
+        })
+        .then((res) => {
+          console.log("SUCCESS");
+        });
+    };
     if (win) {
       displayToast({
         title: "Correct Answer",
@@ -112,6 +130,10 @@ const GuessGame = () => {
         duration: 2000,
         isClosable: true,
       });
+
+      if (guessId != "" && guessId) {
+        sendWinAPI();
+      }
     }
   }, [win]);
 
@@ -188,6 +210,7 @@ const GuessGame = () => {
               <Paragraph
                 news={news}
                 win={win}
+                setWin={setWin}
                 guesses={guesses}
                 difficulty={difficulty}
                 topRef={topRef}

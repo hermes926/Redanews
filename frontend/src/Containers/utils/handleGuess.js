@@ -97,4 +97,35 @@ const handleGuess = async (
   }
 };
 
-export { handleGuess, countHits };
+// Check win or not
+const checkWin = (guesses, title) => {
+  let redacted = "";
+  let cnt = 0;
+  const words = title.split(/[\n\s]+/);
+  for (let i = 0; i < words.length; i++) {
+    let word = "";
+    let mark = "";
+    if (!marks.find((m) => m === words[i][words[i].length - 1])) {
+      word = words[i];
+    } else {
+      word = words[i].substring(0, words[i].length - 1);
+      mark = words[i][words[i].length - 1];
+    }
+    if (
+      guesses.find(
+        (guess) => guess.vocab.toLowerCase() === word.toLowerCase()
+      ) ||
+      commonWords.find((commonWord) => commonWord === word.toLowerCase())
+    ) {
+      redacted += (cnt > 0 ? title[cnt - 1] : " ") + word;
+    } else {
+      redacted += (cnt > 0 ? title[cnt - 1] : " ") + "█".repeat(word.length);
+    }
+    redacted += mark;
+    cnt += words[i].length + 1;
+  }
+
+  return !redacted.includes("█");
+};
+
+export { handleGuess, countHits, checkWin };

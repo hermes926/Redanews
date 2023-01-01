@@ -5,12 +5,17 @@ import styled from "@emotion/styled";
 
 // Functions, Utils
 import redact from "../Containers/utils/redact";
+import { checkWin } from "../Containers/utils/handleGuess";
 
 const TopRef = styled.div`
   height: 1px;
 `;
 
-const Paragraph = ({ news, guesses, win, difficulty, topRef }) => {
+const Paragraph = ({ news, guesses, win, setWin, difficulty, topRef }) => {
+  useEffect(() => {
+    setWin(checkWin(guesses, news.title));
+  }, [guesses]);
+
   return (
     <Stack
       width="100%"
