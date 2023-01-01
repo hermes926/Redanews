@@ -4,19 +4,12 @@ import { getCookie } from "../../Utils/CookieUsage";
 
 // Function for counting word hits with the today's quiz
 const countHits = (currentGuess, news) => {
-  let count = 0;
-  const words = news.title.split(" ").concat(news.content.split(" "));
-  for (let i = 0; i < words.length; i++) {
-    let word = "";
-    if (!marks.find((m) => m === words[i][words[i].length - 1])) {
-      word = words[i];
-    } else {
-      word = words[i].substring(0, words[i].length - 1);
-    }
-    if (word.toLowerCase() === currentGuess.toLowerCase()) {
-      count += 1;
-    }
-  }
+  const count = news.title
+    .split(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/)
+    .concat(
+      news.content.split(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/)
+    )
+    .filter((word) => word.toLowerCase() === currentGuess.toLowerCase()).length;
   return count;
 };
 
@@ -33,6 +26,15 @@ const handleGuess = async (
     return {
       title: "Fail to guess",
       description: `Please input a vocabulary to guess`,
+      status: "warning",
+      duration: 2000,
+      isClosable: true,
+    };
+  }
+  if (currentGuess.includes(" ")) {
+    return {
+      title: "Fail to guess",
+      description: `Please guess a word without any space`,
       status: "warning",
       duration: 2000,
       isClosable: true,
@@ -97,4 +99,36 @@ const handleGuess = async (
   }
 };
 
-export { handleGuess, countHits };
+// Check win or not
+const checkWin = (guesses, content) => {
+  let redacted = "";
+  let cnt = 0;
+  const words = content.split(
+    /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/
+  );
+  let words_index = 1;
+  for (let i = 0; i < content.length; i++) {
+    if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(content[i])) {
+      redacted += content[i];
+    } else {
+      if (
+        guesses.find(
+          (guess) =>
+            guess.vocab.toLowerCase() === words[words_index].toLowerCase()
+        ) ||
+        commonWords.find(
+          (commonWord) => commonWord === words[words_index].toLowerCase()
+        )
+      ) {
+        redacted += words[words_index];
+      } else {
+        redacted += "█".repeat(words[words_index].length);
+      }
+      i += words[words_index].length - 1;
+      words_index += 1;
+    }
+  }
+  return !redacted.includes("█") && content !== "";
+};
+
+export { handleGuess, countHits, checkWin };

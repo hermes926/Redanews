@@ -66,7 +66,7 @@ const RedanewsProvider = (props) => {
     },
   ]);
 
-  const [guessId, setGuessId] = useState(getCookie("guessId"));
+  const [guessId, setGuessId] = useState("");
   const [guesses, setGuesses] = useState([]);
   const [win, setWin] = useState(false);
 
@@ -106,6 +106,9 @@ const RedanewsProvider = (props) => {
     setUser({});
     setUserId("");
     setGuessId("");
+
+    setGuesses([]);
+    setWin(false);
 
     deleteCookie("userId");
     deleteCookie("guessId");

@@ -3,71 +3,60 @@ import { commonWords, marks } from "./variables";
 // Function for redacting given content with guesses and commonWords revealed
 // Return the redacted content
 function redact(content, guesses, difficulty) {
-  let redacted = "";
+  let redacted = [];
   let cnt = 0;
-  const words = content.split(/[\n\s]+/);
-  for (let i = 0; i < words.length; i++) {
-    let word = "";
-    let mark = "";
-    if (!marks.find((m) => m === words[i][words[i].length - 1])) {
-      word = words[i];
+  const words = content.split(
+    /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/
+  );
+  let words_index = 1;
+  for (let i = 0; i < content.length; i++) {
+    if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(content[i])) {
+      redacted.push(content[i]);
     } else {
-      word = words[i].substring(0, words[i].length - 1);
-      mark = words[i][words[i].length - 1];
+      if (
+        guesses.find(
+          (guess) =>
+            guess.vocab.toLowerCase() === words[words_index].toLowerCase()
+        ) ||
+        commonWords.find(
+          (commonWord) => commonWord === words[words_index].toLowerCase()
+        )
+      ) {
+        redacted.push(words[words_index]);
+      } else if (difficulty === "Hard" || words[words_index].length < 3) {
+        redacted.push("█".repeat(words[words_index].length));
+      } else if (difficulty === "Medium") {
+        redacted.push(
+          words[words_index][0] +
+            "█".repeat(words[words_index].length - 2) +
+            words[words_index][words[words_index].length - 1]
+        );
+      } else if (difficulty === "Easy") {
+        redacted.push(
+          words[words_index][0] +
+            "▉".repeat(words[words_index].length - 2) +
+            words[words_index][words[words_index].length - 1]
+        );
+      }
+      i += words[words_index].length - 1;
+      words_index += 1;
     }
-    if (
-      guesses.find(
-        (guess) => guess.vocab.toLowerCase() === word.toLowerCase()
-      ) ||
-      commonWords.find((commonWord) => commonWord === word.toLowerCase())
-    ) {
-      redacted += (cnt > 0 ? content[cnt - 1] : " ") + word;
-    } else if (difficulty === "Hard" || word.length < 3) {
-      redacted += (cnt > 0 ? content[cnt - 1] : " ") + "█".repeat(word.length);
-    } else if (difficulty === "Medium") {
-      redacted +=
-        (cnt > 0 ? content[cnt - 1] : " ") +
-        word[0] +
-        "█".repeat(word.length - 2) +
-        word[word.length - 1];
-    } else if (difficulty === "Easy") {
-      redacted +=
-        (cnt > 0 ? content[cnt - 1] : " ") +
-        word[0] +
-        "▉".repeat(word.length - 2) +
-        word[word.length - 1];
-    }
-
-    redacted += mark;
-    cnt += words[i].length + 1;
   }
 
   return (
     <>
-      {redacted
-        .substring(1)
-        .replace(/(?:\r\n|\r|\n)/g, "\n\n")
-        .split(" ")
-        .map((str, i) => {
-          if (!marks.find((m) => m === str[str.length - 1])) {
-            return (
-              <span key={str + "-" + i}>
-                <span className={str.toLowerCase()}>{str}</span>{" "}
-              </span>
-            );
-          } else {
-            return (
-              <span key={str + "-" + i}>
-                <span
-                  className={str.substring(0, str.length - 1).toLowerCase()}
-                >
-                  {str.substring(0, str.length - 1)}
-                </span>
-                <span>{str[str.length - 1]}</span>{" "}
-              </span>
-            );
-          }
-        })}
+      {redacted.map((str, i) => (
+        <span key={str + "-" + i}>
+          <span className={str.toLowerCase()}>{str}</span>
+          {!/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(str) &&
+          i !== redacted.length - 1 &&
+          !/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(
+            redacted[i + 1]
+          )
+            ? " "
+            : ""}
+        </span>
+      ))}
     </>
   );
 }
