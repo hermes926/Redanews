@@ -31,6 +31,9 @@ router.get("/:id/history", async (req, res) => {
       for(let i = 0; i < user.guesses_id.length; i++){
         const guess = await Guess.findById(user.guesses_id[i]);
         const news = await News.findById(guess.news_id);
+        console.log(news)
+        if(!news)
+          continue
         
         let t = 0.0, cnt = 10e-7;
         for(let j = 0; j < news.guesses_id.length; j++){
@@ -47,6 +50,8 @@ router.get("/:id/history", async (req, res) => {
           title: news.title,
           date: guess.date,
           avgGuess: (t * 100 / cnt).toFixed(2),
+          vocabs: guess.vocabs,
+          news_id: guess.news_id,
         };
         guesses = [...guesses, newGuess];
       }
