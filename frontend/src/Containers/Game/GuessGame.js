@@ -45,6 +45,7 @@ const GuessGame = () => {
   } = useRedanews();
   const [currentGuess, setCurrentGuess] = useState("");
   const [preClickGuess, setPreClickGuess] = useState("");
+  const [preSpans, setPreSpans] = useState([]);
   const [currentFocus, setCurrentFocus] = useState(0);
 
   const [loadGuess, setLoadGuess] = useState(false);
@@ -170,33 +171,44 @@ const GuessGame = () => {
   };
 
   const clearStyle = () => {
-    Array.from(document.getElementsByTagName("span")).forEach((element) => {
-      element.style.cssText = "";
-    });
+    Array.from(document.getElementsByClassName(preClickGuess)).forEach(
+      (element) => {
+        element.style.cssText = "";
+      }
+    );
   };
 
-  const findSpan = (word) => {
-    clearStyle();
+  const findSpan = async (word) => {
     let toFocus = 0;
-    if (word === preClickGuess) {
+    let elements = preSpans;
+    if (word.toLowerCase() === preClickGuess) {
       toFocus = currentFocus + 1;
+      elements[toFocus % elements.length].style.cssText =
+        "color:black;background-color:aqua;";
+      elements[(toFocus - 1) % elements.length].style.cssText =
+        "color:black;background-color:gray;";
+    } else {
+      clearStyle();
+      elements = Array.from(await document.getElementsByClassName(word));
+      setPreSpans(elements);
+      elements.forEach((element, i) => {
+        if (i === 0) {
+          element.style.cssText += "color:black;background-color:aqua;";
+        } else {
+          element.style.cssText += "color:black;background-color:gray;";
+        }
+      });
     }
 
     setCurrentFocus(toFocus);
-    setPreClickGuess(word);
+    setPreClickGuess(word.toLowerCase());
 
-    const elements = Array.from(document.getElementsByClassName(word));
-    elements.forEach((element, i) => {
-      if (toFocus % elements.length === i) {
-        element.style.cssText += "color:black;background-color:aqua;";
-      } else {
-        element.style.cssText += "color:black;background-color:gray;";
-      }
-    });
-    elements[toFocus % elements.length].current?.scrollIntoView({
-      behavior: "smooth",
-      block: "center",
-    });
+    if (elements !== []) {
+      elements[toFocus % elements.length]?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
   };
 
   if (!loadGuess) {
