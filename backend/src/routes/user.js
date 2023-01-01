@@ -31,7 +31,7 @@ router.get("/:id/history", async (req, res) => {
       for(let i = 0; i < user.guesses_id.length; i++){
         const guess = await Guess.findById(user.guesses_id[i]);
         const news = await News.findById(guess.news_id);
-        console.log(news)
+        //console.log(news)
         if(!news)
           continue
         
