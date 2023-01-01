@@ -10,6 +10,7 @@ function redact(content, guesses, difficulty) {
   let words_index = words[0] === "" ? 1 : 0;
   for (let i = 0; i < content.length; i++) {
     if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(content[i])) {
+      redacted.push(content[i]);
     } else {
       if (
         guesses.find(
