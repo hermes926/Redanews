@@ -75,9 +75,13 @@ const GuessGame = () => {
 
   useEffect(() => {
     const getGuessRecord = async () => {
-      if (guessId && news) {
+      let curGuessId = guessId;
+      if (getCookie("guessId") !== "" || getCookie("guessId")) {
+        curGuessId = getCookie("guessId");
+      }
+      if (curGuessId !== "" && news) {
         await axios
-          .get("/guess/" + guessId)
+          .get("/guess/" + curGuessId)
           .catch((e) => {
             displayToast({
               title: "Fetch Guess Record",
@@ -101,6 +105,7 @@ const GuessGame = () => {
                   },
                 ];
               });
+              setGuessId(curGuessId);
               setGuesses(guessRecord);
               setLoadGuess(true);
             }
