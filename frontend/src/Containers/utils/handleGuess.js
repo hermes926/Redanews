@@ -4,19 +4,12 @@ import { getCookie } from "../../Utils/CookieUsage";
 
 // Function for counting word hits with the today's quiz
 const countHits = (currentGuess, news) => {
-  let count = 0;
-  const words = news.title.split(" ").concat(news.content.split(" "));
-  for (let i = 0; i < words.length; i++) {
-    let word = "";
-    if (!marks.find((m) => m === words[i][words[i].length - 1])) {
-      word = words[i];
-    } else {
-      word = words[i].substring(0, words[i].length - 1);
-    }
-    if (word.toLowerCase() === currentGuess.toLowerCase()) {
-      count += 1;
-    }
-  }
+  const count = news.title
+    .split(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/)
+    .concat(
+      news.content.split(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/)
+    )
+    .filter((word) => word.toLowerCase() === currentGuess.toLowerCase()).length;
   return count;
 };
 
