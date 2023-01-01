@@ -1,5 +1,12 @@
 // React Utils, UI Components
-import { Box, Container, HStack, Text, Button, useToast } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  HStack,
+  Text,
+  Button,
+  useToast,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 // User-defined Components, Container
@@ -19,20 +26,23 @@ const Home = () => {
 
   useEffect(() => {
     const getTrendingNews = async () => {
-      await axios.get('/news/trending').catch((e) => {
-        displayToast({
-          title: "Fetch Trending News Failed!",
-          status: "error",
-          duration: 2000,
-          isClosable: true,
+      await axios
+        .get("/news/trending")
+        .catch((e) => {
+          displayToast({
+            title: "Fetch Trending News Failed!",
+            status: "error",
+            duration: 2000,
+            isClosable: true,
+          });
+        })
+        .then((res) => {
+          setTrendingNews(res.data);
+          console.log(res.data);
         });
-      }).then((res) => {
-        setTrendingNews(res.data);
-        console.log(res.data);
-      })
-    }
+    };
     getTrendingNews();
-  }, [])
+  }, []);
 
   return (
     <Box width="100%" height="100%" align="center" margin="0 0 0 0">
@@ -126,14 +136,18 @@ const Home = () => {
               },
             }}
           >
-            {trendingNews.map((piece, i) => (
-              <NewsCard
-                title={piece.title}
-                summary={piece.article}
-                link={piece.link}
-                key={i}
-              />
-            ))}
+            {trendingNews === [] ? (
+              <></>
+            ) : (
+              trendingNews.map((piece, i) => (
+                <NewsCard
+                  title={piece.title}
+                  summary={piece.article}
+                  link={piece.link}
+                  key={i}
+                />
+              ))
+            )}
           </Box>
         </HStack>
       </Container>
