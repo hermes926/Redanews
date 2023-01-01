@@ -1,6 +1,7 @@
 // React Utils, UI Components
 import { Radio, RadioGroup, Stack, Box, Center } from "@chakra-ui/react";
 
+
 // Difficulty Control Panel
 const Difficulty = ({ difficulty, setDifficulty }) => {
   return (
@@ -15,5 +16,6 @@ const Difficulty = ({ difficulty, setDifficulty }) => {
     </Center>
   );
 };
+
 
 export default Difficulty;

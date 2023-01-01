@@ -8,9 +8,21 @@ import {
   Text,
   Link,
   Divider,
+  Button
 } from "@chakra-ui/react";
 
+import Record from './Record'
+
 const HistoryTable = ({ history }) => {
+	const [recordOpen, setRecordOpen] = useState(false)
+	const recordOpenClick=()=>{
+		if(recordOpen)
+			setRecordOpen(false)
+		else
+			setRecordOpen(true)
+	}
+	const [index, setIndex] = useState(0)
+
   return (
     <Box width="80vw" borderRadius="10px" bgColor="primary.300" align="center">
       <Box
@@ -65,7 +77,7 @@ const HistoryTable = ({ history }) => {
           {Array.from(history)
             .reverse()
             .map((record, i) => (
-              <Box key={i}>
+
                 <Box
                   color="redanews-blue"
                   key={i}
@@ -89,16 +101,21 @@ const HistoryTable = ({ history }) => {
                         <Text>{record.newsDate}</Text>
                       </Box>
                       <Text>|</Text>
-                      <Link
+                      <Button
                         width="45%"
                         height="10%"
                         _hover={{ color: "redanews-teal" }}
-                        href={record.newsLink}
+
+                        variant='link'
+                        onClick={()=>{recordOpenClick(); setIndex(i)}}
+
+                        //href={record.newsLink}
                         noOfLines={1}
-                        isExternal
+                        //isExternal
+
                       >
                         {record.newsTitle}
-                      </Link>
+                      </Button>
                       <Text>|</Text>
                       <Box width="10%" height="10%" noOfLines={1}>
                         {record.guessesCnt}
@@ -117,9 +134,12 @@ const HistoryTable = ({ history }) => {
                     </HStack>
                   </Center>
                 </Box>
-              </Box>
+
             ))}
         </Stack>
+
+         <Record history={history[index]} recordOpen={recordOpen} recordOpenClick={recordOpenClick}/>
+
       </Box>
     </Box>
   );
