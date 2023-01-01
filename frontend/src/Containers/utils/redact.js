@@ -4,18 +4,13 @@ import { commonWords, marks } from "./variables";
 // Return the redacted content
 function redact(content, guesses, difficulty) {
   let redacted = [];
-  let cnt = 0;
-  console.log(content, guesses);
   const words = content.split(
     /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/
   );
-  console.log(words);
   let words_index = words[0] === "" ? 1 : 0;
   for (let i = 0; i < content.length; i++) {
     if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(content[i])) {
-      redacted.push(content[i]);
     } else {
-      console.log(i, words_index, content.length, words[words_index]);
       if (
         guesses.find(
           (guess) =>

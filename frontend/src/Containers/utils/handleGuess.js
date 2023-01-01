@@ -106,7 +106,7 @@ const checkWin = (guesses, content) => {
   const words = content.split(
     /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/
   );
-  let words_index = 1;
+  let words_index = words[0] === "" ? 1 : 0;
   for (let i = 0; i < content.length; i++) {
     if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(content[i])) {
       redacted += content[i];
