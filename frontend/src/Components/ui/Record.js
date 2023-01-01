@@ -49,13 +49,13 @@ const Record=({history, recordOpen, recordOpenClick})=>{
           (guess) => guess.toLowerCase() === word.toLowerCase()
         ) 
       ){
-        redacted.push( <span key={i*2} style={{fontWeight: 'bolder'}}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span> )
+        redacted.push( <span key={i*2} style={{fontWeight: 'bolder'}}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span> )    //for guessed words, text are thicker.
       }
       else if (commonWords.find((commonWord) => commonWord === word.toLowerCase())
       ) {
-        redacted.push( <span key={i*2}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span> )
+        redacted.push( <span key={i*2}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span> )    //for given words, text are normal.
       } else{
-        redacted.push(<span key={i*2} style={{color: '#FFC9C9'}}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span>)
+        redacted.push(<span key={i*2} style={{color: '#FFC9C9'}}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span>)    //for words not being guessed, text are red.
       }
 
       redacted.push(<span key={i*2+1}>{mark}</span>);
