@@ -79,7 +79,7 @@ const Record=({history, recordOpen, recordOpenClick})=>{
               <ModalCloseButton />
               <ModalBody>
                 <Text>News title: {history.newsTitle}</Text>
-                <Text>Link: <Link color="redanews-teal" href={history.newsLink}>{history.newsLink}</Link></Text>
+                <Text>Link: <Link color="redanews-teal" href={history.newsLink} isExternal>{history.newsLink}</Link></Text>
                 <Text>Content: </Text>
                 {article}
               </ModalBody>
