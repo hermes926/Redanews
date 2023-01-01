@@ -28,45 +28,42 @@ router.get("/:id/history", async (req, res) => {
       res.status(403).send({ message: "Unauthorized" });
     } else {
       let guesses = [];
-      for(let i = 0; i < user.guesses_id.length; i++){
+      for (let i = 0; i < user.guesses_id.length; i++) {
         const guess = await Guess.findById(user.guesses_id[i]);
         const news = await News.findById(guess.news_id);
-        //console.log(news)
-        if(!news)
-          continue
-        
-        let t = 0.0, cnt = 10e-7;
-        for(let j = 0; j < news.guesses_id.length; j++){
+        if (!news) continue;
+
+        let t = 0.0,
+          cnt = 10e-7;
+        for (let j = 0; j < news.guesses_id.length; j++) {
           const guess_r = await Guess.findById(news.guesses_id[j]);
-          if(guess_r.win){
-            t += (guess_r.correctCnt / guess_r.guessCnt);
+          if (guess_r.win) {
+            t += guess_r.correctCnt / guess_r.guessCnt;
             cnt += 1.0;
           }
         }
         const newGuess = {
-          guessCnt: guess.guessCnt,
-          correctCnt: guess.correctCnt,
           link: news.link,
           title: news.title,
           date: guess.date,
-          avgGuess: (t * 100 / cnt).toFixed(2),
+          guessCnt: guess.guessCnt,
+          correctCnt: guess.correctCnt,
+          avgGuess: ((t * 100) / cnt).toFixed(2),
+          win: guess.win,
           vocabs: guess.vocabs,
           news_id: guess.news_id,
         };
         guesses = [...guesses, newGuess];
       }
-      res
-        .status(200)
-        .send({ 
-          guesses: guesses,
-          username: user.username
-        });
+      res.status(200).send({
+        guesses: guesses,
+        username: user.username,
+      });
     }
   } else {
     res.status(403).send({ message: "Unauthorized" });
   }
 });
-
 
 router.patch("/:id", async (req, res) => {
   if (mongoose.isValidObjectId(req.params.id)) {
@@ -102,7 +99,5 @@ router.post("/:id/password", async (req, res) => {
     res.status(403).send({ message: "Unauthorized" });
   }
 });
-
-
 
 export default router;
