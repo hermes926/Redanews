@@ -38,6 +38,15 @@ const handleGuess = async (
       isClosable: true,
     };
   }
+  if (currentGuess.includes(" ")) {
+    return {
+      title: "Fail to guess",
+      description: `Please guess a word without any space`,
+      status: "warning",
+      duration: 2000,
+      isClosable: true,
+    };
+  }
   if (
     guesses.find(
       (guess) => guess.vocab.toLowerCase() === currentGuess.toLowerCase()
@@ -126,7 +135,7 @@ const checkWin = (guesses, content) => {
       words_index += 1;
     }
   }
-  return !redacted.includes("█");
+  return !redacted.includes("█") && content !== "";
 };
 
 export { handleGuess, countHits, checkWin };
