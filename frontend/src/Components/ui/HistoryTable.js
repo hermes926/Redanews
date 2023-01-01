@@ -138,7 +138,7 @@ const HistoryTable = ({ history }) => {
             ))}
         </Stack>
 
-         <Record history={history[index]} recordOpen={recordOpen} recordOpenClick={recordOpenClick}/>
+         {<Record history={history[index]} recordOpen={recordOpen} recordOpenClick={recordOpenClick}/>}
 
       </Box>
     </Box>

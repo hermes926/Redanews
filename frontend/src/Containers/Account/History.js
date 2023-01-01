@@ -42,6 +42,8 @@ const History = () => {
                 newsDate: res.data.guesses[i].date,
                 newsLink: res.data.guesses[i].link,
                 avgGuess: res.data.guesses[i].avgGuess,
+                vocabs: res.data.guesses[i].vocabs,
+                news_id: res.data.guesses[i].news_id,
               };
               newGuessHistory = [...newGuessHistory, newGuess];
             }

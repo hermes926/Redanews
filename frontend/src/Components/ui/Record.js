@@ -12,14 +12,24 @@ import {
   Link,
 } from '@chakra-ui/react'
 
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { commonWords, marks } from "../../Containers/utils/variables";
+import axios from "../../api";
 
 const Record=({history, recordOpen, recordOpenClick})=>{
-  const content = "'happy birthday' to you happy birthday, to you happy birthday to you!"
-  const guesses = ["happy", "birthday"]
+  //const content = "'happy birthday' to you happy birthday, to you happy birthday to you!"
+  //const guesses = ["happy", "birthday"]
+  const [content, setContent] = useState("")
+  const [article, setArticle] = useState("")
+  
+  const getArtitle = async()=>{ 
+      const payload = await axios.get("/news/all/" + history.news_id)
+      //console.log(payload)
+      setContent(payload.data.article)
+  }
 
   const makeRecord=()=>{   //copy from redact.js
+    const guesses = history.vocabs
     let redacted = [];
     let cnt = 0;
     const words = content.split(/[\n\s]+/);
@@ -49,8 +59,20 @@ const Record=({history, recordOpen, recordOpenClick})=>{
     return redacted
   }
 
+  useEffect(()=>{
+    if(content != ""){
+      setArticle(makeRecord())
+    }
+  }, [content])
+
+  useEffect(()=>{
+    if(recordOpen)
+      getArtitle()
+  }, [recordOpen])
+  
+
   return(
-    <Modal isOpen={recordOpen} onClose={()=>{recordOpenClick()}}>
+    <Modal isOpen={recordOpen} onClose={()=>{recordOpenClick()}} size='5xl'>
           <ModalOverlay />
           <ModalContent>
               <ModalHeader>Record on {history.newsDate}</ModalHeader>
@@ -59,7 +81,7 @@ const Record=({history, recordOpen, recordOpenClick})=>{
                 <Text>News title: {history.newsTitle}</Text>
                 <Text>Link: <Link color="redanews-teal" href={history.newsLink}>{history.newsLink}</Link></Text>
                 <Text>Content: </Text>
-                {makeRecord()}
+                {article}
               </ModalBody>
 
               <ModalFooter>
