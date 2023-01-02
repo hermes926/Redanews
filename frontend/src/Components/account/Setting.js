@@ -1,5 +1,6 @@
 // React Utils, UI Components
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Flex,
   Box,
@@ -14,7 +15,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 
-import { FiUser, FiAtSign, FiMail, FiEdit2 } from "react-icons/fi";
+import { FiAtSign, FiMail } from "react-icons/fi";
 
 // Functions, Utils
 import axios from "../../api";
@@ -45,9 +46,10 @@ const Setting = ({ user, userId, updateUser }) => {
           });
           setEmail("");
           setUsername("");
-          fetchUser(userId, updateUser);
         });
     }
+    fetchUser(userId, updateUser);
+    document.location.reload();
   };
 
   const onCancel = () => {
