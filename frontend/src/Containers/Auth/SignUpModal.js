@@ -21,6 +21,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import { HiEye, HiEyeOff } from "react-icons/hi";
+import SHA256 from "../../Utils/SHA256";
 
 // Functions, Utils
 import axios from "../../api";
@@ -96,11 +97,12 @@ const SignUpModal = () => {
     }
 
     if (!hasError) {
+      const hashedPassword = SHA256(inputs.password.trim());
       const res = await axios
         .post("/auth/signup", {
           username: inputs.username.trim(),
           email: inputs.email.trim(),
-          password: inputs.password.trim(),
+          password: hashedPassword,
         })
         .catch(() => {
           displayToast({

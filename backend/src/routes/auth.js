@@ -3,13 +3,13 @@ import Guess from "../models/Guess.js";
 import User from "../models/User.js";
 import News from "../models/News.js";
 import today from "../utils/today.js";
-
 const router = Router();
 
 
 router.post("/login",  async (req, res) => {
     let date = today.getToday();
     const existingUser = await User.findOne({ username: req.body.username });
+    console.log(existingUser?.password, req.body.password);
     if (existingUser === undefined || existingUser?.password !== req.body.password){
         res.status(403).send({ error: "Username or Password not correct"});
     } else {
