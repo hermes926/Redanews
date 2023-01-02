@@ -54,7 +54,8 @@ const SignUpModal = () => {
   const [hasRequest, setHasRequest] = useState(false);
 
   const [inputError, setInputError] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [isOpen2, setIsOpen2] = useState(false);
 
   const labelName = ["username", "email", "password", "confirmPassword"];
 
@@ -188,8 +189,12 @@ const SignUpModal = () => {
     setHasRequest(false);
   };
 
-  const onClickReveal = () => {
-    setIsOpen(!isOpen);
+  const onClickReveal1 = () => {
+    setIsOpen1(!isOpen1);
+  };
+
+  const onClickReveal2 = () => {
+    setIsOpen2(!isOpen2);
   };
 
   return (
@@ -266,7 +271,7 @@ const SignUpModal = () => {
                   <InputGroup>
                     <Input
                       id="signup-password"
-                      type={isOpen ? "text" : "password"}
+                      type={isOpen1 ? "text" : "password"}
                       label="Password"
                       placeholder="Password"
                       name="password"
@@ -283,10 +288,10 @@ const SignUpModal = () => {
                     />
                     <InputRightElement>
                       <IconButton
-                        onClick={onClickReveal}
-                        icon={isOpen ? <HiEye /> : <HiEyeOff />}
+                        onClick={onClickReveal1}
+                        icon={isOpen1 ? <HiEye /> : <HiEyeOff />}
                         aria-label={
-                          isOpen ? "Mask password" : "Reveal password"
+                          isOpen1 ? "Mask password" : "Reveal password"
                         }
                         variant="link"
                         border="none"
@@ -313,7 +318,7 @@ const SignUpModal = () => {
                   <InputGroup>
                     <Input
                       id="signup-confirm-password"
-                      type={isOpen ? "text" : "password"}
+                      type={isOpen2 ? "text" : "password"}
                       label="Confirm Password"
                       placeholder="Confirm Password"
                       name="confirmPassword"
@@ -330,10 +335,10 @@ const SignUpModal = () => {
                     />
                     <InputRightElement>
                       <IconButton
-                        onClick={onClickReveal}
-                        icon={isOpen ? <HiEye /> : <HiEyeOff />}
+                        onClick={onClickReveal2}
+                        icon={isOpen2 ? <HiEye /> : <HiEyeOff />}
                         aria-label={
-                          isOpen ? "Mask password" : "Reveal password"
+                          isOpen2 ? "Mask password" : "Reveal password"
                         }
                         variant="link"
                         border="none"
