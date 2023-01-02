@@ -4,6 +4,9 @@ import { getCookie } from "../../Utils/CookieUsage";
 
 // Function for counting word hits with the today's quiz
 const countHits = (currentGuess, news) => {
+  if (!news.title) {
+    return 0;
+  }
   const count = news.title
     .split(regex)
     .concat(news.content.split(regex))
