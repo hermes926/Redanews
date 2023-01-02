@@ -4,3 +4,4 @@ runtime: nodejs16 # or another supported version
 
 env_variables:
   MONGO_URL: "mongodb+srv://starsstars:hermes1111@cluster0.bae3ozx.mongodb.net/?retryWrites=true&w=majority"
+  GUARDIANS_KEY: "88a6b377-661c-40c6-9a84-a516a316bfe2"
