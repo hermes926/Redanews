@@ -34,8 +34,8 @@ const History = () => {
             let newGuessHistory = [];
             for (let i = 0; i < res.data.guesses.length; i++) {
               const newGuess = {
-                guess_id: 1,
-                news_id: 1,
+                guess_id: res.data.guesses[i].guess_id,
+                news_id: res.data.guesses[i].news_id,
                 newsTitle: res.data.guesses[i].title,
                 newsDate: res.data.guesses[i].date,
                 newsLink: res.data.guesses[i].link,
@@ -43,8 +43,6 @@ const History = () => {
                 guessesCnt: res.data.guesses[i].guessCnt,
                 avgGuess: res.data.guesses[i].avgGuess,
                 win: res.data.guesses[i].win ? res.data.guesses[i].win : false,
-                vocabs: res.data.guesses[i].vocabs,
-                news_id: res.data.guesses[i].news_id,
               };
               newGuessHistory = [...newGuessHistory, newGuess];
             }
