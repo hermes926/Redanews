@@ -20,15 +20,26 @@ import { FiAtSign, FiMail } from "react-icons/fi";
 // Functions, Utils
 import axios from "../../api";
 import fetchUser from "../../Containers/utils/fetchUser";
+import ValidateEmail from "../../Containers/utils/validateEmail";
 
 const Setting = ({ user, userId, updateUser }) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
 
   const displayToast = useToast();
 
   const onSubmit = async () => {
     if (userId) {
+      if (!ValidateEmail(email)) {
+        displayToast({
+          title: "Cannot update profile",
+          description: "Invalid email",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+        return;
+      }
       await axios
         .patch("/user/" + userId, {
           username,
