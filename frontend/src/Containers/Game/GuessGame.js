@@ -22,7 +22,7 @@ import GuessTable from "./GuessTable";
 
 // Functions, Utils
 import { handleGuess, countHits } from "../utils/handleGuess";
-import { getCookie } from "../../Utils/CookieUsage";
+import { getCookie, setCookie } from "../../Utils/CookieUsage";
 import axios from "../../api";
 
 // Redanews Context Provider
@@ -66,10 +66,6 @@ const GuessGame = () => {
       setPreClickGuess("");
     } else {
       findSpan(currentGuess);
-      tableTopRef.current?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
     }
   };
 
@@ -111,7 +107,12 @@ const GuessGame = () => {
             }
           });
       } else {
-        if (news) setLoadGuess(true);
+        if (news) {
+          if (getCookie("guesses")) {
+            setGuesses(guesses);
+          }
+          setLoadGuess(true);
+        }
       }
     };
     getGuessRecord();
@@ -175,6 +176,7 @@ const GuessGame = () => {
     topRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  // Func: Remove styles added for pre-click word
   const clearStyle = () => {
     Array.from(document.getElementsByClassName(preClickGuess)).forEach(
       (element) => {
@@ -183,18 +185,32 @@ const GuessGame = () => {
     );
   };
 
+  // Func: for find all words same as the guess word to highlight
   const findSpan = async (word) => {
+    if (word === undefined || word === "") {
+      return;
+    }
+
     let toFocus = 0;
     let elements = preSpans;
+
+    // Check pre-clicking or not
     if (word.toLowerCase() === preClickGuess) {
       toFocus = currentFocus + 1;
-      elements[toFocus % elements.length].style.cssText =
-        "color:black;background-color:aqua;";
-      elements[(toFocus - 1) % elements.length].style.cssText =
-        "color:black;background-color:gray;";
+      if (elements.length === 0) {
+        return;
+      }
+      elements[
+        elements.length === 1 ? 0 : toFocus % elements.length
+      ].style.cssText = "color:black;background-color:aqua;";
+      if (elements.length !== 1) {
+        elements[(toFocus - 1) % elements.length].style.cssText =
+          "color:black;background-color:gray;";
+      }
     } else {
       clearStyle();
-      elements = Array.from(await document.getElementsByClassName(word));
+
+      elements = Array.from(document.getElementsByClassName(word));
       setPreSpans(elements);
       elements.forEach((element, i) => {
         if (i === 0) {
@@ -215,6 +231,13 @@ const GuessGame = () => {
       });
     }
   };
+
+  useEffect(() => {
+    tableTopRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, [guesses]);
 
   if (!loadGuess) {
     return <></>;
