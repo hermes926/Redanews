@@ -24,6 +24,7 @@ import { HiEye, HiEyeOff } from "react-icons/hi";
 
 // Functions, Utils
 import axios from "../../api";
+import ValidateEmail from "../utils/validateEmail";
 
 function checkPassword(password1, password2) {
   if (password1 === password2) {
@@ -86,6 +87,13 @@ const SignUpModal = () => {
       hasError = true;
     }
 
+    // Check email
+    const statusE = ValidateEmail(newInputs.email);
+    if (!statusE) {
+      setErrors((input) => ({ ...input, email: true }));
+      hasError = true;
+    }
+
     if (!hasError) {
       const res = await axios
         .post("/auth/signup", {
@@ -127,6 +135,14 @@ const SignUpModal = () => {
         displayToast({
           title: "Register Fail",
           description: "Password Not Match",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+      } else if (errors.email === true) {
+        displayToast({
+          title: "Register Fail",
+          description: "Invalid email address",
           status: "error",
           duration: 2000,
           isClosable: true,
