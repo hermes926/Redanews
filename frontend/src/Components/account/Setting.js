@@ -46,7 +46,13 @@ const Setting = ({ user, userId, updateUser }) => {
           email,
         })
         .catch((e) => {
-          console.log(e);
+          displayToast({
+            title: "Fail to update profile",
+            description: "Username exists",
+            status: "success",
+            duration: 2000,
+            isClosable: true,
+          });
         })
         .then((res) => {
           displayToast({
