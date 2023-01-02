@@ -46,12 +46,12 @@ router.get("/:id/history", async (req, res) => {
           link: news.link,
           title: news.title,
           date: guess.date,
+          guess_id: guess._id,
+          news_id: guess.news_id,
           guessCnt: guess.guessCnt,
           correctCnt: guess.correctCnt,
           avgGuess: ((t * 100) / cnt).toFixed(2),
           win: guess.win,
-          vocabs: guess.vocabs,
-          news_id: guess.news_id,
         };
         guesses = [...guesses, newGuess];
       }
