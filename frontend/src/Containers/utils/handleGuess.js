@@ -1,14 +1,15 @@
-import { commonWords, marks } from "./variables";
+import { commonWords, regex } from "./variables";
 import axios from "../../api";
 import { getCookie } from "../../Utils/CookieUsage";
 
 // Function for counting word hits with the today's quiz
 const countHits = (currentGuess, news) => {
+  if (!news.title) {
+    return 0;
+  }
   const count = news.title
-    .split(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/)
-    .concat(
-      news.content.split(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/)
-    )
+    .split(regex)
+    .concat(news.content.split(regex))
     .filter((word) => word.toLowerCase() === currentGuess.toLowerCase()).length;
   return count;
 };
@@ -35,6 +36,15 @@ const handleGuess = async (
     return {
       title: "Fail to guess",
       description: `Please guess a word without any space`,
+      status: "warning",
+      duration: 2000,
+      isClosable: true,
+    };
+  }
+  if (regex.test(currentGuess)) {
+    return {
+      title: "Fail to guess",
+      description: `Please guess a word without any marks`,
       status: "warning",
       duration: 2000,
       isClosable: true,
@@ -103,12 +113,10 @@ const handleGuess = async (
 const checkWin = (guesses, content) => {
   let redacted = "";
   let cnt = 0;
-  const words = content.split(
-    /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/
-  );
+  const words = content.split(regex);
   let words_index = words[0] === "" ? 1 : 0;
   for (let i = 0; i < content.length; i++) {
-    if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(content[i])) {
+    if (regex.test(content[i])) {
       redacted += content[i];
     } else {
       if (
