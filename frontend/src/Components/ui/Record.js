@@ -25,48 +25,45 @@ const Record = ({ history, recordOpen, recordOpenClick }) => {
   const [title, setTitle] = useState("");
   const [article, setArticle] = useState("");
 
-  const getArtitle = async () => {
-    const payload = await axios.get("/news/all/" + history.news_id);
-    setContent(payload.data.article);
-  };
-
   const makeRecord = (contentt) => {
     //copy from redact.js
     const guesses = history.vocabs;
-    let redacted = [];
-    let cnt = 0;
-    const words = contentt.split(/[\n\s]+/);
-    for (let i = 0; i < words.length; i++) {
-      let word = "";
-      let mark = "";
-      if (!marks.find((m) => m === words[i][words[i].length - 1])) {
-        word = words[i];
-      } else {
-        word = words[i].substring(0, words[i].length - 1);
-        mark = words[i][words[i].length - 1];
-      }
-      if (guesses.find((guess) => guess.toLowerCase() === word.toLowerCase())) {
-        redacted.push(
-          <span key={i * 2} style={{ fontWeight: "bolder" }}>
-            {(cnt > 0 ? contentt[cnt - 1] : " ") + word}
-          </span>
-        ); //for guessed words, text are thicker.
-      } else if (
-        commonWords.find((commonWord) => commonWord === word.toLowerCase())
-      ) {
-        redacted.push(
-          <span key={i * 2}>{(cnt > 0 ? contentt[cnt - 1] : " ") + word}</span>
-        ); //for given words, text are normal.
-      } else {
-        redacted.push(
-          <span key={i * 2} style={{ color: "#FFC9C9" }}>
-            {(cnt > 0 ? contentt[cnt - 1] : " ") + word}
-          </span>
-        ); //for words not being guessed, text are red.
-      }
 
-      redacted.push(<span key={i * 2 + 1}>{mark}</span>);
-      cnt += words[i].length + 1;
+    let redacted = []; //this is new redact algorithm
+    const words = contentt.split(
+      /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/
+    );
+    let words_index = words[0] === "" ? 1 : 0;
+    for (let i = 0; i < contentt.length; i++) {
+      if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(contentt[i])) {
+        redacted.push(contentt[i]);
+      } else {
+        if (
+          guesses.find(
+            (guess) => guess.toLowerCase() === words[words_index].toLowerCase()
+          )
+        ) {
+          redacted.push(
+            <span key={i * 2} style={{ fontWeight: "bolder" }}>
+              {words[words_index]}
+            </span>
+          ); //for guessed words, text are thicker.
+        } else if (
+          commonWords.find(
+            (commonWord) => commonWord === words[words_index].toLowerCase()
+          )
+        ) {
+          redacted.push(<span key={i * 2}>{words[words_index]}</span>); //for given words, text are normal.
+        } else {
+          redacted.push(
+            <span key={i * 2} style={{ color: "#FFC9C9" }}>
+              {words[words_index]}
+            </span>
+          ); //for words not being guessed, text are red.
+        }
+        i += words[words_index].length - 1;
+        words_index += 1;
+      }
     }
     return redacted;
   };
