@@ -2,6 +2,10 @@ import { commonWords, regex } from "./variables";
 
 const viewHistoryRecord = (guesses, content) => {
   let redacted = []; //this is new redact algorithm
+  if (!content) {
+    return;
+  }
+
   const words = content.split(regex);
 
   let words_index = words[0] === "" ? 1 : 0;
