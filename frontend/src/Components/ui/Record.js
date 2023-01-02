@@ -116,7 +116,7 @@ const Record = ({ history, recordOpen, recordOpenClick }) => {
               </Tag>
             )}
           </HStack>
-          <Text>Your answer : </Text>
+          <Text fontWeight="700">Your Guessing Progress : </Text>
           <Heading>{title}</Heading>
           {article}
         </ModalBody>
