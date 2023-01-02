@@ -1,15 +1,13 @@
-import { commonWords, marks } from "./variables";
+import { commonWords, regex } from "./variables";
 
 // Function for redacting given content with guesses and commonWords revealed
 // Return the redacted content
 function redact(content, guesses, difficulty) {
   let redacted = [];
-  const words = content.split(
-    /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]+/
-  );
+  const words = content.split(regex);
   let words_index = words[0] === "" ? 1 : 0;
   for (let i = 0; i < content.length; i++) {
-    if (/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(content[i])) {
+    if (regex.test(content[i])) {
       redacted.push(content[i]);
     } else {
       if (
@@ -47,11 +45,9 @@ function redact(content, guesses, difficulty) {
       {redacted.map((str, i) => (
         <span key={str + "-" + i}>
           <span className={str.toLowerCase()}>{str}</span>
-          {!/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(str) &&
+          {!regex.test(str) &&
           i !== redacted.length - 1 &&
-          !/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~\n\s’‘–]/.test(
-            redacted[i + 1]
-          )
+          !regex.test(redacted[i + 1])
             ? " "
             : ""}
         </span>
