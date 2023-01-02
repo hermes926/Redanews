@@ -72,6 +72,12 @@ router.patch("/:id", async (req, res) => {
       res.status(403).send({ message: "Unauthorized" });
     } else {
       if (req.body.username !== "" && req.body.username != undefined) {
+        const existingUser = await User.findOne({
+          username: req.body.username,
+        });
+        if (existingUser) {
+          res.status(400).send({ error: "Username Exists" });
+        }
         user.username = req.body.username;
       }
       if (req.body.email !== "" && req.body.email != undefined) {
