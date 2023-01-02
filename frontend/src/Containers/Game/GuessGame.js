@@ -138,7 +138,7 @@ const GuessGame = () => {
         isClosable: true,
       });
 
-      if (guessId != "" && guessId) {
+      if (guessId !== "" && guessId) {
         sendWinAPI();
       }
     }

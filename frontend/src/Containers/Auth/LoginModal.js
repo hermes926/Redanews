@@ -28,6 +28,8 @@ import fetchUser from "../utils/fetchUser";
 
 // Redanews Context Provider
 import { useRedanews } from "../../Hooks/useRedanews";
+import SHA256 from "../../Utils/SHA256";
+
 
 const LoginModal = () => {
   const navigate = useNavigate();
@@ -57,8 +59,9 @@ const LoginModal = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const hashedPassword = SHA256(password);
     const res = await axios
-      .post("/auth/login", { username, password })
+      .post("/auth/login", { username, password: hashedPassword })
       .catch(() => {
         displayToast({
           title: "Login Failed",
