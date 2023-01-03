@@ -242,6 +242,7 @@ const GuessGame = () => {
 
   useEffect(() => {
     if (sendGuess) {
+      findSpan(guesses[guesses.length - 1].vocab);
       setSendGuess(false);
     }
   }, [sendGuess]);
