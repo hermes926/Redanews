@@ -92,17 +92,17 @@ const HistoryTable = ({ history }) => {
                       height="10%"
                       variant="link"
                       color={
-                        today !== record.newsDate || today.win === true
+                        today !== record.newsDate || record.win === true
                           ? "gray.400"
                           : "redanews-blue"
                       }
                       _hover={
-                        today !== record.newsDate || today.win === true
+                        today !== record.newsDate || record.win === true
                           ? { color: "redanews-grey" }
                           : { color: "redanews-teal" }
                       }
                       onClick={() => {
-                        if (today !== record.newsDate || today.win === true) {
+                        if (today !== record.newsDate || record.win === true) {
                           recordOpenClick();
                           setIndex(history.length - 1 - i);
                         } else {
@@ -111,7 +111,7 @@ const HistoryTable = ({ history }) => {
                       }}
                       noOfLines={1}
                     >
-                      {today !== record.newsDate || today.win === true
+                      {today !== record.newsDate || record.win === true
                         ? record.newsTitle
                         : "You still have time, keep guessing → "}
                     </Button>
