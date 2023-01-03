@@ -49,6 +49,7 @@ const GuessGame = () => {
   const [currentFocus, setCurrentFocus] = useState(0);
 
   const [loadGuess, setLoadGuess] = useState(false);
+  const [sendGuess, setSendGuess] = useState(false);
 
   const submitGuess = async () => {
     const result = await handleGuess(
@@ -65,7 +66,7 @@ const GuessGame = () => {
       displayToast(result);
       setPreClickGuess("");
     } else {
-      findSpan(currentGuess);
+      setSendGuess(true);
     }
   };
 
@@ -238,6 +239,13 @@ const GuessGame = () => {
       block: "start",
     });
   }, [guesses]);
+
+  useEffect(() => {
+    if (sendGuess) {
+      findSpan(guesses[guesses.length - 1].vocab);
+      setSendGuess(false);
+    }
+  }, [sendGuess]);
 
   if (!loadGuess) {
     return <></>;
