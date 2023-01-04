@@ -61,7 +61,10 @@ const Info = ({ infoOpen, InfoClick }) => {
             <Stack spacing="2.5">
               <HStack justify="space-between">
                 <Heading size="md">How To Play</Heading>
-                <Link px="2" to="./Tutorial">
+                <Link
+                  px="2"
+                  href="https://www.youtube.com/watch?v=jA3wpAD8TnA&fbclid=IwAR3BUt0eGKCH0L8GNGh5u6rvF38IsT5g2ubuQuGHU4orrUBSim9JS1wHgw8"
+                >
                   Tutorial
                 </Link>
               </HStack>
