@@ -18,6 +18,7 @@ const HistoryTable = ({ history }) => {
 
   // Parsing today's date
   var today = new Date();
+  today.setHours(today.getHours - 8);
   today.setDate(today.getDate() - 1);
   var dd = String(today.getDate()).padStart(2, "0");
   var mm = String(today.getMonth() + 1).padStart(2, "0");
