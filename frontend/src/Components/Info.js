@@ -55,13 +55,13 @@ const Info = ({ infoOpen, InfoClick }) => {
                 .
               </Text>
               <Text>
-                A new puzzle will be available every day at 00:00 UTC+08:00.
+                A new puzzle will be available every day at 08:00 UTC+08:00.
               </Text>
             </Stack>
             <Stack spacing="2.5">
               <HStack justify="space-between">
                 <Heading size="md">How To Play</Heading>
-                <Link px="2" to="./Tutorial">
+                <Link px="2" href="https://redanews.df.r.appspot.com/">
                   Tutorial
                 </Link>
               </HStack>
