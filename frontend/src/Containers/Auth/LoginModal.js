@@ -30,7 +30,6 @@ import fetchUser from "../utils/fetchUser";
 import { useRedanews } from "../../Hooks/useRedanews";
 import SHA256 from "../../Utils/SHA256";
 
-
 const LoginModal = () => {
   const navigate = useNavigate();
 
@@ -47,12 +46,32 @@ const LoginModal = () => {
     if (e.target.value !== "") {
       setInputError(false);
     }
+    const value = e.target.value;
+    if (value !== "" && value.search(/^[a-zA-Z0-9_.@]+$/) === -1) {
+      displayToast({
+        title: "Invalid Input",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
     setUsername(e.target.value);
   };
 
   const handlePasswordChange = (e) => {
     if (e.target.value !== "") {
       setInputError(false);
+    }
+    const value = e.target.value;
+    if (value !== "" && value.search(/^[a-zA-Z0-9_.@]+$/) === -1) {
+      displayToast({
+        title: "Invalid Input",
+        status: "error",
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
     }
     setPassword(e.target.value);
   };

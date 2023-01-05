@@ -156,6 +156,18 @@ const SignUpModal = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    if (name !== "email") {
+      if (value !== "" && value.search(/^[a-zA-Z0-9_.@]+$/) === -1) {
+        displayToast({
+          title: "Invalid Input",
+          status: "error",
+          duration: 2000,
+          isClosable: true,
+        });
+        return;
+      }
+    }
+
     setInputs((input) => ({ ...input, [name]: value }));
     if (value !== "") {
       setErrors((input) => ({ ...input, [name]: false }));

@@ -57,7 +57,8 @@ const PasswordSetting = () => {
       if (userId) {
         await axios
           .post("/user/" + userId + "/password", {
-            orgPassword, newPassword
+            orgPassword,
+            newPassword,
           })
           .catch((e) => {
             displayToast({
@@ -68,7 +69,7 @@ const PasswordSetting = () => {
             });
           })
           .then((res) => {
-            if(res.status === 200){
+            if (res.status === 200) {
               displayToast({
                 title: "Update Profile Successful",
                 status: "success",
@@ -77,9 +78,9 @@ const PasswordSetting = () => {
               });
             }
           });
-          setOrgPassword("");
-          setNewPassword("");
-          setConfirmPassword("");
+        setOrgPassword("");
+        setNewPassword("");
+        setConfirmPassword("");
       }
     }
   };
@@ -142,7 +143,22 @@ const PasswordSetting = () => {
                         label="org-password"
                         placeholder="Original Password"
                         value={orgPassword}
-                        onChange={(e) => setOrgPassword(e.target.value)}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (
+                            value !== "" &&
+                            value.search(/^[a-zA-Z0-9_.@]+$/) === -1
+                          ) {
+                            displayToast({
+                              title: "Invalid Input",
+                              status: "error",
+                              duration: 2000,
+                              isClosable: true,
+                            });
+                            return;
+                          }
+                          setOrgPassword(e.target.value);
+                        }}
                         size="md"
                         color="redanews"
                         borderColor="black"
@@ -209,7 +225,22 @@ const PasswordSetting = () => {
                         label="new-password"
                         placeholder="New Password"
                         value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (
+                            value !== "" &&
+                            value.search(/^[a-zA-Z0-9_.@]+$/) === -1
+                          ) {
+                            displayToast({
+                              title: "Invalid Input",
+                              status: "error",
+                              duration: 2000,
+                              isClosable: true,
+                            });
+                            return;
+                          }
+                          setNewPassword(e.target.value);
+                        }}
                         size="md"
                         color="redanews"
                         borderColor="black"
@@ -276,7 +307,22 @@ const PasswordSetting = () => {
                         label="confirm-password"
                         placeholder="Confirm New Password"
                         value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          if (
+                            value !== "" &&
+                            value.search(/^[a-zA-Z0-9_.@]+$/) === -1
+                          ) {
+                            displayToast({
+                              title: "Invalid Input",
+                              status: "error",
+                              duration: 2000,
+                              isClosable: true,
+                            });
+                            return;
+                          }
+                          setConfirmPassword(e.target.value);
+                        }}
                         size="md"
                         color="redanews"
                         borderColor="black"

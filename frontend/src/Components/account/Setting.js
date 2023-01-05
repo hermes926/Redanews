@@ -121,7 +121,22 @@ const Setting = ({ user, userId, updateUser }) => {
                       label="username"
                       placeholder="Username"
                       value={username}
-                      onChange={(e) => setUsername(e.target.value)}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        if (
+                          value !== "" &&
+                          value.search(/^[a-zA-Z0-9_.@]+$/) === -1
+                        ) {
+                          displayToast({
+                            title: "Invalid Input",
+                            status: "error",
+                            duration: 2000,
+                            isClosable: true,
+                          });
+                          return;
+                        }
+                        setUsername(e.target.value);
+                      }}
                       size="md"
                       color="redanews"
                       borderColor="black"
