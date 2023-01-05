@@ -162,7 +162,14 @@ const LoginModal = () => {
                     color="redanews-teal"
                     fontSize="2vmin"
                     fontWeight={600}
-                    to="/"
+                    onClick={() => {
+                      displayToast({
+                        title: "Function not available",
+                        status: "warning",
+                        duration: 2000,
+                        isClosable: true,
+                      });
+                    }}
                   >
                     Forgot your password?
                   </Link>
